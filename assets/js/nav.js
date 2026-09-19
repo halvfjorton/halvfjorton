@@ -33,6 +33,27 @@
     });
   });
 
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll("[data-reveal]").forEach(function (node) {
+      io.observe(node);
+    });
+  } else {
+    document.querySelectorAll("[data-reveal]").forEach(function (node) {
+      node.classList.add("is-in");
+    });
+  }
+
   var form = document.querySelector("[data-mailto-form]");
   if (form) {
     form.addEventListener("submit", function (event) {

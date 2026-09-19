@@ -46,7 +46,7 @@ Filen `.nojekyll` finns så att GitHub inte kör Jekyll mot `_`-filer eller stat
 
 ## Domän och DNS
 
-Apex `halvfjorton.se` är **just nu parkerad hos Loopia**. Det är inte bandets sajt – behandla den inte som innehåll. `www.halvfjorton.se` pekar på den gamla Google Sites-sidan.
+Apex `halvfjorton.se` är **just nu parkerad hos Loopia**. Det är inte bandets sajt. Behandla den inte som innehåll. `www.halvfjorton.se` pekar på den gamla Google Sites-sidan.
 
 Rekommendation:
 
@@ -74,7 +74,7 @@ AAAA (IPv6), om ni använder det:
 
 `www` som CNAME mot `ivarlundin.github.io` (eller er Pages-värd) fungerar, så länge apex är primär och www redirectar dit.
 
-Uppdatera posterna hos Loopia när parkeringen ska bort. TTL kan vara hög – räkna med fördröjning.
+Uppdatera posterna hos Loopia när parkeringen ska bort. TTL kan vara hög, räkna med fördröjning.
 
 ## Bilder och presskit
 
@@ -97,3 +97,27 @@ Lägg inte in analys-id:n förrän ni faktiskt har ett konto.
 ## SEO
 
 Varje sida har unik titel, meta-beskrivning, canonical, Open Graph och `lang="sv"`. Startsida och undersidor bär JSON-LD för MusicGroup/Organization. FAQ har `FAQPage`. `robots.txt` och `sitemap.xml` ligger i roten.
+
+## Agent skills (Taste)
+
+Projektet har [Taste Skill](https://github.com/Leonxlnx/taste-skill) incheckat så att framtida agenter hittar reglerna utan global installation.
+
+- `.cursor/skills/design-taste-frontend/` (installnamn `design-taste-frontend`)
+- `.cursor/skills/redesign-existing-projects/` (installnamn `redesign-existing-projects`)
+- Samma filer ligger även under `.agents/skills/` efter `npx skills add`
+
+Cursor-agenter läser `SKILL.md` i `.cursor/skills/` automatiskt. Använd **redesign-existing-projects** när UI ska förbättras på den här sajten (audit först, behåll URL:er och copy). Använd **design-taste-frontend** för layout, typografi, rörelse och anti-slop.
+
+Aktuella vred för den här sajten: `DESIGN_VARIANCE` 7, `MOTION_INTENSITY` 5, `VISUAL_DENSITY` 4. Mörkt tema, ett accent (guld), foto från bandet, inga påhittade citat.
+
+Uppdatera vid behov:
+
+```bash
+npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend" --skill "redesign-existing-projects" -a cursor -y --copy
+```
+
+Kopiera sedan in filerna till `.cursor/skills/` om installern bara skriver `.agents/skills/`.
+
+## Designpass (2026)
+
+UI:t är omritat mot de skills ovan: asymmetrisk startsida, Syne + Outfit, varm off-black, kornig yta, scroll-reveal och en kontakt-CTA (`Hör av er`). SEO, sökvägar och svensk copy är oförändrade i sak.
