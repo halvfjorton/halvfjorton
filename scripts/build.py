@@ -140,7 +140,7 @@ def page(
         current = ' aria-current="page"' if href == path else ""
         nav_items.append(f'          <li><a href="{href}"{current}>{label}</a></li>')
     nav = "\n".join(nav_items)
-    graphs = [music_group_ld(), breadcrumb_ld([("/", "Hem")] + ([] if path == "/" else [(path, title.split(" — ")[0])]))]
+    graphs = [music_group_ld(), breadcrumb_ld([("/", "Hem")] + ([] if path == "/" else [(path, title.split(" | ")[0])]))]
     if extra_ld:
         graphs.extend(extra_ld)
     jsonld = ",\n  ".join(graphs)
@@ -168,7 +168,7 @@ def page(
   <link rel="apple-touch-icon" href="/assets/img/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,650&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
   <script type="application/ld+json">
   {jsonld}
@@ -215,7 +215,7 @@ def page(
           <li><a href="/foretag/">Företag</a></li>
           <li><a href="/for-eventbolag/">För eventbolag</a></li>
           <li><a href="/faq/">Vanliga frågor</a></li>
-          <li><a href="/kontakt/">Boka oss</a></li>
+          <li><a href="/kontakt/">Hör av er</a></li>
         </ul>
       </div>
     </div>
@@ -237,80 +237,80 @@ def page(
 def write_pages():
     page(
         "/",
-        "Halv Fjorton — Sveriges svängigaste coverband",
+        "Halv Fjorton | Sveriges svängigaste coverband",
         "Halv Fjorton är ett coverband med åtta musiker från södra Sverige. Soul, funk, rock och svenska klassiker till bröllop, företag och fest i Växjö och hela södern.",
         body="""    <section class="hero">
-      <img src="/assets/img/hero.jpg" alt="Halv Fjorton på scen i blått ljus, sångare och blåssektion framför publiken">
-      <div class="hero-copy">
-        <p class="eyebrow">Coverband · Partyband · Växjö</p>
-        <h1>Sveriges svängigaste coverband</h1>
-        <p class="lead">Åtta musiker, egen blåssektion och en repertoar som får hela sällskapet i rörelse – ung som gammal. Vi skräddarsyr bröllop, mingel och företagsfester i södra Sverige.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="/kontakt/">Hör av er</a>
-          <a class="btn btn-ghost" href="/lyssna/">Lyssna på oss</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="vad-ar">
-      <div class="wrap">
-        <p class="eyebrow">På en minut</p>
-        <h2 id="vad-ar">Vad är Halv Fjorton?</h2>
-        <p class="muted">Korta fakta för den som snabbt vill veta om vi passar till er tillställning.</p>
-        <div class="facts">
-          <div class="fact"><strong>8 musiker</strong><p>Komplett band med sång, rytmsektion och blås. Namnet kommer från att vi började som sju – halva fjorton.</p></div>
-          <div class="fact"><strong>Soul, funk och rock</strong><p>Stevie Wonder, Ray Charles, Earth, Wind &amp; Fire – plus svenska klassiker som Björn Skifs och Tomas Ledin.</p></div>
-          <div class="fact"><strong>Egen blåssektion</strong><p>Trumpet, saxofon och kör som ger festen det extra svänget som ett mindre band sällan når.</p></div>
-          <div class="fact"><strong>Södra Sverige</strong><p>Rötter i Växjö, medlemmar utspridda i södern. Vi spelar bröllop, kickoffer och fester i hela regionen.</p></div>
-          <div class="fact"><strong>Egen teknik + 2 tekniker</strong><p>Vi tar med PA och har alltid två ljudtekniker på plats för en professionell ljudbild.</p></div>
-          <div class="fact"><strong>Ekonomisk förening</strong><p>Halv Fjorton EK. FÖR., org.nr 769641-5418. Enkel faktura och tydlig motpart för både par och företag.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-alt" aria-labelledby="erbjudanden">
-      <div class="wrap">
-        <h2 id="erbjudanden">Tre vanliga upplägg</h2>
-        <div class="grid-3">
-          <article class="card">
-            <h3><a href="/brollop/">Bröllop</a></h3>
-            <p>Festen, vigseln, psalmer och komp till solist om ni vill. Upplägget skräddarsys efter er dag.</p>
-            <p><a href="/brollop/">Läs om bröllop →</a></p>
-          </article>
-          <article class="card">
-            <h3><a href="/mingel/">Mingel</a></h3>
-            <p>Från traditionell jazz till svenska klassiker. Passar konferensmiddagar, mottagningar och bröllopsmingel.</p>
-            <p><a href="/mingel/">Läs om mingel →</a></p>
-          </article>
-          <article class="card">
-            <h3><a href="/foretag/">Fest och företag</a></h3>
-            <p>Personalfest, kickoff, jubileum eller födelsedag. Gärna kombinerat med mingel tidigare under kvällen.</p>
-            <p><a href="/foretag/">Läs om företag →</a></p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="kort-om">
-      <div class="wrap split">
-        <div>
-          <h2 id="kort-om">Kort om oss</h2>
-          <p>Vi är Halv Fjorton, ett coverband på åtta medlemmar från södra Sverige. Grunden ligger i soul, funk och rock – med tillräcklig bredd för att hela rummet ska känna igen sig.</p>
-          <p>Här är ett litet smakprov. Mer finns på lyssna-sidan, bland annat <em>Signed Sealed Delivered</em> från 2025 och vår reel från 2022.</p>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Coverband från Växjö</p>
+          <h1>Sveriges svängigaste coverband</h1>
+          <p class="lead">Åtta musiker med blås, soul och svenska klassiker. Bröllop, företag och fest i södra Sverige.</p>
           <div class="actions">
-            <a class="btn btn-primary" href="/om-oss/">Möt bandet</a>
-            <a class="btn btn-ghost" href="/lyssna/">Se film</a>
+            <a class="btn btn-primary" href="/kontakt/">Hör av er</a>
+            <a class="btn btn-ghost" href="/lyssna/">Lyssna</a>
           </div>
         </div>
-        <div class="embed">
-          <iframe src="https://www.youtube-nocookie.com/embed/V2Nb8jMKUCk" title="Signed Sealed Delivered – Halv Fjorton 2025" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        <figure class="hero-media">
+          <img src="/assets/img/hero.jpg" alt="Halv Fjorton på scen i blått ljus, sångare och blåssektion framför publiken">
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="vad-ar" data-reveal>
+      <div class="wrap">
+        <h2 id="vad-ar">Vad är Halv Fjorton?</h2>
+        <div class="facts">
+          <div class="fact surface"><strong>8 musiker</strong><p>Komplett band med sång, rytmsektion och blås. Namnet kommer från att vi började som sju, halva fjorton.</p></div>
+          <div class="fact"><strong>Soul, funk och rock</strong><p>Stevie Wonder, Ray Charles, Earth, Wind &amp; Fire plus svenska klassiker som Björn Skifs och Tomas Ledin.</p></div>
+          <div class="fact"><strong>Egen blåssektion</strong><p>Trumpet, saxofon och kör som ger festen det extra svänget.</p></div>
+          <div class="fact"><strong>Södra Sverige</strong><p>Rötter i Växjö, medlemmar utspridda i södern. Bröllop, kickoffer och fester i hela regionen.</p></div>
+          <div class="fact"><strong>Egen teknik + 2 tekniker</strong><p>Vi tar med PA och har alltid två ljudtekniker på plats.</p></div>
+          <div class="fact"><strong>Ekonomisk förening</strong><p>Halv Fjorton EK. FÖR., org.nr 769641-5418. Tydlig motpart för par och företag.</p></div>
         </div>
       </div>
     </section>
 
-    <section class="section section-alt" aria-labelledby="skraeddarsy">
+    <section class="section section-alt" aria-labelledby="erbjudanden" data-reveal>
+      <div class="wrap">
+        <h2 id="erbjudanden">Vanliga upplägg</h2>
+        <div class="offer-grid">
+          <article class="offer-feature">
+            <img src="/assets/img/fest.jpg" alt="Två bandmedlemmar i vita skjortor under en fest med konfetti, en med litet bastrumma">
+            <h3><a href="/brollop/">Bröllop</a></h3>
+            <p>Festen, vigseln, psalmer och komp till solist om ni vill. Upplägget skräddarsys efter er dag.</p>
+            <p><a href="/brollop/">Till bröllop</a></p>
+          </article>
+          <article>
+            <h3><a href="/mingel/">Mingel</a></h3>
+            <p>Från traditionell jazz till svenska klassiker. Passar konferensmiddagar, mottagningar och bröllopsmingel.</p>
+            <p><a href="/mingel/">Till mingel</a></p>
+          </article>
+          <article>
+            <h3><a href="/foretag/">Fest och företag</a></h3>
+            <p>Personalfest, kickoff, jubileum eller födelsedag. Gärna kombinerat med mingel tidigare under kvällen.</p>
+            <p><a href="/foretag/">Till företag</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="kort-om" data-reveal>
+      <div class="wrap">
+        <h2 id="kort-om">Kort om oss</h2>
+        <p>Vi är Halv Fjorton, ett coverband på åtta medlemmar från södra Sverige. Grunden ligger i soul, funk och rock, med tillräcklig bredd för att hela rummet ska känna igen sig.</p>
+        <p>Här är ett litet smakprov. Mer finns på lyssna-sidan, bland annat <em>Signed Sealed Delivered</em> från 2025 och vår reel från 2022.</p>
+        <div class="embed" style="margin-top:1.4rem;border-radius:16px;overflow:hidden">
+          <iframe src="https://www.youtube-nocookie.com/embed/V2Nb8jMKUCk" title="Signed Sealed Delivered - Halv Fjorton 2025" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="actions">
+          <a class="btn btn-ghost" href="/om-oss/">Möt bandet</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="skraeddarsy" data-reveal>
       <div class="wrap split">
-        <img src="/assets/img/fest.jpg" alt="Två bandmedlemmar i vita skjortor under en fest med konfetti, en med litet bastrumma">
+        <img src="/assets/img/stage.jpg" alt="Scen i lila ljus med mikrofonstativ och keyboard">
         <div>
           <h2 id="skraeddarsy">Tillsammans skräddarsyr vi ert event</h2>
           <p>Utöver repertoaren tar vi fram speciallösningar när det behövs. Musik under middagen? Ett sambatåg genom lokalen? Hör av er så ser vi hur vi kan lägga upp kvällen.</p>
@@ -319,12 +319,12 @@ def write_pages():
       </div>
     </section>
 
-    <section class="section section-gold" aria-labelledby="boka">
+    <section class="section" aria-labelledby="boka" data-reveal>
       <div class="wrap">
         <h2 id="boka">Vill ni att vi spelar på ert bröllop, fest eller annan tillställning?</h2>
-        <p>Tveka inte att höra av er. Berätta datum, plats och vad ni är ute efter – så återkommer vi med ett förslag.</p>
+        <p>Berätta datum, plats och vad ni är ute efter. Vi återkommer med ett förslag.</p>
         <div class="actions">
-          <a class="btn btn-primary" href="/kontakt/">Kontakta oss</a>
+          <a class="btn btn-primary" href="/kontakt/">Hör av er</a>
           <a class="btn btn-ghost" href="/faq/">Vanliga frågor</a>
         </div>
       </div>
@@ -334,7 +334,7 @@ def write_pages():
 
     page(
         "/brollop/",
-        "Bröllopsband i Växjö och södra Sverige — Halv Fjorton",
+        "Bröllopsband i Växjö och södra Sverige | Halv Fjorton",
         "Boka Halv Fjorton som bröllopsband. Fest, vigsel, psalmer och komp till solist. Åtta musiker, blåssektion och egen teknik i Växjö och södra Sverige.",
         extra_ld=[
             service_ld(
@@ -347,7 +347,7 @@ def write_pages():
       <div class="page-hero-copy">
         <p class="eyebrow">Bröllop</p>
         <h1>Ett bröllopsband som får hela släkten på dansgolvet</h1>
-        <p class="lead">Vi har mångårig erfarenhet av att spela på bröllop och vet hur man får igång hela sällskapet – ung som gammal. Upplägget skräddarsys efter era önskemål.</p>
+        <p class="lead">Vi har mångårig erfarenhet av att spela på bröllop och vet hur man får igång hela sällskapet - ung som gammal. Upplägget skräddarsys efter era önskemål.</p>
       </div>
     </header>
     <section class="section">
@@ -355,7 +355,7 @@ def write_pages():
         <div>
           <h2>Vad vi kan göra på er dag</h2>
           <ul class="list-check">
-            <li>Spelning på bröllopsfesten – dans, soul, funk, rock och svenska klassiker.</li>
+            <li>Spelning på bröllopsfesten - dans, soul, funk, rock och svenska klassiker.</li>
             <li>Musik vid vigseln, psalmer och komp av solist om ni vill.</li>
             <li>Mingel före middagen, från jazz till lågmälda svenska favoriter.</li>
             <li>Egen PA och alltid två ljudtekniker, så ni inte behöver jaga teknik själva.</li>
@@ -364,20 +364,20 @@ def write_pages():
         <div>
           <h2>Så lägger vi upp det</h2>
           <p>Ni berättar hur dagen ser ut: kyrka eller borgerligt, om ni vill ha oss redan vid vigseln, hur länge festen ska pågå och om det finns låtar som måste med. Vi tar fram ett förslag på tider, sättning och repertoar.</p>
-          <p>Vi utgår från Växjö och spelar i hela södra Sverige. Boka gärna i god tid – särskilt lördagar under bröllopssäsongen.</p>
+          <p>Vi utgår från Växjö och spelar i hela södra Sverige. Boka gärna i god tid - särskilt lördagar under bröllopssäsongen.</p>
         </div>
       </div>
     </section>
     <section class="section section-alt">
       <div class="wrap">
         <h2>Vanliga önskemål</h2>
-        <div class="grid-3">
-          <article class="card"><h3>Första dansen</h3><p>Vi lär in er låt om den inte redan finns i repertoaren, så länge den funkar live med band.</p></article>
-          <article class="card"><h3>Generationsmix</h3><p>Samma kväll rymmer både Earth, Wind &amp; Fire och Tomas Ledin. Det är poängen.</p></article>
-          <article class="card"><h3>Vigsel och fest</h3><p>Ett band genom hela dagen ger en röd tråd – och en kontaktperson istället för tre olika akter.</p></article>
+        <div class="faq-grid">
+          <article><h3>Första dansen</h3><p>Vi lär in er låt om den inte redan finns i repertoaren, så länge den funkar live med band.</p></article>
+          <article><h3>Generationsmix</h3><p>Samma kväll rymmer både Earth, Wind &amp; Fire och Tomas Ledin. Det är poängen.</p></article>
+          <article><h3>Vigsel och fest</h3><p>Ett band genom hela dagen ger en röd tråd och en kontaktperson istället för tre olika akter.</p></article>
         </div>
         <div class="actions">
-          <a class="btn btn-primary" href="/kontakt/">Fråga om ert datum</a>
+          <a class="btn btn-primary" href="/kontakt/">Hör av er</a>
           <a class="btn btn-ghost" href="/mingel/">Kombinera med mingel</a>
         </div>
       </div>
@@ -387,7 +387,7 @@ def write_pages():
 
     page(
         "/foretag/",
-        "Coverband till företagsfest, kickoff och jubileum — Halv Fjorton",
+        "Coverband till företagsfest, kickoff och jubileum | Halv Fjorton",
         "Halv Fjorton spelar på personalfest, kickoff, jubileum och konferens i södra Sverige. Åtta musiker, blåssektion, egen teknik och två ljudtekniker.",
         extra_ld=[
             service_ld(
@@ -399,17 +399,17 @@ def write_pages():
         body="""    <header class="page-hero">
       <div class="page-hero-copy">
         <p class="eyebrow">Företag och fest</p>
-        <h1>Ett liveband som lyfter personalfesten – inte bara fyller tiden mellan talen</h1>
-        <p class="lead">Letar ni underhållning till en personalfest, ett jubileum, en kickoff eller ett födelsedagsfirande? Vi har repertoaren för stämningen ni är ute efter. Med fördel kombineras festens spelning med mingel tidigare under kvällen.</p>
+        <h1>Ett liveband som lyfter personalfesten</h1>
+        <p class="lead">Personalfest, jubileum, kickoff eller födelsedag. Gärna mingel först, sedan dans när rummet är redo.</p>
       </div>
     </header>
     <section class="section">
       <div class="wrap">
         <h2>När företag bokar oss</h2>
-        <div class="grid-3">
-          <article class="card"><h3>Personalfest och julbord</h3><p>Kvällar där kollegor faktiskt dansar. Soul och funk som fungerar även om gästlistan är blandad.</p></article>
-          <article class="card"><h3>Kickoff och konferens</h3><p>Mingel till fördrinken, mer tryck efter middagen. Vi anpassar volym och repertoar efter lokalen och programmet.</p></article>
-          <article class="card"><h3>Jubileum och kundkväll</h3><p>När ni vill visa något mer än en spellista. Ett komplett band med blås ger tyngd utan att bli stelt.</p></article>
+        <div class="faq-grid">
+          <article><h3>Personalfest och julbord</h3><p>Kvällar där kollegor faktiskt dansar. Soul och funk som fungerar även om gästlistan är blandad.</p></article>
+          <article><h3>Kickoff och konferens</h3><p>Mingel till fördrinken, mer tryck efter middagen. Vi anpassar volym och repertoar efter lokalen och programmet.</p></article>
+          <article><h3>Jubileum och kundkväll</h3><p>När ni vill visa något mer än en spellista. Ett komplett band med blås ger tyngd utan att bli stelt.</p></article>
         </div>
       </div>
     </section>
@@ -418,7 +418,7 @@ def write_pages():
         <div>
           <h2>Det som brukar avgöra</h2>
           <ul class="list-check">
-            <li><strong>Blåssektion.</strong> Trumpet, sax och kör – mer än gitarr, bas och trummor i ett hörn.</li>
+            <li><strong>Blåssektion.</strong> Trumpet, sax och kör - mer än gitarr, bas och trummor i ett hörn.</li>
             <li><strong>Egen teknik och två ljudtekniker.</strong> Ni behöver inte gissa PA eller hoppas på husets anläggning.</li>
             <li><strong>Bred repertoar.</strong> Från Stevie Wonder till Björn Skifs. Det gör att både vd och sommarjobbare känner igen något.</li>
             <li><strong>Södra Sverige som hemmaplan.</strong> Växjö i botten, medlemmar i bland annat Malmö och Skåne. Rimliga restider i södern.</li>
@@ -427,7 +427,7 @@ def write_pages():
         </div>
         <div>
           <h2>Ett typiskt upplägg</h2>
-          <p>Mingel 45–90 minuter medan gästerna kommer in. Paus under middag och tal. Därefter ett längre dansblock. Tider justeras efter er agenda – inte tvärtom.</p>
+          <p>Mingel 45-90 minuter medan gästerna kommer in. Paus under middag och tal. Därefter ett längre dansblock. Tider justeras efter er agenda - inte tvärtom.</p>
           <p>Vill ni ha fanfar, extra akt eller bakgrund under mingelmat? Säg till. Vi tar fram ett konkret förslag när vi vet datum, plats, antal gäster och ungefärlig sluttid.</p>
         </div>
       </div>
@@ -446,11 +446,11 @@ def write_pages():
           </article>
         </div>
         <div class="quote-placeholder">
-          <p><strong>Citat från arrangörer — läggs till</strong></p>
+          <p><strong>Citat från arrangörer | läggs till</strong></p>
           <p>Här kan referenser från företag och eventbyråer publiceras när de finns. Inga påhittade omdömen.</p>
         </div>
         <div class="actions">
-          <a class="btn btn-primary" href="/kontakt/">Be om ett förslag</a>
+          <a class="btn btn-primary" href="/kontakt/">Hör av er</a>
           <a class="btn btn-ghost" href="/for-eventbolag/">Information till eventbolag</a>
         </div>
       </div>
@@ -460,7 +460,7 @@ def write_pages():
 
     page(
         "/mingel/",
-        "Mingelband och jazz till mottagning — Halv Fjorton",
+        "Mingelband och jazz till mottagning | Halv Fjorton",
         "Halv Fjorton spelar mingel med jazz och svenska klassiker. Passar konferensmiddag, bröllopsmottagning och företagsmingel i södra Sverige.",
         extra_ld=[
             service_ld(
@@ -473,14 +473,14 @@ def write_pages():
       <div class="page-hero-copy">
         <p class="eyebrow">Mingel</p>
         <h1>Musik som fyller rummet utan att ta över samtalet</h1>
-        <p class="lead">Vi erbjuder spelning vid mingel med blandad repertoar. Allt från traditionell jazz till svenska klassiker. Upplägget passar konferensmiddagar, bröllopsmottagningar och andra sammankomster där gästerna ska kunna prata – och ändå känna att det händer något.</p>
+        <p class="lead">Vi erbjuder spelning vid mingel med blandad repertoar. Allt från traditionell jazz till svenska klassiker. Upplägget passar konferensmiddagar, bröllopsmottagningar och andra sammankomster där gästerna ska kunna prata - och ändå känna att det händer något.</p>
       </div>
     </header>
     <section class="section">
       <div class="wrap grid-2">
         <div>
           <h2>När mingel är rätt val</h2>
-          <p>Innan middagen, under fördrink, i foajén eller på en sommaräng. Vi spelar lägre, mer akustiskt i känslan, men med samma musiker – så kvällen kan växa till fest utan att byta band.</p>
+          <p>Innan middagen, under fördrink, i foajén eller på en sommaräng. Vi spelar lägre, mer akustiskt i känslan, men med samma musiker - så kvällen kan växa till fest utan att byta band.</p>
           <ul class="list-check">
             <li>Bröllopsmottagning mellan vigsel och middag</li>
             <li>Konferensmiddag och after work</li>
@@ -489,10 +489,10 @@ def write_pages():
         </div>
         <div>
           <h2>Repertoaren i korthet</h2>
-          <p>Jazzstandard, soul i dämpat tempo, svenska visor och klassiker. Vill ni ha en tydlig tråd – till exempel bara jazz, eller mest svenskt – säger ni det så styr vi dit.</p>
+          <p>Jazzstandard, soul i dämpat tempo, svenska visor och klassiker. Vill ni ha en tydlig tråd - till exempel bara jazz, eller mest svenskt - säger ni det så styr vi dit.</p>
           <p>Många bokar mingel plus fest samma kväll. Det är vårt vanligaste kombinerade upplägg, och det vi rekommenderar när tiden räcker.</p>
           <div class="actions">
-            <a class="btn btn-primary" href="/kontakt/">Boka mingel</a>
+            <a class="btn btn-primary" href="/kontakt/">Hör av er</a>
             <a class="btn btn-ghost" href="/brollop/">Se bröllop</a>
           </div>
         </div>
@@ -503,20 +503,20 @@ def write_pages():
 
     page(
         "/om-oss/",
-        "Om Halv Fjorton — partyband från Växjö",
+        "Om Halv Fjorton | partyband från Växjö",
         "Halv Fjorton är ett partyband med rötter i Växjö och åtta medlemmar i södra Sverige. Soul, funk och svenska klassiker med blåssektion.",
         body="""    <header class="page-hero compact">
       <div class="page-hero-copy">
         <p class="eyebrow">Om oss</p>
         <h1>Vilka är Halv Fjorton?</h1>
-        <p class="lead">Ett partyband med rötter i Växjö. Medlemmarna är spridda över södra Sverige. Namnet kan låta knepigt, men det är enkelt: ursprungligen var vi sju – halva fjorton. Numera är vi åtta, även om vi inte gör någon stor sak av det.</p>
+        <p class="lead">Ett partyband med rötter i Växjö. Medlemmarna är spridda över södra Sverige. Namnet kan låta knepigt, men det är enkelt: ursprungligen var vi sju - halva fjorton. Numera är vi åtta, även om vi inte gör någon stor sak av det.</p>
       </div>
     </header>
     <section class="section">
       <div class="wrap">
         <h2>Musiken</h2>
         <p>Vårt mål är fester som blir minnesvärda. Vi brinner för att dela musikalisk glädje. Som ett komplett band med dynamisk blåssektion har vi en bred repertoar. Huvudinriktningen är funk och soul: Stevie Wonder, Ray Charles, Earth, Wind &amp; Fire. Därtill svenska favoriter som Björn Skifs och Tomas Ledin.</p>
-        <p>Styrkan är mångsidigheten. Det som behövs för att göra festen speciell, det ställer vi upp på. När ni bokar oss ska kvällen kännas unik – inte som en slumpmässig coverkväll.</p>
+        <p>Styrkan är mångsidigheten. Det som behövs för att göra festen speciell, det ställer vi upp på. När ni bokar oss ska kvällen kännas unik - inte som en slumpmässig coverkväll.</p>
       </div>
     </section>
     <section class="section section-alt">
@@ -539,7 +539,7 @@ def write_pages():
             <img src="/assets/img/member-ivar.jpg" alt="Ivar Lundin spelar klaviatur">
             <h3>Ivar Lundin</h3>
             <p class="role">Klaviatur</p>
-            <p>Multiinstrumentalist i Malmö som balanserar IT-arbete med jazz och havet. Bidrar ofta med arrangemang – ibland med aningen mycket jazzinslag.</p>
+            <p>Multiinstrumentalist i Malmö som balanserar IT-arbete med jazz och havet. Bidrar ofta med arrangemang - ibland med aningen mycket jazzinslag.</p>
           </article>
           <article class="member">
             <img src="/assets/img/member-nils.jpg" alt="Nils Biström med trumpet">
@@ -551,7 +551,7 @@ def write_pages():
             <img src="/assets/img/member-adam.jpg" alt="Adam Blidstål sjunger">
             <h3>Adam Blidstål</h3>
             <p class="role">Sång</p>
-            <p>Växjöbördig, pappa till nästa generation musiker och lärare i samhällskunskap och historia. Minst formellt musikutbildad i bandet – med en talang som räcker långt.</p>
+            <p>Växjöbördig, pappa till nästa generation musiker och lärare i samhällskunskap och historia. Minst formellt musikutbildad i bandet - med en talang som räcker långt.</p>
           </article>
           <article class="member">
             <img src="/assets/img/member-gustav.jpg" alt="Gustav Magnusson sjunger i mikrofon">
@@ -569,7 +569,7 @@ def write_pages():
             <img src="/assets/img/member-olof.jpg" alt="Olof Ingelsten med saxofon">
             <h3>Olof Ingelsten</h3>
             <p class="role">Saxofon och kör</p>
-            <p>Multimusikant som behärskar det mesta som gungar. Nyexaminerad designer i Malmö med passion för musik, simning och bastubad – och nästan alla träblåsinstrument.</p>
+            <p>Multimusikant som behärskar det mesta som gungar. Nyexaminerad designer i Malmö med passion för musik, simning och bastubad - och nästan alla träblåsinstrument.</p>
           </article>
         </div>
       </div>
@@ -585,7 +585,7 @@ def write_pages():
 
     page(
         "/lyssna/",
-        "Lyssna på Halv Fjorton — film, reel och julkonserter",
+        "Lyssna på Halv Fjorton | film, reel och julkonserter",
         "Se Halv Fjorton live: Signed Sealed Delivered 2025, reel 2022 och julkonserterna A Soulful Christmas.",
         body="""    <header class="page-hero compact">
       <div class="page-hero-copy">
@@ -598,10 +598,10 @@ def write_pages():
       <div class="wrap media-grid">
         <article class="media-card">
           <div class="embed">
-            <iframe src="https://www.youtube-nocookie.com/embed/V2Nb8jMKUCk" title="Signed Sealed Delivered – Halv Fjorton 2025" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            <iframe src="https://www.youtube-nocookie.com/embed/V2Nb8jMKUCk" title="Signed Sealed Delivered - Halv Fjorton 2025" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
           </div>
           <div class="meta">
-            <h2>Signed Sealed Delivered – 2025</h2>
+            <h2>Signed Sealed Delivered - 2025</h2>
             <p>Aktuell livevideo. Ett smakprov på sound, blås och sång.</p>
           </div>
         </article>
@@ -611,7 +611,7 @@ def write_pages():
           </div>
           <div class="meta">
             <h2>Reel 2022</h2>
-            <p>Kortare klipp från spelningar – bra att skicka vidare till den som inte var med.</p>
+            <p>Kortare klipp från spelningar - bra att skicka vidare till den som inte var med.</p>
           </div>
         </article>
       </div>
@@ -622,15 +622,15 @@ def write_pages():
         <p class="muted">A Soulful Christmas och en julmässa med vänner. Inbäddade från bandets tidigare mediasida.</p>
         <div class="media-grid">
           <article class="media-card">
-            <div class="embed"><iframe src="https://www.youtube-nocookie.com/embed/vV8aavPxYss" title="A Soulful Christmas 2024 – 8 december, Nygatan 6" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>
+            <div class="embed"><iframe src="https://www.youtube-nocookie.com/embed/vV8aavPxYss" title="A Soulful Christmas 2024 - 8 december, Nygatan 6" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>
             <div class="meta"><h3>A Soulful Christmas 2024</h3><p>8 december, Nygatan 6.</p></div>
           </article>
           <article class="media-card">
-            <div class="embed"><iframe src="https://www.youtube-nocookie.com/embed/UytyTLnKDWQ" title="A Soulful Christmas 2023 – 3 december, Nygatan 6" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>
+            <div class="embed"><iframe src="https://www.youtube-nocookie.com/embed/UytyTLnKDWQ" title="A Soulful Christmas 2023 - 3 december, Nygatan 6" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>
             <div class="meta"><h3>A Soulful Christmas 2023</h3><p>3 december, Nygatan 6.</p></div>
           </article>
           <article class="media-card">
-            <div class="embed"><iframe src="https://www.youtube-nocookie.com/embed/lAmSo6wGjqo" title="Halv Fjorton med vänner och mässa – 26 december 2022" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>
+            <div class="embed"><iframe src="https://www.youtube-nocookie.com/embed/lAmSo6wGjqo" title="Halv Fjorton med vänner och mässa - 26 december 2022" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>
             <div class="meta"><h3>Med vänner och mässa</h3><p>26 december 2022.</p></div>
           </article>
           <article class="media-card">
@@ -646,7 +646,7 @@ def write_pages():
 
     page(
         "/for-eventbolag/",
-        "Boka Halv Fjorton via eventbolag — underlag för bookers",
+        "Boka Halv Fjorton via eventbolag | underlag för bookers",
         "Underlag för eventbolag och bookers: kort bio, vad som ingår, teknik, presskit, organisationsuppgifter och bokningsgång för Halv Fjorton.",
         extra_ld=[
             service_ld(
@@ -666,14 +666,14 @@ def write_pages():
       <div class="wrap grid-2">
         <div>
           <h2>Kort bio att återanvända</h2>
-          <p>Halv Fjorton är ett cover- och partyband från södra Sverige. Bandet har åtta permanenta medlemmar, egen blåssektion och en repertoar med tyngdpunkt i soul och funk – Stevie Wonder, Ray Charles, Earth, Wind &amp; Fire – plus svenska klassiker som Björn Skifs och Tomas Ledin. Vanliga bokningar: bröllop (även vigsel/psalmer), mingel, personalfest, kickoff och jubileum.</p>
+          <p>Halv Fjorton är ett cover- och partyband från södra Sverige. Bandet har åtta permanenta medlemmar, egen blåssektion och en repertoar med tyngdpunkt i soul och funk - Stevie Wonder, Ray Charles, Earth, Wind &amp; Fire - plus svenska klassiker som Björn Skifs och Tomas Ledin. Vanliga bokningar: bröllop (även vigsel/psalmer), mingel, personalfest, kickoff och jubileum.</p>
         </div>
         <div>
           <h2>Vad kunden får</h2>
           <ul class="list-check">
             <li>8 musiker på scen (sång, gitarr, bas, trummor, klaviatur, slagverk, trumpet, saxofon)</li>
             <li>Egen PA för typisk fest- och konferenslokal</li>
-            <li>Två ljudtekniker – inte en person som både spelar och mixar ensam</li>
+            <li>Två ljudtekniker - inte en person som både spelar och mixar ensam</li>
             <li>Möjlighet att kombinera mingel och dansspelning samma kväll</li>
             <li>Specialönskemål: middag, sambatåg, fanfar, utvald första dans</li>
           </ul>
@@ -683,11 +683,11 @@ def write_pages():
     <section class="section section-alt">
       <div class="wrap">
         <h2>Teknik i korthet</h2>
-        <p>Vi tar med egen grundutrustning och två tekniker. Exakt inputlista, scenskiss och strömbehov skickas per spelning – underlaget här är en sammanfattning, inte ett färdigt rider.</p>
-        <div class="grid-3">
-          <article class="card"><h3>Ljud</h3><p>Eget PA dimensionerat för fest och konferens. Extra täckning eller linjearray via samarbetande uthyrare vid behov.</p></article>
-          <article class="card"><h3>Scen</h3><p>Åtta personer plus teknik. Bekräfta scendmått och bärväg i lokalen så att vi inte gissar lastning.</p></article>
-          <article class="card"><h3>Rider / underlag</h3><p><em>Teknisk rider, kanallista och scenskiss — läggs till som nedladdningsbara PDF:er här.</em></p></article>
+        <p>Vi tar med egen grundutrustning och två tekniker. Exakt inputlista, scenskiss och strömbehov skickas per spelning - underlaget här är en sammanfattning, inte ett färdigt rider.</p>
+        <div class="faq-grid">
+          <article><h3>Ljud</h3><p>Eget PA dimensionerat för fest och konferens. Extra täckning eller linjearray via samarbetande uthyrare vid behov.</p></article>
+          <article><h3>Scen</h3><p>Åtta personer plus teknik. Bekräfta scendmått och bärväg i lokalen så att vi inte gissar lastning.</p></article>
+          <article><h3>Rider</h3><p><em>Teknisk rider, kanallista och scenskiss läggs till som nedladdningsbara PDF:er här.</em></p></article>
         </div>
       </div>
     </section>
@@ -698,28 +698,28 @@ def write_pages():
           <ul class="list-check">
             <li>Film: <a href="/lyssna/">Signed Sealed Delivered 2025</a> och <a href="/lyssna/">Reel 2022</a></li>
             <li>Foton: medlemsbilder och scenfoton på den här sajten</li>
-            <li><em>Högupplösta pressfoton och logotyppaket — läggs till</em></li>
+            <li><em>Högupplösta pressfoton och logotyppaket läggs till</em></li>
             <li>Instagram: <a href="https://www.instagram.com/halvfjorton/">@halvfjorton</a></li>
           </ul>
         </div>
         <div>
           <h2>Organisation och avtal</h2>
           <p>Halv Fjorton EK. FÖR.<br>Org.nr 769641-5418<br><a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a><br><a href="tel:+46709742085">+46 70 974 20 85</a></p>
-          <p>Faktura mot företag och byrå. En bokningskontakt från vår sida. Inga påhittade referenslogotyper här – be oss om aktuella referenser till liknande event.</p>
+          <p>Faktura mot företag och byrå. En bokningskontakt från vår sida. Inga påhittade referenslogotyper här - be oss om aktuella referenser till liknande event.</p>
         </div>
       </div>
     </section>
     <section class="section section-alt">
       <div class="wrap">
         <h2>Bokningsgång</h2>
-        <div class="grid-3">
-          <article class="card"><h3>1. Förfrågan</h3><p>Datum, ort, typ av event, antal gäster, mingel + fest eller bara en del, sluttid.</p></article>
-          <article class="card"><h3>2. Datum och förslag</h3><p>Vi återkommer om tillgänglighet, sättning och ett konkret upplägg. Därefter offert.</p></article>
-          <article class="card"><h3>3. Bekräftelse</h3><p>Skriftlig bokning. Teknikdetaljer och tidsplan närmare eventet. Deposition enligt överenskommelse.</p></article>
+        <div class="faq-grid">
+          <article><h3>Förfrågan</h3><p>Datum, ort, typ av event, antal gäster, mingel plus fest eller bara en del, sluttid.</p></article>
+          <article><h3>Förslag</h3><p>Vi återkommer om tillgänglighet, sättning och ett konkret upplägg. Därefter offert.</p></article>
+          <article><h3>Bekräftelse</h3><p>Skriftlig bokning. Teknikdetaljer och tidsplan närmare eventet. Deposition enligt överenskommelse.</p></article>
         </div>
-        <p>Säsongstoppar är lördagar vår–sommar och julperioder. Hör av er tidigt om datumet är låst.</p>
+        <p>Säsongstoppar är lördagar vår-sommar och julperioder. Hör av er tidigt om datumet är låst.</p>
         <div class="actions">
-          <a class="btn btn-primary" href="/kontakt/">Skicka en förfrågan</a>
+          <a class="btn btn-primary" href="/kontakt/">Hör av er</a>
           <a class="btn btn-ghost" href="/faq/">FAQ</a>
         </div>
       </div>
@@ -730,7 +730,7 @@ def write_pages():
     faqs = [
         (
             "Hur stort är bandet?",
-            "Halv Fjorton är åtta permanenta medlemmar: sång, gitarr, bas, trummor, klaviatur, slagverk, trumpet och saxofon – plus kör. Namnet kommer från att vi började som sju, alltså halva fjorton.",
+            "Halv Fjorton är åtta permanenta medlemmar: sång, gitarr, bas, trummor, klaviatur, slagverk, trumpet och saxofon - plus kör. Namnet kommer från att vi började som sju, alltså halva fjorton.",
         ),
         (
             "Ingår teknik och ljudtekniker?",
@@ -742,7 +742,7 @@ def write_pages():
         ),
         (
             "Var i Sverige spelar ni?",
-            "Vi har rötter i Växjö och medlemmar spridda över södra Sverige. Det är vår hemmaplan. Andra orter går att diskutera – hör av er med platsen så säger vi vad som är rimligt.",
+            "Vi har rötter i Växjö och medlemmar spridda över södra Sverige. Det är vår hemmaplan. Andra orter går att diskutera - hör av er med platsen så säger vi vad som är rimligt.",
         ),
         (
             "Hur går en bokning till?",
@@ -750,7 +750,7 @@ def write_pages():
         ),
         (
             "Hur lång framförhållning behövs?",
-            "Så tidigt ni kan, särskilt lördagar under bröllopssäsong och kring jul. Ibland finns det luckor med kortare varsel – fråga hellre än att anta att det är fullt.",
+            "Så tidigt ni kan, särskilt lördagar under bröllopssäsong och kring jul. Ibland finns det luckor med kortare varsel - fråga hellre än att anta att det är fullt.",
         ),
         (
             "Kan ni skräddarsy repertoaren?",
@@ -762,7 +762,7 @@ def write_pages():
         ),
         (
             "Vad kostar en spelning?",
-            "Det beror på datum, restid, hur länge vi spelar och om det är mingel, fest eller båda. Vi ger pris i offerten när underlaget finns – inte som en fast lista här.",
+            "Det beror på datum, restid, hur länge vi spelar och om det är mingel, fest eller båda. Vi ger pris i offerten när underlaget finns - inte som en fast lista här.",
         ),
         (
             "Vem fakturerar?",
@@ -770,10 +770,10 @@ def write_pages():
         ),
     ]
     faq_items = "\n".join(
-        f"""        <details>
-          <summary>{q}</summary>
+        f"""        <article class="faq-item">
+          <h3>{q}</h3>
           <p>{a}</p>
-        </details>"""
+        </article>"""
         for q, a in faqs
     )
     faq_ld_entities = ",\n".join(
@@ -797,7 +797,7 @@ def write_pages():
 
     page(
         "/faq/",
-        "Vanliga frågor om Halv Fjorton — bokning, teknik och repertoar",
+        "Vanliga frågor om Halv Fjorton | bokning, teknik och repertoar",
         "FAQ om Halv Fjorton: bandstorlek, teknik, tillfällen, södra Sverige, bokning, framförhållning och skräddarsydd repertoar.",
         extra_ld=[faq_ld],
         body=f"""    <header class="page-hero compact">
@@ -808,7 +808,7 @@ def write_pages():
       </div>
     </header>
     <section class="section">
-      <div class="wrap faq" data-faq>
+      <div class="wrap faq-grid">
 {faq_items}
       </div>
     </section>
@@ -817,7 +817,7 @@ def write_pages():
 
     page(
         "/kontakt/",
-        "Kontakta Halv Fjorton — boka coverband i södra Sverige",
+        "Kontakta Halv Fjorton | boka coverband i södra Sverige",
         "Kontakta Halv Fjorton för bokning: halvfjorton@gmail.com, 070-974 20 85. Coverband till bröllop, företag och fest i Växjö och södra Sverige.",
         body="""    <header class="page-hero compact">
       <div class="page-hero-copy">
@@ -877,7 +877,7 @@ def write_pages():
 
     page(
         "/404.html",
-        "Sidan hittades inte — Halv Fjorton",
+        "Sidan hittades inte | Halv Fjorton",
         "Sidan finns inte. Gå till startsidan eller kontakta Halv Fjorton.",
         outfile=ROOT / "404.html",
         body="""    <header class="page-hero compact">
