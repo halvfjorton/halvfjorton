@@ -106,11 +106,11 @@ a:hover {
   color: var(--gold-2);
 }
 
-.brand img,
-.brand svg {
+.brand-mark {
   width: 42px;
   height: 42px;
-  color: var(--ink);
+  filter: invert(1);
+  mix-blend-mode: screen;
 }
 
 .nav-toggle {
@@ -183,6 +183,12 @@ a:hover {
 
 .hero-copy {
   padding-bottom: 3.4rem;
+}
+
+.hero-copy h1,
+.hero-copy .lead,
+.hero-copy .eyebrow {
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
 }
 
 .eyebrow {
@@ -505,7 +511,7 @@ textarea {
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 1080px) {
   .nav-toggle {
     display: inline-flex;
   }
@@ -530,7 +536,9 @@ textarea {
   body.nav-open {
     overflow: hidden;
   }
+}
 
+@media (max-width: 760px) {
   .grid-3,
   .facts,
   .members,

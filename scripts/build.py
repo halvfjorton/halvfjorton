@@ -179,12 +179,7 @@ def page(
   <header class="site-header" data-nav>
     <div class="header-inner">
       <a class="brand" href="/">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="42" height="42" aria-hidden="true" focusable="false">
-          <text x="8" y="52" font-family="Georgia, serif" font-size="52" font-weight="700" fill="currentColor">1</text>
-          <text x="58" y="52" font-family="Georgia, serif" font-size="52" font-weight="700" fill="currentColor">4</text>
-          <rect x="10" y="60" width="100" height="6" fill="currentColor"/>
-          <text x="38" y="108" font-family="Georgia, serif" font-size="52" font-weight="700" fill="currentColor">2</text>
-        </svg>
+        <img class="brand-mark" src="/assets/img/logo-mark.png" alt="" width="42" height="42">
         <span>Halv Fjorton</span>
       </a>
       <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="meny">Meny</button>
