@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = "https://halvfjorton.se"
 OG = f"{SITE}/assets/img/og.jpg"
 ORGANIZATION_JSON = ROOT / "assets/schema/organization.json"
+H14_LOGO = ROOT / "assets/img/h14-logo.svg"
 BRAND_TITLE = "Halv Fjorton – coverband & bröllopsband i Småland och Skåne"
 WEDDING_VIDEO_ID = "V2Nb8jMKUCk"
 WEDDING_VIDEO_TITLE = "Signed Sealed Delivered - Halv Fjorton"
@@ -70,6 +71,11 @@ def music_group_ld() -> str:
 
 def load_org() -> dict:
     return json.loads(ORGANIZATION_JSON.read_text(encoding="utf-8"))
+
+
+def brand_logo_markup() -> str:
+    svg = H14_LOGO.read_text(encoding="utf-8")
+    return svg.replace("<svg ", '<svg class="brand-mark" focusable="false" ', 1)
 
 
 def aeo_answer(text: str) -> str:
@@ -199,8 +205,8 @@ def page(
   <a class="skip-link" href="#innehall">Hoppa till innehållet</a>
   <header class="site-header" data-nav>
     <div class="header-inner">
-      <a class="brand" href="/">
-        <img class="brand-mark" src="/assets/img/logo-mark.png" alt="" width="42" height="42">
+      <a class="brand" href="/" aria-label="Halv Fjorton">
+{brand_logo_markup()}
         <span>Halv Fjorton</span>
       </a>
       <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="meny">Meny</button>
@@ -1158,6 +1164,16 @@ def write_alt_jsonld():
 def patch_alt_page():
     alt_path = ROOT / "alt/index.html"
     html = alt_path.read_text(encoding="utf-8")
+    logo = "\n".join("        " + line for line in brand_logo_markup().splitlines())
+    html = re.sub(
+        r'<img src="\.\./assets/img/logo-mark\.png"[^>]*>\s*',
+        logo + "\n",
+        html,
+    )
+    html = html.replace(
+        '<a class="alt-brand brand" href="../">',
+        '<a class="alt-brand brand" href="../" aria-label="Halv Fjorton">',
+    )
     html = html.replace(
         '<span class="alt-facts__placeholder">Grundat [ÅR - fyll i]</span>',
         "<span>Grundat 2018</span>",
