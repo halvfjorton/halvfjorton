@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Generate the Halv Fjorton static site."""
 
+import argparse
 import json
 import re
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+OUT_ROOT = ROOT
 SITE = "https://halvfjorton.se"
 OG = f"{SITE}/assets/img/og.jpg"
 ORGANIZATION_JSON = ROOT / "assets/schema/organization.json"
@@ -67,6 +70,8 @@ LOKAL_TEKNIK_COPY = (
     "Tekniska behov tar vi i offerten utifrån lokal och program. "
     "Vid större saler eller särskilda önskemål har vi kontakter bland uthyrare."
 )
+
+LABS_SUBPATH_DEFAULT = "/testing/halfbandnew2026"
 
 
 def esc(text: str) -> str:
@@ -417,12 +422,12 @@ def page(
 """
     dest = outfile
     if dest is None:
-        dest = ROOT / (path.lstrip("/") + ("index.html" if path.endswith("/") else ""))
+        dest = OUT_ROOT / (path.lstrip("/") + ("index.html" if path.endswith("/") else ""))
         if path == "/":
-            dest = ROOT / "index.html"
+            dest = OUT_ROOT / "index.html"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(html, encoding="utf-8")
-    print("wrote", dest.relative_to(ROOT))
+    print("wrote", dest.relative_to(OUT_ROOT))
 
 
 def write_pages():
@@ -1179,7 +1184,7 @@ def write_pages():
         "/404.html",
         "Sidan hittades inte | Halv Fjorton",
         "Sidan finns inte. Gå till startsidan eller kontakta Halv Fjorton.",
-        outfile=ROOT / "404.html",
+        outfile=OUT_ROOT / "404.html",
         body="""    <header class="page-hero compact">
       <div class="page-hero-copy">
         <h1>Sidan finns inte</h1>
@@ -1211,9 +1216,9 @@ def write_sitemap():
             ]
         )
     lines.append("</urlset>")
-    dest = ROOT / "sitemap.xml"
+    dest = OUT_ROOT / "sitemap.xml"
     dest.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print("wrote", dest.relative_to(ROOT))
+    print("wrote", dest.relative_to(OUT_ROOT))
 
 
 def write_llms_txt():
@@ -1247,13 +1252,13 @@ Kärnregion: Växjö, Älmhult, Kalmar, Jönköping, Lund, Malmö, Helsingborg (
 - Coverband Skåne: {SITE}/coverband-skane-malmo/
 - Alternativ startsida (förhandsvisning): {SITE}/alt/
 """
-    dest = ROOT / "llms.txt"
+    dest = OUT_ROOT / "llms.txt"
     dest.write_text(text, encoding="utf-8")
-    print("wrote", dest.relative_to(ROOT))
+    print("wrote", dest.relative_to(OUT_ROOT))
 
 
 def write_alt_jsonld():
-    alt_path = ROOT / "alt/index.html"
+    alt_path = OUT_ROOT / "alt/index.html"
     html = alt_path.read_text(encoding="utf-8")
     org = music_group_ld()
     crumb = breadcrumb_ld([("/", "Hem"), ("/alt/", "Alternativ startsida")])
@@ -1276,11 +1281,11 @@ def write_alt_jsonld():
             f'  <link rel="stylesheet" href="../assets/css/alt.css">\n{block}',
         )
     alt_path.write_text(html, encoding="utf-8")
-    print("wrote", alt_path.relative_to(ROOT), "(json-ld)")
+    print("wrote", alt_path.relative_to(OUT_ROOT), "(json-ld)")
 
 
 def patch_alt_page():
-    alt_path = ROOT / "alt/index.html"
+    alt_path = OUT_ROOT / "alt/index.html"
     html = alt_path.read_text(encoding="utf-8")
     logo = "\n".join("        " + line for line in brand_logo_markup().splitlines())
     html = re.sub(
@@ -1369,12 +1374,87 @@ def patch_alt_page():
             font_preloads("../assets") + '\n  <link rel="stylesheet" href="../assets/css/alt.css">\n',
         )
     alt_path.write_text(html, encoding="utf-8")
-    print("wrote", alt_path.relative_to(ROOT), "(alt patches)")
+    print("wrote", alt_path.relative_to(OUT_ROOT), "(alt patches)")
 
 
-if __name__ == "__main__":
+def normalize_subpath(subpath: str) -> str:
+    subpath = subpath.strip()
+    if not subpath:
+        return ""
+    if not subpath.startswith("/"):
+        subpath = "/" + subpath
+    return subpath.rstrip("/")
+
+
+def prepare_output_directory(target: Path) -> None:
+    if target.resolve() == ROOT.resolve():
+        return
+    if target.exists():
+        shutil.rmtree(target)
+    target.mkdir(parents=True)
+    shutil.copytree(ROOT / "assets", target / "assets")
+    (target / "alt").mkdir(parents=True, exist_ok=True)
+    shutil.copy2(ROOT / "alt/index.html", target / "alt/index.html")
+    for name in ("robots.txt", ".nojekyll"):
+        src = ROOT / name
+        if src.exists():
+            shutil.copy2(src, target / name)
+
+
+_ROOT_RELATIVE_URL = re.compile(
+    r'(?P<attr>href|src|content|data-tally-src)=(?P<q>["\'])(?P<path>/[^"\']*)(?P=q)'
+)
+
+
+def rewrite_root_relative_urls(target: Path, subpath: str) -> None:
+    prefix = normalize_subpath(subpath)
+    if not prefix:
+        return
+
+    def replace_url(match: re.Match[str]) -> str:
+        path = match.group("path")
+        if path.startswith("//"):
+            return match.group(0)
+        return f'{match.group("attr")}={match.group("q")}{prefix}{path}{match.group("q")}'
+
+    extensions = {".html", ".xml", ".css", ".js", ".txt"}
+    for file_path in target.rglob("*"):
+        if not file_path.is_file() or file_path.suffix not in extensions:
+            continue
+        text = file_path.read_text(encoding="utf-8")
+        updated = _ROOT_RELATIVE_URL.sub(replace_url, text)
+        if updated != text:
+            file_path.write_text(updated, encoding="utf-8")
+
+
+def run_build(output_dir: Path | None = None, subpath: str = "") -> None:
+    global OUT_ROOT
+    OUT_ROOT = output_dir.resolve() if output_dir else ROOT
+    if output_dir and OUT_ROOT != ROOT.resolve():
+        prepare_output_directory(OUT_ROOT)
     write_pages()
     write_sitemap()
     write_llms_txt()
     write_alt_jsonld()
     patch_alt_page()
+    rewrite_root_relative_urls(OUT_ROOT, subpath)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Build the Halv Fjorton static site.")
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=None,
+        help="Write generated site to this directory (copies assets/ and alt/ source first).",
+    )
+    parser.add_argument(
+        "--subpath",
+        default="",
+        help=f"Rewrite root-relative URLs for hosting under a path (default labs: {LABS_SUBPATH_DEFAULT}).",
+    )
+    args = parser.parse_args()
+    subpath = args.subpath
+    if args.output_dir and not subpath:
+        subpath = LABS_SUBPATH_DEFAULT
+    run_build(output_dir=args.output_dir, subpath=subpath)

@@ -1,0 +1,46 @@
+name: Deploy labs preview
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout halvfjorton
+        uses: actions/checkout@v4
+
+      - name: Build for labs subpath
+        run: python3 scripts/build.py --output-dir dist --subpath /testing/halfbandnew2026
+
+      - name: Checkout peperipaperika
+        uses: actions/checkout@v4
+        with:
+          repository: ivarlundin/peperipaperika
+          token: ${{ secrets.LABS_DEPLOY_TOKEN }}
+          path: peperipaperika
+
+      - name: Replace testing/halfbandnew2026 only
+        run: |
+          set -euo pipefail
+          DEST="peperipaperika/testing/halfbandnew2026"
+          mkdir -p "$(dirname "$DEST")"
+          rsync -a --delete dist/ "$DEST/"
+
+      - name: Commit and push if changed
+        working-directory: peperipaperika
+        env:
+          TOKEN: ${{ secrets.LABS_DEPLOY_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add testing/halfbandnew2026/
+          if git diff --staged --quiet; then
+            echo "No changes in testing/halfbandnew2026; skipping commit."
+            exit 0
+          fi
+          git commit -m "Deploy halfbandnew2026 from halvfjorton@${GITHUB_SHA}"
+          git push origin HEAD:main
