@@ -9,17 +9,38 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = "https://halvfjorton.se"
 OG = f"{SITE}/assets/img/og.jpg"
 ORGANIZATION_JSON = ROOT / "assets/schema/organization.json"
+BRAND_TITLE = "Halv Fjorton – coverband & bröllopsband i Småland och Skåne"
+WEDDING_VIDEO_ID = "V2Nb8jMKUCk"
+WEDDING_VIDEO_TITLE = "Signed Sealed Delivered - Halv Fjorton"
 
 NAV = [
     ("/", "Hem"),
     ("/brollop/", "Bröllop"),
     ("/foretag/", "Företag"),
+    ("/kompband/", "Kompband"),
     ("/mingel/", "Mingel"),
     ("/for-eventbolag/", "Eventbolag"),
     ("/om-oss/", "Om oss"),
     ("/lyssna/", "Lyssna"),
     ("/faq/", "FAQ"),
     ("/kontakt/", "Kontakt"),
+]
+
+SITEMAP_PATHS = [
+    "/",
+    "/brollop/",
+    "/foretag/",
+    "/kompband/",
+    "/50-arsfest/",
+    "/julkonsert/",
+    "/mingel/",
+    "/om-oss/",
+    "/lyssna/",
+    "/for-eventbolag/",
+    "/faq/",
+    "/kontakt/",
+    "/brollopsband-smaland/",
+    "/coverband-skane-malmo/",
 ]
 
 LOKAL_TEKNIK_COPY = (
@@ -47,6 +68,46 @@ def music_group_ld() -> str:
     return _indent_ld(data)
 
 
+def load_org() -> dict:
+    return json.loads(ORGANIZATION_JSON.read_text(encoding="utf-8"))
+
+
+def aeo_answer(text: str) -> str:
+    return f'        <p class="aeo-answer">{text}</p>'
+
+
+def video_facade(
+    video_id: str,
+    title: str,
+    alt: str,
+    width: int = 1280,
+    height: int = 720,
+) -> str:
+    return f"""        <div class="embed video-facade" data-video-facade="{video_id}" data-video-title="{esc(title)}">
+          <button type="button" class="video-facade__play" aria-label="Spela video: {esc(title)}">
+            <img src="https://i.ytimg.com/vi/{video_id}/hqdefault.jpg" alt="{esc(alt)}" width="{width}" height="{height}" loading="lazy" decoding="async">
+          </button>
+        </div>"""
+
+
+def wedding_video_ld() -> str:
+    data = {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": WEDDING_VIDEO_TITLE,
+        "description": "Livevideo med Halv Fjorton som cover- och bröllopsband i södra Sverige.",
+        "thumbnailUrl": f"https://i.ytimg.com/vi/{WEDDING_VIDEO_ID}/hqdefault.jpg",
+        "embedUrl": f"https://www.youtube-nocookie.com/embed/{WEDDING_VIDEO_ID}",
+        "contentUrl": f"https://www.youtube.com/watch?v={WEDDING_VIDEO_ID}",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Halv Fjorton",
+            "url": f"{SITE}/",
+        },
+    }
+    return _indent_ld(data)
+
+
 def breadcrumb_ld(items):
     elements = ",\n".join(
         f'''      {{
@@ -67,19 +128,20 @@ def breadcrumb_ld(items):
 
 
 def service_ld(name, desc, url):
-    return f"""{{
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "{name}",
-    "description": "{desc}",
-    "url": "{SITE}{url}",
-    "areaServed": "Södra Sverige",
-    "provider": {{
-      "@type": "MusicGroup",
-      "name": "Halv Fjorton",
-      "url": "{SITE}/"
-    }}
-  }}"""
+    data = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": name,
+        "description": desc,
+        "url": f"{SITE}{url}",
+        "areaServed": load_org()["areaServed"],
+        "provider": {
+            "@type": "MusicGroup",
+            "name": "Halv Fjorton",
+            "url": f"{SITE}/",
+        },
+    }
+    return _indent_ld(data)
 
 
 def page(
@@ -90,6 +152,7 @@ def page(
     body: str = "",
     page_class: str = "",
     outfile: Path | None = None,
+    breadcrumb_name: str | None = None,
 ):
     canonical = f"{SITE}{path}"
     nav_items = []
@@ -97,7 +160,8 @@ def page(
         current = ' aria-current="page"' if href == path else ""
         nav_items.append(f'          <li><a href="{href}"{current}>{label}</a></li>')
     nav = "\n".join(nav_items)
-    graphs = [music_group_ld(), breadcrumb_ld([("/", "Hem")] + ([] if path == "/" else [(path, title.split(" | ")[0])]))]
+    crumb_label = breadcrumb_name or title.split(" | ")[0].split(" – ")[0]
+    graphs = [music_group_ld(), breadcrumb_ld([("/", "Hem")] + ([] if path == "/" else [(path, crumb_label)]))]
     if extra_ld:
         graphs.extend(extra_ld)
     jsonld = ",\n  ".join(graphs)
@@ -162,14 +226,25 @@ def page(
         <ul class="small">
           <li><a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a></li>
           <li><a href="https://www.instagram.com/halvfjorton/" rel="noopener noreferrer">Instagram @halvfjorton</a></li>
+          <li><a href="https://www.youtube.com/@halvfjorton9292" rel="noopener noreferrer">YouTube</a></li>
         </ul>
       </div>
       <div>
-        <p><strong>Sidor</strong></p>
+        <p><strong>Tjänster</strong></p>
         <ul class="small">
           <li><a href="/brollop/">Bröllop</a></li>
           <li><a href="/foretag/">Företag</a></li>
+          <li><a href="/kompband/">Kompband för artist</a></li>
+          <li><a href="/50-arsfest/">50-årsfest</a></li>
+          <li><a href="/julkonsert/">Julkonsert</a></li>
           <li><a href="/for-eventbolag/">För eventbolag</a></li>
+        </ul>
+      </div>
+      <div>
+        <p><strong>Områden</strong></p>
+        <ul class="small">
+          <li><a href="/brollopsband-smaland/">Bröllopsband Småland</a></li>
+          <li><a href="/coverband-skane-malmo/">Coverband Skåne</a></li>
           <li><a href="/faq/">Vanliga frågor</a></li>
           <li><a href="/kontakt/">Hör av er</a></li>
         </ul>
@@ -177,6 +252,7 @@ def page(
     </div>
   </footer>
   <script src="/assets/js/nav.js"></script>
+  <script src="/assets/js/video-facade.js" defer></script>
 </body>
 </html>
 """
@@ -193,8 +269,8 @@ def page(
 def write_pages():
     page(
         "/",
-        "Halv Fjorton | Sveriges svängigaste coverband",
-        "Halv Fjorton är ett coverband med åtta musiker från södra Sverige. Soul, funk, rock och svenska klassiker till bröllop, företag och fest i Växjö och hela södern.",
+        f"{BRAND_TITLE}",
+        "Halv Fjorton är ett coverband med åtta musiker och egen blåssektion. Bröllop, företagsfest och privatfest i Växjö, Småland, Skåne och Malmö. Bokning via halvfjorton@gmail.com.",
         body=f"""    <section class="hero">
       <div class="hero-grid">
         <div class="hero-copy">
@@ -288,39 +364,48 @@ def write_pages():
 """,
     )
 
+    wedding_video_block = video_facade(
+        WEDDING_VIDEO_ID,
+        WEDDING_VIDEO_TITLE,
+        "Förhandsbild: Halv Fjorton spelar live på bröllopsfest i södra Sverige",
+    )
     page(
         "/brollop/",
-        "Bröllopsband i Växjö och södra Sverige | Halv Fjorton",
-        "Boka Halv Fjorton som bröllopsband. Fest, vigsel, psalmer och komp till solist. Åtta musiker och egen blåssektion i Växjö och södra Sverige.",
+        f"Bröllopsband Växjö, Kalmar och Småland | {BRAND_TITLE}",
+        "Bröllopsband med två set partymusik, egen blåssektion och tillval: mingel, vigselmusik och komp till solist. Bokas i Växjö, Småland och Skåne.",
+        breadcrumb_name="Bröllop",
         extra_ld=[
             service_ld(
                 "Bröllopsband",
-                "Liveband till bröllopsfest, vigsel, psalmer och komp av solist i södra Sverige.",
+                "Bröllopsband med två set partymusik. Tillval: mingelmusik, vigselmusik med solist, helband eller komp till solist.",
                 "/brollop/",
-            )
+            ),
+            wedding_video_ld(),
         ],
-        body="""    <header class="page-hero">
+        body=f"""    <header class="page-hero">
       <div class="page-hero-copy">
         <p class="eyebrow">Bröllop</p>
-        <h1>Ett bröllopsband som får hela släkten på dansgolvet</h1>
-        <p class="lead">Vi har mångårig erfarenhet av att spela på bröllop och vet hur man får igång hela sällskapet - ung som gammal. Upplägget skräddarsys efter era önskemål.</p>
+        <h1>Bröllopsband med dans, blås och svenska klassiker</h1>
+{aeo_answer("Halv Fjorton är ett åtta man starkt bröllopsband från Växjö med egen blåssektion. På festen spelar vi två set partymusik med soul, funk, rock och svenska favoriter.")}
+        <p class="lead">Tillval: mingel, vigselmusik med solist, helband eller komp till solist. En kontakt från offert till spelning.</p>
       </div>
     </header>
     <section class="section">
       <div class="wrap grid-2">
         <div>
-          <h2>Vad vi kan göra på er dag</h2>
+          <h2>Upplägg på bröllopsfesten</h2>
           <ul class="list-check">
-            <li>Spelning på bröllopsfesten - dans, soul, funk, rock och svenska klassiker.</li>
-            <li>Musik vid vigseln, psalmer och komp av solist om ni vill - vi erbjuder också kompband för artist.</li>
-            <li>Mingel före middagen, från jazz till lågmälda svenska favoriter.</li>
-            <li>Egen blåssektion och komplett liveband genom kvällen.</li>
+            <li><strong>Två set partymusik</strong> med dansgolv i fokus.</li>
+            <li><strong>Mingelmusik</strong> före middag eller under mottagning.</li>
+            <li><strong>Vigselmusik</strong> med solist, helband eller komp till solist.</li>
+            <li><strong>Egen blåssektion</strong> och komplett liveband.</li>
           </ul>
+          <p>Vi spelar i Växjö, Kalmar, Älmhult, Jönköping, Lund, Malmö, Helsingborg och resten av Småland och Skåne. Andra orter går att diskutera.</p>
         </div>
         <div>
-          <h2>Så lägger vi upp det</h2>
-          <p>Ni berättar hur dagen ser ut: kyrka eller borgerligt, om ni vill ha oss redan vid vigseln, hur länge festen ska pågå och om det finns låtar som måste med. Vi tar fram ett förslag på tider, sättning och repertoar.</p>
-          <p>Vi utgår från Växjö och spelar i hela södra Sverige. Boka gärna i god tid - särskilt lördagar under bröllopssäsongen.</p>
+          <h2>Smakprov från scen</h2>
+{wedding_video_block}
+          <p class="small muted" style="margin-top:0.75rem">Signed Sealed Delivered, inspelat live med bandet.</p>
         </div>
       </div>
     </section>
@@ -329,12 +414,12 @@ def write_pages():
         <h2>Vanliga önskemål</h2>
         <div class="faq-grid">
           <article><h3>Första dansen</h3><p>Vi lär in er låt om den inte redan finns i repertoaren, så länge den funkar live med band.</p></article>
-          <article><h3>Generationsmix</h3><p>Samma kväll rymmer både Earth, Wind &amp; Fire och Tomas Ledin. Det är poängen.</p></article>
-          <article><h3>Vigsel och fest</h3><p>Ett band genom hela dagen ger en röd tråd och en kontaktperson istället för tre olika akter.</p></article>
+          <article><h3>Mingel och fest</h3><p>Samma kväll, samma band: mingel i lugnare tempo och sedan två set dansmusik.</p></article>
+          <article><h3>Komp till solist</h3><p>Psalmer, vigsel eller gästsång? Se <a href="/kompband/">kompband för artist</a>.</p></article>
         </div>
         <div class="actions">
           <a class="btn btn-primary" href="/kontakt/">Hör av er</a>
-          <a class="btn btn-ghost" href="/mingel/">Kombinera med mingel</a>
+          <a class="btn btn-ghost" href="/brollopsband-smaland/">Bröllop i Småland</a>
         </div>
       </div>
     </section>
@@ -343,20 +428,22 @@ def write_pages():
 
     page(
         "/foretag/",
-        "Coverband till företagsfest, kickoff och jubileum | Halv Fjorton",
-        "Halv Fjorton spelar på personalfest, kickoff, jubileum och konferens i södra Sverige. Åtta musiker och egen blåssektion.",
+        f"Coverband till företagsfest Malmö och Skåne | {BRAND_TITLE}",
+        "Festband och musikunderhållning till personalfest, kickoff och jubileum. Artistkomp och specialarrangerad musik. Malmö, Lund, Växjö och Småland.",
+        breadcrumb_name="Företag",
         extra_ld=[
             service_ld(
-                "Coverband till företagsevent",
-                "Liveband till personalfest, kickoff, jubileum och konferens i södra Sverige.",
+                "Företagsfest och festband",
+                "Musikunderhållning och festmusik till personalfest och företagsevent. Artistkomp för inhyrda artister och specialarrangerad musik.",
                 "/foretag/",
             )
         ],
         body=f"""    <header class="page-hero">
       <div class="page-hero-copy">
         <p class="eyebrow">Företag och fest</p>
-        <h1>Ett liveband som lyfter personalfesten</h1>
-        <p class="lead">Personalfest, jubileum, kickoff eller födelsedag. Gärna mingel först, sedan dans när rummet är redo.</p>
+        <h1>Festband till personalfest och kickoff</h1>
+{aeo_answer("Halv Fjorton levererar musikunderhållning med åtta musiker och egen blåssektion till företagsfester i Skåne och Småland. Vanligt upplägg är två set festmusik, ofta efter mingel.")}
+        <p class="lead">Vi komponerar kvällen med er: mingel, tal, dans. Artistkomp och specialmusik för event går att boka.</p>
       </div>
     </header>
     <section class="section">
@@ -458,27 +545,197 @@ def write_pages():
     )
 
     page(
+        "/kompband/",
+        f"Kompband för artist i Småland och Skåne | {BRAND_TITLE}",
+        "Kompband för solist eller inhyrd artist på bröllop, fest och företagsevent. Växjö, Malmö, Lund och övriga södra Sverige.",
+        breadcrumb_name="Kompband",
+        extra_ld=[
+            service_ld(
+                "Kompband för artist",
+                "Livekompri för solist eller inhyrd artist på bröllop, fest och företagsevent.",
+                "/kompband/",
+            )
+        ],
+        body=f"""    <header class="page-hero compact">
+      <div class="page-hero-copy">
+        <p class="eyebrow">Kompband</p>
+        <h1>Kompband för solist och artist</h1>
+{aeo_answer("Halv Fjorton fungerar som kompband när ni vill att en solist, gäst eller inhyrd artist ska framföras med fullt liveband. Samma åtta musiker och egen blåssektion som på våra vanliga gig.")}
+        <p class="lead">Vanligt vid vigsel, psalmer, gästsång eller när eventbolag tar in en artist som behöver professionellt komp.</p>
+      </div>
+    </header>
+    <section class="section">
+      <div class="wrap grid-2">
+        <div>
+          <h2>När det passar</h2>
+          <ul class="list-check">
+            <li>Bröllopsvigsel med solist eller psalmer</li>
+            <li>Gäst som vill sjunga med band</li>
+            <li>Företagsevent med inhyrd artist</li>
+            <li>Specialmoment under fest eller mingel</li>
+          </ul>
+        </div>
+        <div>
+          <p>Skicka låtlista, tonart och ungefärliga tider i god tid. Vi återkommer med förslag och offert via <a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a>.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="/kontakt/">Begär offert</a>
+            <a class="btn btn-ghost" href="/brollop/">Bröllop</a>
+          </div>
+        </div>
+      </div>
+    </section>
+""",
+    )
+
+    page(
+        "/50-arsfest/",
+        f"50-årsfest och privatfest | liveband {BRAND_TITLE.split(' | ')[0]}",
+        "Liveband till 50-årsfest, privatfest och födelsedag i Växjö, Småland och Skåne. Två set soul, funk och svenska klassiker.",
+        breadcrumb_name="50-årsfest",
+        extra_ld=[
+            service_ld(
+                "50-årsfest och privatfest",
+                "Festmusik och musikunderhållning till 50-årsfest, privatfest och födelsedag med två set live.",
+                "/50-arsfest/",
+            )
+        ],
+        body=f"""    <header class="page-hero compact">
+      <div class="page-hero-copy">
+        <p class="eyebrow">Privatfest</p>
+        <h1>Liveband till 50-årsfest och privatfest</h1>
+{aeo_answer("Vi spelar 50-årsfester och andra privata tillställningar med samma sättning som till bröllop och företag: två set med dans, blås och igenkännbara låtar.")}
+        <p class="lead">Lokal, loge eller hembygdsgård i Småland eller Skåne. Hör av er med datum och ort.</p>
+      </div>
+    </header>
+    <section class="section">
+      <div class="wrap">
+        <p>Repertoaren växlar mellan soul, funk, rock och svenska klassiker så att både dansgolv och generationsmix fungerar. Mingel samma kväll går att kombinera.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/kontakt/">Hör av er</a>
+          <a class="btn btn-ghost" href="/faq/">Vanliga frågor</a>
+        </div>
+      </div>
+    </section>
+""",
+    )
+
+    page(
+        "/julkonsert/",
+        f"Julkonsert A Soulful Christmas i Växjö | {BRAND_TITLE}",
+        "Halv Fjortons egen julkonsert med soul och funk sedan 2018. Spelas på Nygatan 6 i Växjö sedan 2023.",
+        breadcrumb_name="Julkonsert",
+        extra_ld=[
+            service_ld(
+                "Julkonsert",
+                "Egen årlig julkonsert med egna jullåtar och covers i soul- och funkstil, Växjö.",
+                "/julkonsert/",
+            )
+        ],
+        body="""    <header class="page-hero compact">
+      <div class="page-hero-copy">
+        <p class="eyebrow">Julkonsert</p>
+        <h1>A Soulful Christmas i Växjö</h1>
+        <p class="aeo-answer">Sedan 2018 arrangerar Halv Fjorton en egen julkonsert med egna låtar och jultolkningar i soul och funk. Sedan 2023 spelar vi på Nygatan 6 i Växjö, nästan varje år.</p>
+        <p class="lead">Det här är bandets egna konsert, inte en bokningstjänst. Följ datum via <a href="/lyssna/">Lyssna</a> och sociala medier.</p>
+      </div>
+    </header>
+    <section class="section">
+      <div class="wrap">
+        <p>Vill ni boka bandet till er egen julfest eller företagsjul? Se <a href="/foretag/">företag</a> eller <a href="/kontakt/">kontakt</a>.</p>
+      </div>
+    </section>
+""",
+    )
+
+    page(
+        "/brollopsband-smaland/",
+        f"Bröllopsband Småland – Växjö, Kalmar, Älmhult | {BRAND_TITLE}",
+        "Bröllopsband i Småland: Växjö, Kalmar, Älmhult och Jönköping. Två set partymusik, mingel och vigselmusik. Egen blåssektion.",
+        breadcrumb_name="Bröllopsband Småland",
+        extra_ld=[
+            service_ld(
+                "Bröllopsband Småland",
+                "Bröllopsband i Småland med två set partymusik till bröllop i Växjö, Kalmar, Älmhult och Jönköping.",
+                "/brollopsband-smaland/",
+            )
+        ],
+        body=f"""    <header class="page-hero compact">
+      <div class="page-hero-copy">
+        <p class="eyebrow">Småland</p>
+        <h1>Bröllopsband i Småland</h1>
+{aeo_answer("Halv Fjorton är hemmahörande i Växjö och spelar bröllop i hela Småland, från Kalmar och Älmhult till Jönköping. Två set dansmusik med egen blåssektion.")}
+        <p class="lead">Samma band till mingel, vigsel och fest. Andra orter utanför listan kan fungera - fråga i mejlet.</p>
+      </div>
+    </header>
+    <section class="section">
+      <div class="wrap">
+        <p>Se hela upplägget på <a href="/brollop/">bröllop</a> eller begär offert direkt.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/kontakt/">Begär offert</a>
+          <a class="btn btn-ghost" href="/coverband-skane-malmo/">Skåne och Malmö</a>
+        </div>
+      </div>
+    </section>
+""",
+    )
+
+    page(
+        "/coverband-skane-malmo/",
+        f"Coverband Skåne – Malmö, Lund, Helsingborg | {BRAND_TITLE}",
+        "Coverband och festband i Skåne: Malmö, Lund och Helsingborg. Bröllop, företagsfest och privatfest med åtta musiker.",
+        breadcrumb_name="Coverband Skåne",
+        extra_ld=[
+            service_ld(
+                "Coverband Skåne",
+                "Coverband och festband i Malmö, Lund, Helsingborg och övriga Skåne.",
+                "/coverband-skane-malmo/",
+            )
+        ],
+        body=f"""    <header class="page-hero compact">
+      <div class="page-hero-copy">
+        <p class="eyebrow">Skåne</p>
+        <h1>Coverband i Malmö och Skåne</h1>
+{aeo_answer("Vi spelar regelbundet i Skåne med bas i södra Sverige: Malmö, Lund och Helsingborg är vanliga orter. Samma åtta mannasband med soul, funk och svenska klassiker.")}
+        <p class="lead">Personalfest, bröllop eller privatfest. Spelningar utanför Skåne och Småland går att diskutera.</p>
+      </div>
+    </header>
+    <section class="section">
+      <div class="wrap">
+        <p>Läs mer om <a href="/foretag/">företagsfest</a> och <a href="/brollop/">bröllop</a>, eller maila <a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a>.</p>
+      </div>
+    </section>
+""",
+    )
+
+    page(
         "/om-oss/",
-        "Om Halv Fjorton | partyband från Växjö",
-        "Halv Fjorton är ett partyband med rötter i Växjö och åtta medlemmar i södra Sverige. Soul, funk och svenska klassiker med blåssektion.",
+        f"Om Halv Fjorton | grundat 2018 i Växjö | {BRAND_TITLE}",
+        "Coverband grundat 2018 i Växjö. Egen julkonsert med soul och funk, spelningar på Nygatan 6 sedan 2023. Åtta musiker med egen blåssektion.",
+        breadcrumb_name="Om oss",
         body="""    <header class="page-hero compact">
       <div class="page-hero-copy">
         <p class="eyebrow">Om oss</p>
-        <h1>Vilka är Halv Fjorton?</h1>
-        <p class="lead">Ett partyband med rötter i Växjö. Medlemmarna är spridda över södra Sverige. Namnet kan låta knepigt, men det är enkelt: ursprungligen var vi sju - halva fjorton. Numera är vi åtta, även om vi inte gör någon stor sak av det.</p>
+        <h1>Coverband från Växjö sedan 2018</h1>
+        <p class="lead">Ett partyband med rötter i Växjö och musiker över södra Sverige. Namnet kommer från att vi började som sju - halva fjorton. Idag är vi åtta musiker med egen blåssektion.</p>
       </div>
     </header>
     <section class="section">
       <div class="wrap">
         <h2>Musiken</h2>
-        <p>Vårt mål är fester som blir minnesvärda. Vi brinner för att dela musikalisk glädje. Som ett komplett band med dynamisk blåssektion har vi en bred repertoar. Huvudinriktningen är funk och soul: Stevie Wonder, Ray Charles, Earth, Wind &amp; Fire. Därtill svenska favoriter som Björn Skifs och Tomas Ledin.</p>
+        <p>Vårt mål är fester som blir minnesvärda. Huvudinriktningen är funk och soul: Stevie Wonder, Ray Charles, Earth, Wind &amp; Fire. Därtill svenska favoriter som Björn Skifs och Tomas Ledin.</p>
         <p>Styrkan är mångsidigheten. Det som behövs för att göra festen speciell, det ställer vi upp på. När ni bokar oss ska kvällen kännas unik - inte som en slumpmässig coverkväll.</p>
+      </div>
+    </section>
+    <section class="section section-alt">
+      <div class="wrap">
+        <h2>Julkonsert och Nygatan 6</h2>
+        <p>Sedan starten 2018 har vi nästan varje år arrangerat en egen julkonsert med egna jullåtar och covers i soul- och funkstil. Sedan 2023 spelar vi den på <strong>Nygatan 6</strong> i Växjö. Läs mer under <a href="/julkonsert/">julkonsert</a> och se filmer på <a href="/lyssna/">Lyssna</a>.</p>
       </div>
     </section>
     <section class="section">
       <div class="wrap">
         <h2>Föreningen</h2>
-        <p>Vi är <strong>Halv Fjorton EK. FÖR.</strong>, organisationsnummer <strong>769641-5418</strong>. Kontakt: <a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a>, Instagram <a href="https://www.instagram.com/halvfjorton/">@halvfjorton</a>.</p>
+        <p>Vi är <strong>Halv Fjorton EK. FÖR.</strong>, organisationsnummer <strong>769641-5418</strong>. Kontakt: <a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a>, Instagram <a href="https://www.instagram.com/halvfjorton/">@halvfjorton</a>, YouTube <a href="https://www.youtube.com/@halvfjorton9292" rel="noopener noreferrer">@halvfjorton9292</a>.</p>
       </div>
     </section>
 """,
@@ -630,44 +887,52 @@ def write_pages():
 
     faqs = [
         (
+            "Spelar ni i Småland och Skåne?",
+            "Ja. Vår kärnregion är Växjö, Älmhult, Kalmar, Jönköping, Lund, Malmö och Helsingborg, det vill säga Småland och Skåne.",
+        ),
+        (
+            "Spelar ni utanför ert område?",
+            "Oftast ja, om datum och logistik går ihop. Maila plats och datum så återkommer vi med vad som är rimligt.",
+        ),
+        (
+            "Sedan när finns Halv Fjorton?",
+            "Bandet grundades 2018 i Växjö. Sedan dess har vi bland annat arrangerat egen julkonsert nästan varje år.",
+        ),
+        (
             "Hur stort är bandet?",
-            "Halv Fjorton är åtta permanenta medlemmar: sång, gitarr, bas, trummor, klaviatur, slagverk, trumpet och saxofon - plus kör. Namnet kommer från att vi började som sju, alltså halva fjorton.",
+            "Vi är åtta musiker med sång, rytmsektion och egen blåssektion. Namnet kommer från att vi började som sju, alltså halva fjorton.",
+        ),
+        (
+            "Hur länge spelar ni?",
+            "På de flesta fester spelar vi två set partymusik. Mingel eller vigsel utöver det planeras separat i offerten.",
+        ),
+        (
+            "Kan ni spela både mingel och fest?",
+            "Ja, det är ett av våra vanligaste upplägg. Mingel i mer återhållen stil, sedan två set dans när rummet är redo.",
+        ),
+        (
+            "Kan ni spela till vigseln?",
+            "Ja. Vi kan spela vigselmusik med helband, komp till solist eller kombinera med psalmer. Läs mer under bröllop och kompband.",
+        ),
+        (
+            "Kan ni kompa en artist?",
+            "Ja. Vi fungerar som kompband för solist, gästsång eller inhyrd artist. Se sidan kompband för artist.",
+        ),
+        (
+            "Kan ni göra specialarrangemang?",
+            "Ja. Första dans, fanfar, musik under middag eller sambatåg går ofta att lösa om ni hör av er i tid.",
+        ),
+        (
+            "Hur bokar man?",
+            "Maila halvfjorton@gmail.com med datum, plats och typ av tillställning. Vi återkommer med upplägg och offert, som PDF på begäran.",
         ),
         (
             "Hur löser ni ljud och teknik?",
             f"{LOKAL_TEKNIK_COPY} Detaljer följer i offert och rider närmare spelningen.",
         ),
         (
-            "Kan ni vara kompband för artist?",
-            "Ja. Vi kan kompa solist eller artist på bröllop, fest och andra tillställningar - till exempel vid vigsel, psalmer eller när någon i sällskapet vill sjunga med fullt band.",
-        ),
-        (
-            "Vilka tillställningar spelar ni på?",
-            "Bröllop (fest, och vid behov vigsel, psalmer och komp till solist), mingel, personalfest, kickoff, jubileum, konferens, födelsedag och andra fester. Vi tar även specialupplägg som musik under middag eller sambatåg.",
-        ),
-        (
-            "Var i Sverige spelar ni?",
-            "Vi har rötter i Växjö och medlemmar spridda över södra Sverige. Det är vår hemmaplan. Andra orter går att diskutera - hör av er med platsen så säger vi vad som är rimligt.",
-        ),
-        (
-            "Hur går en bokning till?",
-            "Skicka datum, plats och typ av tillställning via mejl eller formuläret. Vi kollar tillgänglighet, återkommer med ett upplägg och därefter en offert. När ni säger ja bekräftar vi skriftligt.",
-        ),
-        (
             "Hur lång framförhållning behövs?",
-            "Så tidigt ni kan, särskilt lördagar under bröllopssäsong och kring jul. Ibland finns det luckor med kortare varsel - fråga hellre än att anta att det är fullt.",
-        ),
-        (
-            "Kan ni skräddarsy repertoaren?",
-            "Ja. Vi utgår från soul, funk, rock och svenska klassiker och anpassar efter publiken. Första dans, obligatoriska låtar och temakvällar går ofta att lösa. Hör av er i tid om något måste läras in.",
-        ),
-        (
-            "Kan vi kombinera mingel och fest?",
-            "Ja, och det är ett av våra vanligaste upplägg. Mingel i mer återhållen stil, sedan dansspelning när rummet är redo. Samma band genom kvällen.",
-        ),
-        (
-            "Vad kostar en spelning?",
-            "Det beror på datum, restid, hur länge vi spelar och om det är mingel, fest eller båda. Vi ger pris i offerten när underlaget finns - inte som en fast lista här.",
+            "Så tidigt ni kan, särskilt lördagar under bröllopssäsong. Kortare varsel kan funka - fråga hellre än att anta att det är fullt.",
         ),
         (
             "Vem fakturerar?",
@@ -709,7 +974,7 @@ def write_pages():
             service_ld(
                 "Kompband för artist",
                 "Livekompri för solist eller artist på bröllop, fest och event i södra Sverige.",
-                "/faq/",
+                "/kompband/",
             ),
         ],
         body=f"""    <header class="page-hero compact">
@@ -803,14 +1068,74 @@ def write_pages():
     )
 
 
+def write_sitemap():
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+    for path in SITEMAP_PATHS:
+        priority = "1.0" if path == "/" else "0.8"
+        lines.extend(
+            [
+                "  <url>",
+                f"    <loc>{SITE}{path}</loc>",
+                "    <changefreq>monthly</changefreq>",
+                f"    <priority>{priority}</priority>",
+                "  </url>",
+            ]
+        )
+    lines.append("</urlset>")
+    dest = ROOT / "sitemap.xml"
+    dest.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print("wrote", dest.relative_to(ROOT))
+
+
+def write_llms_txt():
+    text = f"""# Halv Fjorton
+
+> Cover- och partyband med åtta musiker och egen blåssektion från Växjö. Grundat 2018. Soul, funk, rock och svenska klassiker.
+
+## Kontakt
+- E-post: halvfjorton@gmail.com
+- Bokning: en kontakt, offert som PDF på begäran
+- Instagram: https://www.instagram.com/halvfjorton/
+- YouTube: https://www.youtube.com/@halvfjorton9292
+
+## Område
+Kärnregion: Växjö, Älmhult, Kalmar, Jönköping, Lund, Malmö, Helsingborg (Småland och Skåne). Spelningar utanför går att diskutera.
+
+## Tjänster
+- Bröllopsband: två set partymusik; tillval mingel, vigselmusik, komp till solist
+- Företagsfest / festband: musikunderhållning, artistkomp, specialmusik
+- Kompband för artist: /kompband/
+- 50-årsfest och privatfest: /50-arsfest/
+- Egen julkonsert (A Soulful Christmas, Nygatan 6 Växjö sedan 2023): /julkonsert/
+
+## Viktiga sidor
+- Startsida: {SITE}/
+- Bröllop: {SITE}/brollop/
+- Företag: {SITE}/foretag/
+- FAQ: {SITE}/faq/
+- Kontakt: {SITE}/kontakt/
+- Bröllopsband Småland: {SITE}/brollopsband-smaland/
+- Coverband Skåne: {SITE}/coverband-skane-malmo/
+- Alternativ startsida (förhandsvisning): {SITE}/alt/
+"""
+    dest = ROOT / "llms.txt"
+    dest.write_text(text, encoding="utf-8")
+    print("wrote", dest.relative_to(ROOT))
+
+
 def write_alt_jsonld():
     alt_path = ROOT / "alt/index.html"
     html = alt_path.read_text(encoding="utf-8")
     org = music_group_ld()
     crumb = breadcrumb_ld([("/", "Hem"), ("/alt/", "Förhandsvisning")])
+    video = wedding_video_ld()
     block = f"""  <script type="application/ld+json">
   {org},
-  {crumb}
+  {crumb},
+  {video}
   </script>
 """
     if re.search(r'<script type="application/ld\+json">', html):
@@ -830,6 +1155,38 @@ def write_alt_jsonld():
     print("wrote", alt_path.relative_to(ROOT), "(json-ld)")
 
 
+def patch_alt_page():
+    alt_path = ROOT / "alt/index.html"
+    html = alt_path.read_text(encoding="utf-8")
+    html = html.replace(
+        '<span class="alt-facts__placeholder">Grundat [ÅR - fyll i]</span>',
+        "<span>Grundat 2018</span>",
+    )
+    video_section = f"""
+    <section class="alt-video section" aria-labelledby="alt-video-rubrik" data-reveal>
+      <div class="wrap" style="max-width:var(--alt-max);margin:0 auto;padding:0 1.25rem 4rem">
+        <h2 id="alt-video-rubrik">Bröllop på film</h2>
+{video_facade(WEDDING_VIDEO_ID, WEDDING_VIDEO_TITLE, "Förhandsbild: Halv Fjorton som bröllopsband i södra Sverige").replace("        ", "        ")}
+      </div>
+    </section>
+"""
+    if "alt-video" not in html:
+        html = html.replace(
+            '    <section class="alt-intro"',
+            video_section + '    <section class="alt-intro"',
+        )
+    if 'src="../assets/js/video-facade.js"' not in html:
+        html = html.replace(
+            '  <script src="../assets/js/nav.js"></script>',
+            '  <script src="../assets/js/nav.js"></script>\n  <script src="../assets/js/video-facade.js" defer></script>',
+        )
+    alt_path.write_text(html, encoding="utf-8")
+    print("wrote", alt_path.relative_to(ROOT), "(alt patches)")
+
+
 if __name__ == "__main__":
     write_pages()
+    write_sitemap()
+    write_llms_txt()
     write_alt_jsonld()
+    patch_alt_page()
