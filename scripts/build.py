@@ -92,7 +92,7 @@ def load_org() -> dict:
     return json.loads(ORGANIZATION_JSON.read_text(encoding="utf-8"))
 
 
-BRAND_MARK_PX = 42
+BRAND_MARK_PX = 56
 
 def contact_page_ld() -> str:
     data = {
@@ -220,6 +220,15 @@ def alt_nav_list_markup() -> str:
         'href="#offert">Begär offert</a></li>'
     )
     return "\n".join(items)
+
+
+def alt_nav_block() -> str:
+    return f"""      <nav class="alt-nav" aria-label="Huvudmeny">
+        <ul class="alt-nav__links nav-list" id="alt-meny" data-nav-panel>
+{alt_nav_list_markup()}
+        </ul>
+        <a class="alt-btn alt-btn--primary alt-nav__cta-desktop" href="#offert">Begär offert</a>
+      </nav>"""
 
 
 def brand_logo_markup() -> str:
@@ -1309,12 +1318,11 @@ def patch_alt_page():
             '  <script src="../assets/js/nav.js"></script>\n  <script src="../assets/js/alt-nav.js" defer></script>',
         )
     html = re.sub(
-        r'(<ul class="alt-nav__links nav-list" id="alt-meny" data-nav-panel>)[\s\S]*?(</ul>\s*<a class="alt-btn alt-btn--primary alt-nav__cta-desktop")',
-        "\\1\n"
-        + alt_nav_list_markup()
-        + "\n        \\2",
+        r'^[ \t]*<nav class="alt-nav" aria-label="Huvudmeny">[\s\S]*?</nav>',
+        alt_nav_block(),
         html,
         count=1,
+        flags=re.MULTILINE,
     )
     html = re.sub(
         r'href="mailto:halvfjorton@gmail.com\?subject=Beg%C3%A4r%20offert[^"]*"',
