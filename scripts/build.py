@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Generate the Halv Fjorton static site."""
 
+import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = "https://halvfjorton.se"
 OG = f"{SITE}/assets/img/og.jpg"
+ORGANIZATION_JSON = ROOT / "assets/schema/organization.json"
 
 NAV = [
     ("/", "Hem"),
@@ -19,15 +22,9 @@ NAV = [
     ("/kontakt/", "Kontakt"),
 ]
 
-ORG_DESC = (
-    "Halv Fjorton är ett coverband och partyband med åtta musiker, "
-    "rötter i Växjö och medlemmar över södra Sverige. Soul, funk, rock "
-    "och svenska klassiker med egen blåssektion."
-)
-
-PA_TEKNIK_COPY = (
-    "PA ingår vid privata fester, för företagsevent offereras det separat "
-    "eller via er egen leverantör."
+LOKAL_TEKNIK_COPY = (
+    "Tekniska behov tar vi i offerten utifrån lokal och program. "
+    "Vid större saler eller särskilda önskemål har vi kontakter bland uthyrare."
 )
 
 
@@ -40,36 +37,14 @@ def esc(text: str) -> str:
     )
 
 
+def _indent_ld(data: dict) -> str:
+    raw = json.dumps(data, indent=2, ensure_ascii=False)
+    return "\n".join(f"  {line}" for line in raw.splitlines())
+
+
 def music_group_ld() -> str:
-    return f"""{{
-    "@context": "https://schema.org",
-    "@type": ["MusicGroup", "PerformingGroup", "Organization"],
-    "name": "Halv Fjorton",
-    "legalName": "Halv Fjorton EK. FÖR.",
-    "alternateName": "Halv 14",
-    "description": "{ORG_DESC}",
-    "url": "{SITE}/",
-    "image": "{OG}",
-    "email": "halvfjorton@gmail.com",
-    "genre": ["Soul", "Funk", "Rock", "Coverband", "Partyband"],
-    "foundingLocation": {{
-      "@type": "Place",
-      "name": "Växjö",
-      "address": {{
-        "@type": "PostalAddress",
-        "addressLocality": "Växjö",
-        "addressRegion": "Kronoberg",
-        "addressCountry": "SE"
-      }}
-    }},
-    "areaServed": "Södra Sverige",
-    "sameAs": ["https://www.instagram.com/halvfjorton/"],
-    "identifier": {{
-      "@type": "PropertyValue",
-      "propertyID": "orgnr",
-      "value": "769641-5418"
-    }}
-  }}"""
+    data = json.loads(ORGANIZATION_JSON.read_text(encoding="utf-8"))
+    return _indent_ld(data)
 
 
 def breadcrumb_ld(items):
@@ -245,7 +220,7 @@ def write_pages():
           <div class="fact"><strong>Soul, funk och rock</strong><p>Stevie Wonder, Ray Charles, Earth, Wind &amp; Fire plus svenska klassiker som Björn Skifs och Tomas Ledin.</p></div>
           <div class="fact"><strong>Egen blåssektion</strong><p>Trumpet, saxofon och kör som ger festen det extra svänget.</p></div>
           <div class="fact"><strong>Södra Sverige</strong><p>Rötter i Växjö, medlemmar utspridda i södern. Bröllop, kickoffer och fester i hela regionen.</p></div>
-          <div class="fact"><strong>PA och teknik</strong><p>{PA_TEKNIK_COPY}</p></div>
+          <div class="fact"><strong>Bokning</strong><p>En kontakt från förfrågan till kvällen. Offert som PDF på begäran.</p></div>
           <div class="fact"><strong>Ekonomisk förening</strong><p>Halv Fjorton EK. FÖR., org.nr 769641-5418. Tydlig motpart för par och företag.</p></div>
         </div>
       </div>
@@ -284,7 +259,7 @@ def write_pages():
           <iframe src="https://www.youtube-nocookie.com/embed/V2Nb8jMKUCk" title="Signed Sealed Delivered - Halv Fjorton 2025" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
         </div>
         <div class="actions">
-          <a class="btn btn-ghost" href="/om-oss/">Möt bandet</a>
+          <a class="btn btn-ghost" href="/om-oss/">Om oss</a>
         </div>
       </div>
     </section>
@@ -295,7 +270,7 @@ def write_pages():
         <div>
           <h2 id="skraeddarsy">Tillsammans skräddarsyr vi ert event</h2>
           <p>Utöver repertoaren tar vi fram speciallösningar när det behövs. Musik under middagen? Ett sambatåg genom lokalen? Hör av er så ser vi hur vi kan lägga upp kvällen.</p>
-          <p>{PA_TEKNIK_COPY} Behöver ni teknik utöver det som ingår hjälper vi till via uthyrare vi redan samarbetar med.</p>
+          <p>{LOKAL_TEKNIK_COPY} Behöver ni teknik utöver det som ingår hjälper vi till via uthyrare vi redan samarbetar med.</p>
         </div>
       </div>
     </section>
@@ -316,7 +291,7 @@ def write_pages():
     page(
         "/brollop/",
         "Bröllopsband i Växjö och södra Sverige | Halv Fjorton",
-        "Boka Halv Fjorton som bröllopsband. Fest, vigsel, psalmer och komp till solist. Åtta musiker, blåssektion och egen teknik i Växjö och södra Sverige.",
+        "Boka Halv Fjorton som bröllopsband. Fest, vigsel, psalmer och komp till solist. Åtta musiker och egen blåssektion i Växjö och södra Sverige.",
         extra_ld=[
             service_ld(
                 "Bröllopsband",
@@ -339,7 +314,7 @@ def write_pages():
             <li>Spelning på bröllopsfesten - dans, soul, funk, rock och svenska klassiker.</li>
             <li>Musik vid vigseln, psalmer och komp av solist om ni vill - vi erbjuder också kompband för artist.</li>
             <li>Mingel före middagen, från jazz till lågmälda svenska favoriter.</li>
-            <li>PA ingår vid privata fester som bröllopsfesten.</li>
+            <li>Egen blåssektion och komplett liveband genom kvällen.</li>
           </ul>
         </div>
         <div>
@@ -400,7 +375,7 @@ def write_pages():
           <h2>Det som brukar avgöra</h2>
           <ul class="list-check">
             <li><strong>Blåssektion.</strong> Trumpet, sax och kör - mer än gitarr, bas och trummor i ett hörn.</li>
-            <li><strong>Teknik och PA.</strong> {PA_TEKNIK_COPY}</li>
+            <li><strong>Lokal och logistik.</strong> {LOKAL_TEKNIK_COPY}</li>
             <li><strong>Bred repertoar.</strong> Från Stevie Wonder till Björn Skifs. Det gör att både vd och sommarjobbare känner igen något.</li>
             <li><strong>Södra Sverige som hemmaplan.</strong> Växjö i botten, medlemmar i bland annat Malmö och Skåne. Rimliga restider i södern.</li>
             <li><strong>En motpart.</strong> Ekonomisk förening med organisationsnummer, faktura och en bokningskontakt.</li>
@@ -419,7 +394,7 @@ def write_pages():
         <div class="grid-2">
           <article class="card">
             <h3>Vad som följer med</h3>
-            <p>Band och liveupplevelse med blåssektion. {PA_TEKNIK_COPY} Behöver ni extra täckning i en stor sal har vi uthyrare vi redan jobbar med.</p>
+            <p>Band och liveupplevelse med egen blåssektion. {LOKAL_TEKNIK_COPY}</p>
           </article>
           <article class="card">
             <h3>Vad vi behöver av er</h3>
@@ -598,7 +573,8 @@ def write_pages():
           <h2>Vad kunden får</h2>
           <ul class="list-check">
             <li>8 musiker på scen (sång, gitarr, bas, trummor, klaviatur, slagverk, trumpet, saxofon)</li>
-            <li>{PA_TEKNIK_COPY}</li>
+            <li>Egen blåssektion och komplett sättning på scen.</li>
+            <li>{LOKAL_TEKNIK_COPY}</li>
             <li>Möjlighet att kombinera mingel och dansspelning samma kväll</li>
             <li>Specialönskemål: middag, sambatåg, fanfar, utvald första dans</li>
           </ul>
@@ -608,9 +584,9 @@ def write_pages():
     <section class="section section-alt">
       <div class="wrap">
         <h2>Teknik i korthet</h2>
-        <p>{PA_TEKNIK_COPY} Exakt inputlista, scenskiss och strömbehov skickas per spelning - underlaget här är en sammanfattning, inte ett färdigt rider.</p>
+        <p>{LOKAL_TEKNIK_COPY} Exakt inputlista, scenskiss och strömbehov skickas per spelning - underlaget här är en sammanfattning, inte ett färdigt rider.</p>
         <div class="faq-grid">
-          <article><h3>Ljud</h3><p>{PA_TEKNIK_COPY} Extra täckning eller linjearray via samarbetande uthyrare vid behov.</p></article>
+          <article><h3>Ljud</h3><p>{LOKAL_TEKNIK_COPY}</p></article>
           <article><h3>Scen</h3><p>Åtta musiker på scen. Bekräfta scendmått och bärväg i lokalen så att vi inte gissar lastning.</p></article>
           <article><h3>Rider</h3><p><em>Teknisk rider, kanallista och scenskiss läggs till som nedladdningsbara PDF:er här.</em></p></article>
         </div>
@@ -658,8 +634,8 @@ def write_pages():
             "Halv Fjorton är åtta permanenta medlemmar: sång, gitarr, bas, trummor, klaviatur, slagverk, trumpet och saxofon - plus kör. Namnet kommer från att vi började som sju, alltså halva fjorton.",
         ),
         (
-            "Ingår teknik och PA?",
-            f"Ja, för en medryckande liveupplevelse. {PA_TEKNIK_COPY} Behöver ni teknik utöver det som ingår hjälper vi till via uthyrare vi redan samarbetar med.",
+            "Hur löser ni ljud och teknik?",
+            f"{LOKAL_TEKNIK_COPY} Detaljer följer i offert och rider närmare spelningen.",
         ),
         (
             "Kan ni vara kompband för artist?",
@@ -785,8 +761,6 @@ def write_pages():
           <input id="name" name="name" autocomplete="name" required>
           <label for="email">E-post</label>
           <input id="email" name="email" type="email" autocomplete="email" required>
-          <label for="phone">Telefon</label>
-          <input id="phone" name="phone" type="tel" autocomplete="tel">
           <label for="date">Datum</label>
           <input id="date" name="date" type="date">
           <label for="place">Plats</label>
@@ -829,5 +803,33 @@ def write_pages():
     )
 
 
+def write_alt_jsonld():
+    alt_path = ROOT / "alt/index.html"
+    html = alt_path.read_text(encoding="utf-8")
+    org = music_group_ld()
+    crumb = breadcrumb_ld([("/", "Hem"), ("/alt/", "Förhandsvisning")])
+    block = f"""  <script type="application/ld+json">
+  {org},
+  {crumb}
+  </script>
+"""
+    if re.search(r'<script type="application/ld\+json">', html):
+        html = re.sub(
+            r'  <script type="application/ld\+json">.*?</script>\n',
+            block,
+            html,
+            count=1,
+            flags=re.DOTALL,
+        )
+    else:
+        html = html.replace(
+            '  <link rel="stylesheet" href="../assets/css/alt.css">\n',
+            f'  <link rel="stylesheet" href="../assets/css/alt.css">\n{block}',
+        )
+    alt_path.write_text(html, encoding="utf-8")
+    print("wrote", alt_path.relative_to(ROOT), "(json-ld)")
+
+
 if __name__ == "__main__":
     write_pages()
+    write_alt_jsonld()
