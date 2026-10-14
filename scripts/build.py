@@ -73,9 +73,19 @@ def load_org() -> dict:
     return json.loads(ORGANIZATION_JSON.read_text(encoding="utf-8"))
 
 
+BRAND_MARK_PX = 42
+
 def brand_logo_markup() -> str:
     svg = H14_LOGO.read_text(encoding="utf-8")
-    return svg.replace("<svg ", '<svg class="brand-mark" focusable="false" ', 1)
+    svg = re.sub(
+        r'<svg\s+',
+        '<svg class="brand-mark" focusable="false" ',
+        svg,
+        count=1,
+    )
+    svg = re.sub(r'\bwidth="[^"]*"', f'width="{BRAND_MARK_PX}"', svg, count=1)
+    svg = re.sub(r'\bheight="[^"]*"', f'height="{BRAND_MARK_PX}"', svg, count=1)
+    return svg
 
 
 def aeo_answer(text: str) -> str:
@@ -1136,12 +1146,10 @@ def write_alt_jsonld():
     alt_path = ROOT / "alt/index.html"
     html = alt_path.read_text(encoding="utf-8")
     org = music_group_ld()
-    crumb = breadcrumb_ld([("/", "Hem"), ("/alt/", "Förhandsvisning")])
-    video = wedding_video_ld()
+    crumb = breadcrumb_ld([("/", "Hem"), ("/alt/", "Alternativ startsida")])
     block = f"""  <script type="application/ld+json">
   {org},
-  {crumb},
-  {video}
+  {crumb}
   </script>
 """
     if re.search(r'<script type="application/ld\+json">', html):
@@ -1170,6 +1178,13 @@ def patch_alt_page():
         logo + "\n",
         html,
     )
+    html = re.sub(
+        r"\s*<svg class=\"brand-mark\".*?</svg>\s*",
+        "\n" + logo + "\n",
+        html,
+        count=1,
+        flags=re.DOTALL,
+    )
     html = html.replace(
         '<a class="alt-brand brand" href="../">',
         '<a class="alt-brand brand" href="../" aria-label="Halv Fjorton">',
@@ -1178,23 +1193,10 @@ def patch_alt_page():
         '<span class="alt-facts__placeholder">Grundat [ÅR - fyll i]</span>',
         "<span>Grundat 2018</span>",
     )
-    video_section = f"""
-    <section class="alt-video section" aria-labelledby="alt-video-rubrik" data-reveal>
-      <div class="wrap" style="max-width:var(--alt-max);margin:0 auto;padding:0 1.25rem 4rem">
-        <h2 id="alt-video-rubrik">Bröllop på film</h2>
-{video_facade(WEDDING_VIDEO_ID, WEDDING_VIDEO_TITLE, "Förhandsbild: Halv Fjorton som bröllopsband i södra Sverige").replace("        ", "        ")}
-      </div>
-    </section>
-"""
-    if "alt-video" not in html:
-        html = html.replace(
-            '    <section class="alt-intro"',
-            video_section + '    <section class="alt-intro"',
-        )
-    if 'src="../assets/js/video-facade.js"' not in html:
+    if 'src="../assets/js/alt-nav.js"' not in html:
         html = html.replace(
             '  <script src="../assets/js/nav.js"></script>',
-            '  <script src="../assets/js/nav.js"></script>\n  <script src="../assets/js/video-facade.js" defer></script>',
+            '  <script src="../assets/js/nav.js"></script>\n  <script src="../assets/js/alt-nav.js" defer></script>',
         )
     alt_path.write_text(html, encoding="utf-8")
     print("wrote", alt_path.relative_to(ROOT), "(alt patches)")
