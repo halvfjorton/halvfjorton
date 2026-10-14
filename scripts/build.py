@@ -14,12 +14,17 @@ BRAND_TITLE = "Halv Fjorton – coverband & bröllopsband i Småland och Skåne"
 WEDDING_VIDEO_ID = "V2Nb8jMKUCk"
 WEDDING_VIDEO_TITLE = "Signed Sealed Delivered - Halv Fjorton"
 
-NAV = [
-    ("/", "Hem"),
+NAV_SERVICES = [
     ("/brollop/", "Bröllop"),
     ("/foretag/", "Företag"),
-    ("/kompband/", "Kompband"),
-    ("/mingel/", "Mingel"),
+    ("/kompband/", "Kompband för artist"),
+    ("/50-arsfest/", "50-årsfest"),
+    ("/brollopsband-smaland/", "Bröllopsband Småland"),
+    ("/coverband-skane-malmo/", "Coverband Skåne & Malmö"),
+]
+
+NAV_PRIMARY = [
+    ("/", "Hem"),
     ("/for-eventbolag/", "Eventbolag"),
     ("/om-oss/", "Om oss"),
     ("/lyssna/", "Lyssna"),
@@ -74,6 +79,70 @@ def load_org() -> dict:
 
 
 BRAND_MARK_PX = 42
+
+def font_preloads(asset_root: str = "/assets") -> str:
+    root = asset_root.rstrip("/")
+    return f"""  <link rel="preload" href="{root}/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{root}/fonts/Outfit-Variable.woff2" as="font" type="font/woff2" crossorigin>"""
+
+
+def nav_path(href: str, prefix: str = "") -> str:
+    if not prefix:
+        return href
+    return "../" + href.lstrip("/")
+
+
+def nav_toggle_markup(panel_id: str = "meny") -> str:
+    return f"""      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="{panel_id}" aria-label="Öppna meny">
+        <span class="nav-toggle__bars" aria-hidden="true"></span>
+      </button>"""
+
+
+def nav_services_dropdown(current_path: str, prefix: str = "", menu_id: str = "nav-tjanster") -> str:
+    service_paths = {p for p, _ in NAV_SERVICES}
+    expanded = "true" if current_path in service_paths else "false"
+    items = []
+    for href, label in NAV_SERVICES:
+        current = ' aria-current="page"' if href == current_path else ""
+        items.append(
+            f'              <li role="none"><a role="menuitem" href="{nav_path(href, prefix)}"{current}>{label}</a></li>'
+        )
+    submenu = "\n".join(items)
+    return f"""          <li class="nav-item nav-item--dropdown" data-nav-dropdown>
+            <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger aria-expanded="{expanded}" aria-controls="{menu_id}" id="{menu_id}-btn">
+              Tjänster
+              <span class="nav-dropdown__chevron" aria-hidden="true"></span>
+            </button>
+            <ul class="nav-dropdown__menu" id="{menu_id}" role="menu" aria-labelledby="{menu_id}-btn" data-nav-dropdown-menu>
+{submenu}
+            </ul>
+          </li>"""
+
+
+def render_nav_list(current_path: str, prefix: str = "", include_home: bool = True, menu_id: str = "nav-tjanster") -> str:
+    items = []
+    if include_home:
+        current = ' aria-current="page"' if current_path == "/" else ""
+        items.append(f'          <li><a href="{nav_path("/", prefix)}"{current}>Hem</a></li>')
+    items.append(nav_services_dropdown(current_path, prefix, menu_id))
+    for href, label in NAV_PRIMARY:
+        if href == "/":
+            continue
+        current = ' aria-current="page"' if href == current_path else ""
+        items.append(f'          <li><a href="{nav_path(href, prefix)}"{current}>{label}</a></li>')
+    return "\n".join(items)
+
+
+def alt_nav_list_markup() -> str:
+    items = [nav_services_dropdown("", "../", "alt-nav-tjanster")]
+    for href, label in (("/faq/", "FAQ"), ("/lyssna/", "Lyssna"), ("/kontakt/", "Kontakt")):
+        items.append(f'          <li><a href="{nav_path(href, "../")}">{label}</a></li>')
+    items.append(
+        '          <li class="alt-nav__cta-mobile-wrap"><a class="alt-btn alt-btn--primary alt-nav__cta-mobile" '
+        'href="mailto:halvfjorton@gmail.com?subject=Beg%C3%A4r%20offert%20-%20Halv%20Fjorton">Begär offert</a></li>'
+    )
+    return "\n".join(items)
+
 
 def brand_logo_markup() -> str:
     svg = H14_LOGO.read_text(encoding="utf-8")
@@ -171,11 +240,7 @@ def page(
     breadcrumb_name: str | None = None,
 ):
     canonical = f"{SITE}{path}"
-    nav_items = []
-    for href, label in NAV:
-        current = ' aria-current="page"' if href == path else ""
-        nav_items.append(f'          <li><a href="{href}"{current}>{label}</a></li>')
-    nav = "\n".join(nav_items)
+    nav = render_nav_list(path)
     crumb_label = breadcrumb_name or title.split(" | ")[0].split(" – ")[0]
     graphs = [music_group_ld(), breadcrumb_ld([("/", "Hem")] + ([] if path == "/" else [(path, crumb_label)]))]
     if extra_ld:
@@ -203,9 +268,7 @@ def page(
   <meta name="twitter:image" content="{OG}">
   <link rel="icon" href="/assets/img/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/assets/img/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+{font_preloads('/assets')}
   <link rel="stylesheet" href="/assets/css/style.css">
   <script type="application/ld+json">
   {jsonld}
@@ -219,7 +282,8 @@ def page(
 {brand_logo_markup()}
         <span>Halv Fjorton</span>
       </a>
-      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="meny">Meny</button>
+{nav_toggle_markup()}
+      <div class="nav-backdrop" data-nav-backdrop hidden></div>
       <nav id="meny" aria-label="Huvudmeny">
         <ul class="nav-list" data-nav-panel>
 {nav}
@@ -1197,6 +1261,40 @@ def patch_alt_page():
         html = html.replace(
             '  <script src="../assets/js/nav.js"></script>',
             '  <script src="../assets/js/nav.js"></script>\n  <script src="../assets/js/alt-nav.js" defer></script>',
+        )
+    html = re.sub(
+        r'<ul class="alt-nav__links nav-list" id="alt-meny" data-nav-panel>.*?</ul>',
+        "<ul class=\"alt-nav__links nav-list\" id=\"alt-meny\" data-nav-panel>\n"
+        + alt_nav_list_markup()
+        + "\n        </ul>",
+        html,
+        count=1,
+        flags=re.DOTALL,
+    )
+    toggle = nav_toggle_markup("alt-meny").replace("nav-toggle", "nav-toggle alt-nav-toggle")
+    html = re.sub(
+        r'<button class="(?:alt-nav-toggle )?nav-toggle"[^>]*>.*?</button>',
+        toggle.strip(),
+        html,
+        count=1,
+        flags=re.DOTALL,
+    )
+    if "data-nav-backdrop" not in html:
+        html = html.replace(
+            '      <nav class="alt-nav"',
+            '      <div class="nav-backdrop" data-nav-backdrop hidden></div>\n      <nav class="alt-nav"',
+            1,
+        )
+    html = re.sub(
+        r"  <link rel=\"preconnect\" href=\"https://fonts\.googleapis\.com\">[^\n]*\n(?:  <link rel=\"preconnect\" href=\"https://fonts\.gstatic\.com\" crossorigin>\n)?  <link href=\"https://fonts\.googleapis\.com/css2[^\"]*\" rel=\"stylesheet\">\n",
+        font_preloads("../assets") + "\n",
+        html,
+        count=1,
+    )
+    if "InterVariable.woff2" not in html:
+        html = html.replace(
+            '  <link rel="stylesheet" href="../assets/css/alt.css">\n',
+            font_preloads("../assets") + '\n  <link rel="stylesheet" href="../assets/css/alt.css">\n',
         )
     alt_path.write_text(html, encoding="utf-8")
     print("wrote", alt_path.relative_to(ROOT), "(alt patches)")
