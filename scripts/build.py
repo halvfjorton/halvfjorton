@@ -19,21 +19,15 @@ NAV = [
     ("/kontakt/", "Kontakt"),
 ]
 
-MEMBERS_LD = [
-    ("Edvin Sydmark", "Gitarr"),
-    ("Jonathan Eryd", "Trummor"),
-    ("Ivar Lundin", "Klaviatur"),
-    ("Nils Biström", "Trumpet"),
-    ("Adam Blidstål", "Sång"),
-    ("Gustav Magnusson", "Sång"),
-    ("Zacharias Pelz", "Basgitarr"),
-    ("Olof Ingelsten", "Saxofon"),
-]
-
 ORG_DESC = (
     "Halv Fjorton är ett coverband och partyband med åtta musiker, "
     "rötter i Växjö och medlemmar över södra Sverige. Soul, funk, rock "
-    "och svenska klassiker med egen blåssektion, PA och två ljudtekniker."
+    "och svenska klassiker med egen blåssektion."
+)
+
+PA_TEKNIK_COPY = (
+    "PA ingår vid privata fester, för företagsevent offereras det separat "
+    "eller via er egen leverantör."
 )
 
 
@@ -47,14 +41,6 @@ def esc(text: str) -> str:
 
 
 def music_group_ld() -> str:
-    members = ",\n".join(
-        f'''      {{
-        "@type": "OrganizationRole",
-        "roleName": "{role}",
-        "member": {{"@type": "Person", "name": "{name}"}}
-      }}'''
-        for name, role in MEMBERS_LD
-    )
     return f"""{{
     "@context": "https://schema.org",
     "@type": ["MusicGroup", "PerformingGroup", "Organization"],
@@ -65,7 +51,6 @@ def music_group_ld() -> str:
     "url": "{SITE}/",
     "image": "{OG}",
     "email": "halvfjorton@gmail.com",
-    "telephone": "+46-70-974-20-85",
     "genre": ["Soul", "Funk", "Rock", "Coverband", "Partyband"],
     "foundingLocation": {{
       "@type": "Place",
@@ -83,10 +68,7 @@ def music_group_ld() -> str:
       "@type": "PropertyValue",
       "propertyID": "orgnr",
       "value": "769641-5418"
-    }},
-    "member": [
-{members}
-    ]
+    }}
   }}"""
 
 
@@ -204,7 +186,6 @@ def page(
         <p><strong>Kontakt</strong></p>
         <ul class="small">
           <li><a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a></li>
-          <li><a href="tel:+46709742085">+46 70 974 20 85</a></li>
           <li><a href="https://www.instagram.com/halvfjorton/" rel="noopener noreferrer">Instagram @halvfjorton</a></li>
         </ul>
       </div>
@@ -239,7 +220,7 @@ def write_pages():
         "/",
         "Halv Fjorton | Sveriges svängigaste coverband",
         "Halv Fjorton är ett coverband med åtta musiker från södra Sverige. Soul, funk, rock och svenska klassiker till bröllop, företag och fest i Växjö och hela södern.",
-        body="""    <section class="hero">
+        body=f"""    <section class="hero">
       <div class="hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">Coverband från Växjö</p>
@@ -264,7 +245,7 @@ def write_pages():
           <div class="fact"><strong>Soul, funk och rock</strong><p>Stevie Wonder, Ray Charles, Earth, Wind &amp; Fire plus svenska klassiker som Björn Skifs och Tomas Ledin.</p></div>
           <div class="fact"><strong>Egen blåssektion</strong><p>Trumpet, saxofon och kör som ger festen det extra svänget.</p></div>
           <div class="fact"><strong>Södra Sverige</strong><p>Rötter i Växjö, medlemmar utspridda i södern. Bröllop, kickoffer och fester i hela regionen.</p></div>
-          <div class="fact"><strong>Egen teknik + 2 tekniker</strong><p>Vi tar med PA och har alltid två ljudtekniker på plats.</p></div>
+          <div class="fact"><strong>PA och teknik</strong><p>{PA_TEKNIK_COPY}</p></div>
           <div class="fact"><strong>Ekonomisk förening</strong><p>Halv Fjorton EK. FÖR., org.nr 769641-5418. Tydlig motpart för par och företag.</p></div>
         </div>
       </div>
@@ -314,7 +295,7 @@ def write_pages():
         <div>
           <h2 id="skraeddarsy">Tillsammans skräddarsyr vi ert event</h2>
           <p>Utöver repertoaren tar vi fram speciallösningar när det behövs. Musik under middagen? Ett sambatåg genom lokalen? Hör av er så ser vi hur vi kan lägga upp kvällen.</p>
-          <p>Vi har all utrustning som behövs för en medryckande ljudbild. Alltid två ljudtekniker. Behöver ni extra PA utöver huvudakten, eller teknik utöver vår egen, har vi ett brett kontaktnät av uthyrare.</p>
+          <p>{PA_TEKNIK_COPY} Behöver ni teknik utöver det som ingår hjälper vi till via uthyrare vi redan samarbetar med.</p>
         </div>
       </div>
     </section>
@@ -356,9 +337,9 @@ def write_pages():
           <h2>Vad vi kan göra på er dag</h2>
           <ul class="list-check">
             <li>Spelning på bröllopsfesten - dans, soul, funk, rock och svenska klassiker.</li>
-            <li>Musik vid vigseln, psalmer och komp av solist om ni vill.</li>
+            <li>Musik vid vigseln, psalmer och komp av solist om ni vill - vi erbjuder också kompband för artist.</li>
             <li>Mingel före middagen, från jazz till lågmälda svenska favoriter.</li>
-            <li>Egen PA och alltid två ljudtekniker, så ni inte behöver jaga teknik själva.</li>
+            <li>PA ingår vid privata fester som bröllopsfesten.</li>
           </ul>
         </div>
         <div>
@@ -388,7 +369,7 @@ def write_pages():
     page(
         "/foretag/",
         "Coverband till företagsfest, kickoff och jubileum | Halv Fjorton",
-        "Halv Fjorton spelar på personalfest, kickoff, jubileum och konferens i södra Sverige. Åtta musiker, blåssektion, egen teknik och två ljudtekniker.",
+        "Halv Fjorton spelar på personalfest, kickoff, jubileum och konferens i södra Sverige. Åtta musiker och egen blåssektion.",
         extra_ld=[
             service_ld(
                 "Coverband till företagsevent",
@@ -396,7 +377,7 @@ def write_pages():
                 "/foretag/",
             )
         ],
-        body="""    <header class="page-hero">
+        body=f"""    <header class="page-hero">
       <div class="page-hero-copy">
         <p class="eyebrow">Företag och fest</p>
         <h1>Ett liveband som lyfter personalfesten</h1>
@@ -419,7 +400,7 @@ def write_pages():
           <h2>Det som brukar avgöra</h2>
           <ul class="list-check">
             <li><strong>Blåssektion.</strong> Trumpet, sax och kör - mer än gitarr, bas och trummor i ett hörn.</li>
-            <li><strong>Egen teknik och två ljudtekniker.</strong> Ni behöver inte gissa PA eller hoppas på husets anläggning.</li>
+            <li><strong>Teknik och PA.</strong> {PA_TEKNIK_COPY}</li>
             <li><strong>Bred repertoar.</strong> Från Stevie Wonder till Björn Skifs. Det gör att både vd och sommarjobbare känner igen något.</li>
             <li><strong>Södra Sverige som hemmaplan.</strong> Växjö i botten, medlemmar i bland annat Malmö och Skåne. Rimliga restider i södern.</li>
             <li><strong>En motpart.</strong> Ekonomisk förening med organisationsnummer, faktura och en bokningskontakt.</li>
@@ -438,7 +419,7 @@ def write_pages():
         <div class="grid-2">
           <article class="card">
             <h3>Vad som följer med</h3>
-            <p>Band, grundläggande PA, två ljudtekniker. Behöver ni extra täckning i en stor sal eller teknik utöver vår egen utrustning har vi uthyrare vi redan jobbar med.</p>
+            <p>Band och liveupplevelse med blåssektion. {PA_TEKNIK_COPY} Behöver ni extra täckning i en stor sal har vi uthyrare vi redan jobbar med.</p>
           </article>
           <article class="card">
             <h3>Vad vi behöver av er</h3>
@@ -519,65 +500,10 @@ def write_pages():
         <p>Styrkan är mångsidigheten. Det som behövs för att göra festen speciell, det ställer vi upp på. När ni bokar oss ska kvällen kännas unik - inte som en slumpmässig coverkväll.</p>
       </div>
     </section>
-    <section class="section section-alt">
-      <div class="wrap">
-        <h2>Permanenta medlemmar</h2>
-        <div class="members">
-          <article class="member">
-            <img src="/assets/img/member-edvin.jpg" alt="Edvin Sydmark spelar gitarr på scen">
-            <h3>Edvin Sydmark</h3>
-            <p class="role">Gitarr</p>
-            <p>Ämneslärare från Ör utanför Växjö. Gitarrist och en av bandets ljudtekniker, med en uttalad svaghet för varmkorv och flädersaft.</p>
-          </article>
-          <article class="member">
-            <img src="/assets/img/member-jonathan.jpg" alt="Jonathan Eryd vid trummorna">
-            <h3>Jonathan Eryd</h3>
-            <p class="role">Trummor</p>
-            <p>Skånsk tvillingfar, bandets äldste och transportarbetare. Jazzentusiast med ödmjukhet och ett stort sinne för humor.</p>
-          </article>
-          <article class="member">
-            <img src="/assets/img/member-ivar.jpg" alt="Ivar Lundin spelar klaviatur">
-            <h3>Ivar Lundin</h3>
-            <p class="role">Klaviatur</p>
-            <p>Multiinstrumentalist i Malmö som balanserar IT-arbete med jazz och havet. Bidrar ofta med arrangemang - ibland med aningen mycket jazzinslag.</p>
-          </article>
-          <article class="member">
-            <img src="/assets/img/member-nils.jpg" alt="Nils Biström med trumpet">
-            <h3>Nils Biström</h3>
-            <p class="role">Trumpet och kör</p>
-            <p>Född i skogarna runt Älmhult. Trumpetare med flera orkestrar bakom sig och utbildning i musikproduktion. Falsetten är känd i södra Sverige.</p>
-          </article>
-          <article class="member">
-            <img src="/assets/img/member-adam.jpg" alt="Adam Blidstål sjunger">
-            <h3>Adam Blidstål</h3>
-            <p class="role">Sång</p>
-            <p>Växjöbördig, pappa till nästa generation musiker och lärare i samhällskunskap och historia. Minst formellt musikutbildad i bandet - med en talang som räcker långt.</p>
-          </article>
-          <article class="member">
-            <img src="/assets/img/member-gustav.jpg" alt="Gustav Magnusson sjunger i mikrofon">
-            <h3>Gustav Magnusson</h3>
-            <p class="role">Sång och slagverk</p>
-            <p>Från Vislanda. Sjunger, backar släp och undervisar musik på mellanstadiet när det inte är bröllopssäsong. Har gjort musikaler i Växjötrakten både på scen och bakom mixern.</p>
-          </article>
-          <article class="member">
-            <img src="/assets/img/member-zacharias.jpg" alt="Zacharias Pelz med basgitarr">
-            <h3>Zacharias Pelz</h3>
-            <p class="role">Basgitarr</p>
-            <p>Växjöbördig och alltid gladlynt, med bakgrund från jazz till dödsmetall. Till vardags heltidsförälder och mjukvarusäljare.</p>
-          </article>
-          <article class="member">
-            <img src="/assets/img/member-olof.jpg" alt="Olof Ingelsten med saxofon">
-            <h3>Olof Ingelsten</h3>
-            <p class="role">Saxofon och kör</p>
-            <p>Multimusikant som behärskar det mesta som gungar. Nyexaminerad designer i Malmö med passion för musik, simning och bastubad - och nästan alla träblåsinstrument.</p>
-          </article>
-        </div>
-      </div>
-    </section>
     <section class="section">
       <div class="wrap">
         <h2>Föreningen</h2>
-        <p>Vi är <strong>Halv Fjorton EK. FÖR.</strong>, organisationsnummer <strong>769641-5418</strong>. Kontakt: <a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a>, <a href="tel:+46709742085">+46 70 974 20 85</a>, Instagram <a href="https://www.instagram.com/halvfjorton/">@halvfjorton</a>.</p>
+        <p>Vi är <strong>Halv Fjorton EK. FÖR.</strong>, organisationsnummer <strong>769641-5418</strong>. Kontakt: <a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a>, Instagram <a href="https://www.instagram.com/halvfjorton/">@halvfjorton</a>.</p>
       </div>
     </section>
 """,
@@ -655,11 +581,11 @@ def write_pages():
                 "/for-eventbolag/",
             )
         ],
-        body="""    <header class="page-hero compact">
+        body=f"""    <header class="page-hero compact">
       <div class="page-hero-copy">
         <p class="eyebrow">För eventbolag och bookers</p>
         <h1>Ett komplett partyband ni kan sätta i offerten utan att gissa</h1>
-        <p class="lead">Halv Fjorton är åtta musiker med blåssektion, egen grundteknik och alltid två ljudtekniker. Rötter i Växjö, spelningar i södra Sverige. Soul, funk, rock och svenska klassiker.</p>
+        <p class="lead">Halv Fjorton är åtta musiker med egen blåssektion. Rötter i Växjö, spelningar i södra Sverige. Soul, funk, rock och svenska klassiker.</p>
       </div>
     </header>
     <section class="section">
@@ -672,8 +598,7 @@ def write_pages():
           <h2>Vad kunden får</h2>
           <ul class="list-check">
             <li>8 musiker på scen (sång, gitarr, bas, trummor, klaviatur, slagverk, trumpet, saxofon)</li>
-            <li>Egen PA för typisk fest- och konferenslokal</li>
-            <li>Två ljudtekniker - inte en person som både spelar och mixar ensam</li>
+            <li>{PA_TEKNIK_COPY}</li>
             <li>Möjlighet att kombinera mingel och dansspelning samma kväll</li>
             <li>Specialönskemål: middag, sambatåg, fanfar, utvald första dans</li>
           </ul>
@@ -683,10 +608,10 @@ def write_pages():
     <section class="section section-alt">
       <div class="wrap">
         <h2>Teknik i korthet</h2>
-        <p>Vi tar med egen grundutrustning och två tekniker. Exakt inputlista, scenskiss och strömbehov skickas per spelning - underlaget här är en sammanfattning, inte ett färdigt rider.</p>
+        <p>{PA_TEKNIK_COPY} Exakt inputlista, scenskiss och strömbehov skickas per spelning - underlaget här är en sammanfattning, inte ett färdigt rider.</p>
         <div class="faq-grid">
-          <article><h3>Ljud</h3><p>Eget PA dimensionerat för fest och konferens. Extra täckning eller linjearray via samarbetande uthyrare vid behov.</p></article>
-          <article><h3>Scen</h3><p>Åtta personer plus teknik. Bekräfta scendmått och bärväg i lokalen så att vi inte gissar lastning.</p></article>
+          <article><h3>Ljud</h3><p>{PA_TEKNIK_COPY} Extra täckning eller linjearray via samarbetande uthyrare vid behov.</p></article>
+          <article><h3>Scen</h3><p>Åtta musiker på scen. Bekräfta scendmått och bärväg i lokalen så att vi inte gissar lastning.</p></article>
           <article><h3>Rider</h3><p><em>Teknisk rider, kanallista och scenskiss läggs till som nedladdningsbara PDF:er här.</em></p></article>
         </div>
       </div>
@@ -697,14 +622,14 @@ def write_pages():
           <h2>Presskit</h2>
           <ul class="list-check">
             <li>Film: <a href="/lyssna/">Signed Sealed Delivered 2025</a> och <a href="/lyssna/">Reel 2022</a></li>
-            <li>Foton: medlemsbilder och scenfoton på den här sajten</li>
+            <li>Foton: scenfoton på den här sajten</li>
             <li><em>Högupplösta pressfoton och logotyppaket läggs till</em></li>
             <li>Instagram: <a href="https://www.instagram.com/halvfjorton/">@halvfjorton</a></li>
           </ul>
         </div>
         <div>
           <h2>Organisation och avtal</h2>
-          <p>Halv Fjorton EK. FÖR.<br>Org.nr 769641-5418<br><a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a><br><a href="tel:+46709742085">+46 70 974 20 85</a></p>
+          <p>Halv Fjorton EK. FÖR.<br>Org.nr 769641-5418<br><a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a></p>
           <p>Faktura mot företag och byrå. En bokningskontakt från vår sida. Inga påhittade referenslogotyper här - be oss om aktuella referenser till liknande event.</p>
         </div>
       </div>
@@ -733,8 +658,12 @@ def write_pages():
             "Halv Fjorton är åtta permanenta medlemmar: sång, gitarr, bas, trummor, klaviatur, slagverk, trumpet och saxofon - plus kör. Namnet kommer från att vi började som sju, alltså halva fjorton.",
         ),
         (
-            "Ingår teknik och ljudtekniker?",
-            "Ja. Vi tar med egen utrustning för en medryckande liveupplevelse och har alltid två ljudtekniker. Behöver ni ljud utöver huvudakten, eller teknik utöver vår egen, hjälper vi till via uthyrare vi redan samarbetar med.",
+            "Ingår teknik och PA?",
+            f"Ja, för en medryckande liveupplevelse. {PA_TEKNIK_COPY} Behöver ni teknik utöver det som ingår hjälper vi till via uthyrare vi redan samarbetar med.",
+        ),
+        (
+            "Kan ni vara kompband för artist?",
+            "Ja. Vi kan kompa solist eller artist på bröllop, fest och andra tillställningar - till exempel vid vigsel, psalmer eller när någon i sällskapet vill sjunga med fullt band.",
         ),
         (
             "Vilka tillställningar spelar ni på?",
@@ -746,7 +675,7 @@ def write_pages():
         ),
         (
             "Hur går en bokning till?",
-            "Skicka datum, plats och typ av tillställning via mejl, telefon eller formuläret. Vi kollar tillgänglighet, återkommer med ett upplägg och därefter en offert. När ni säger ja bekräftar vi skriftligt.",
+            "Skicka datum, plats och typ av tillställning via mejl eller formuläret. Vi kollar tillgänglighet, återkommer med ett upplägg och därefter en offert. När ni säger ja bekräftar vi skriftligt.",
         ),
         (
             "Hur lång framförhållning behövs?",
@@ -766,7 +695,7 @@ def write_pages():
         ),
         (
             "Vem fakturerar?",
-            "Halv Fjorton EK. FÖR., organisationsnummer 769641-5418. Mejl halvfjorton@gmail.com, telefon +46 70 974 20 85.",
+            "Halv Fjorton EK. FÖR., organisationsnummer 769641-5418. Mejl halvfjorton@gmail.com.",
         ),
     ]
     faq_items = "\n".join(
@@ -799,7 +728,14 @@ def write_pages():
         "/faq/",
         "Vanliga frågor om Halv Fjorton | bokning, teknik och repertoar",
         "FAQ om Halv Fjorton: bandstorlek, teknik, tillfällen, södra Sverige, bokning, framförhållning och skräddarsydd repertoar.",
-        extra_ld=[faq_ld],
+        extra_ld=[
+            faq_ld,
+            service_ld(
+                "Kompband för artist",
+                "Livekompri för solist eller artist på bröllop, fest och event i södra Sverige.",
+                "/faq/",
+            ),
+        ],
         body=f"""    <header class="page-hero compact">
       <div class="page-hero-copy">
         <p class="eyebrow">FAQ</p>
@@ -818,7 +754,7 @@ def write_pages():
     page(
         "/kontakt/",
         "Kontakta Halv Fjorton | boka coverband i södra Sverige",
-        "Kontakta Halv Fjorton för bokning: halvfjorton@gmail.com, 070-974 20 85. Coverband till bröllop, företag och fest i Växjö och södra Sverige.",
+        "Kontakta Halv Fjorton för bokning: halvfjorton@gmail.com. Coverband till bröllop, företag och fest i Växjö och södra Sverige.",
         body="""    <header class="page-hero compact">
       <div class="page-hero-copy">
         <p class="eyebrow">Kontakt</p>
@@ -831,7 +767,6 @@ def write_pages():
         <div>
           <h2>Direkt</h2>
           <p><a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a><br>
-          <a href="tel:+46709742085">+46 70 974 20 85</a><br>
           <a href="https://www.instagram.com/halvfjorton/" rel="noopener noreferrer">Instagram @halvfjorton</a></p>
           <p>Halv Fjorton EK. FÖR.<br>Organisationsnummer 769641-5418</p>
           <h3>Bra att ha med i mejlet</h3>
