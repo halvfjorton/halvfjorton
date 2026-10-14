@@ -8,6 +8,7 @@
   "url": "https://halvfjorton.se/",
   "image": "https://halvfjorton.se/assets/img/og.jpg",
   "email": "halvfjorton@gmail.com",
+  "foundingDate": "2018",
   "genre": ["Soul", "Funk", "Rock", "Coverband", "Partyband"],
   "foundingLocation": {
     "@type": "Place",
@@ -19,8 +20,92 @@
       "addressCountry": "SE"
     }
   },
-  "areaServed": "Södra Sverige",
-  "sameAs": ["https://www.instagram.com/halvfjorton/"],
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Växjö",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Kronoberg",
+        "addressCountry": "SE"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Älmhult",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Kronoberg",
+        "addressCountry": "SE"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Kalmar",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Kalmar",
+        "addressCountry": "SE"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Jönköping",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Jönköping",
+        "addressCountry": "SE"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Lund",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Skåne",
+        "addressCountry": "SE"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Malmö",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Skåne",
+        "addressCountry": "SE"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "Helsingborg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Skåne",
+        "addressCountry": "SE"
+      }
+    },
+    {
+      "@type": "AdministrativeArea",
+      "name": "Småland",
+      "addressCountry": "SE"
+    },
+    {
+      "@type": "AdministrativeArea",
+      "name": "Skåne",
+      "addressCountry": "SE"
+    }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/halvfjorton/",
+    "https://www.youtube.com/@halvfjorton9292"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "halvfjorton@gmail.com",
+    "contactType": "booking",
+    "areaServed": "SE",
+    "availableLanguage": ["sv", "en"]
+  },
   "identifier": {
     "@type": "PropertyValue",
     "propertyID": "orgnr",

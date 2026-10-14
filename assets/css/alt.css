@@ -516,6 +516,32 @@
   transition: transform 0.5s var(--alt-ease);
 }
 
+.alt-video .embed {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--alt-radius);
+  overflow: hidden;
+  border: 1px solid var(--alt-line);
+  background: var(--alt-bg-elevated);
+}
+
+.alt-video .video-facade__play {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: var(--alt-bg-elevated);
+}
+
+.alt-video .video-facade__play img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .alt-gallery__item--portrait img {
   object-fit: cover;
   aspect-ratio: 3 / 4;

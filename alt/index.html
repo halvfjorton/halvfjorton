@@ -35,6 +35,7 @@
     "url": "https://halvfjorton.se/",
     "image": "https://halvfjorton.se/assets/img/og.jpg",
     "email": "halvfjorton@gmail.com",
+    "foundingDate": "2018",
     "genre": [
       "Soul",
       "Funk",
@@ -52,10 +53,95 @@
         "addressCountry": "SE"
       }
     },
-    "areaServed": "Södra Sverige",
-    "sameAs": [
-      "https://www.instagram.com/halvfjorton/"
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "Växjö",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "Kronoberg",
+          "addressCountry": "SE"
+        }
+      },
+      {
+        "@type": "City",
+        "name": "Älmhult",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "Kronoberg",
+          "addressCountry": "SE"
+        }
+      },
+      {
+        "@type": "City",
+        "name": "Kalmar",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "Kalmar",
+          "addressCountry": "SE"
+        }
+      },
+      {
+        "@type": "City",
+        "name": "Jönköping",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "Jönköping",
+          "addressCountry": "SE"
+        }
+      },
+      {
+        "@type": "City",
+        "name": "Lund",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "Skåne",
+          "addressCountry": "SE"
+        }
+      },
+      {
+        "@type": "City",
+        "name": "Malmö",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "Skåne",
+          "addressCountry": "SE"
+        }
+      },
+      {
+        "@type": "City",
+        "name": "Helsingborg",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "Skåne",
+          "addressCountry": "SE"
+        }
+      },
+      {
+        "@type": "AdministrativeArea",
+        "name": "Småland",
+        "addressCountry": "SE"
+      },
+      {
+        "@type": "AdministrativeArea",
+        "name": "Skåne",
+        "addressCountry": "SE"
+      }
     ],
+    "sameAs": [
+      "https://www.instagram.com/halvfjorton/",
+      "https://www.youtube.com/@halvfjorton9292"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "halvfjorton@gmail.com",
+      "contactType": "booking",
+      "areaServed": "SE",
+      "availableLanguage": [
+        "sv",
+        "en"
+      ]
+    },
     "identifier": {
       "@type": "PropertyValue",
       "propertyID": "orgnr",
@@ -79,6 +165,20 @@
         "item": "https://halvfjorton.se/alt/"
       }
     ]
+  },
+    {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Signed Sealed Delivered - Halv Fjorton",
+    "description": "Livevideo med Halv Fjorton som cover- och bröllopsband i södra Sverige.",
+    "thumbnailUrl": "https://i.ytimg.com/vi/V2Nb8jMKUCk/hqdefault.jpg",
+    "embedUrl": "https://www.youtube-nocookie.com/embed/V2Nb8jMKUCk",
+    "contentUrl": "https://www.youtube.com/watch?v=V2Nb8jMKUCk",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Halv Fjorton",
+      "url": "https://halvfjorton.se/"
+    }
   }
   </script>
   <link rel="preload" as="image" href="../assets/img/gallery/halvfjorton-01.webp" type="image/webp">
@@ -140,7 +240,7 @@
           <span>8 musiker</span>
           <span>Egen blåssektion</span>
           <span>Södra Sverige</span>
-          <span class="alt-facts__placeholder">Grundat [ÅR - fyll i]</span>
+          <span>Grundat 2018</span>
         </div>
         <span>Växjö till Malmö</span>
       </div>
@@ -176,6 +276,17 @@
       </div>
     </section>
 
+
+    <section class="alt-video section" aria-labelledby="alt-video-rubrik" data-reveal>
+      <div class="wrap" style="max-width:var(--alt-max);margin:0 auto;padding:0 1.25rem 4rem">
+        <h2 id="alt-video-rubrik">Bröllop på film</h2>
+        <div class="embed video-facade" data-video-facade="V2Nb8jMKUCk" data-video-title="Signed Sealed Delivered - Halv Fjorton">
+          <button type="button" class="video-facade__play" aria-label="Spela video: Signed Sealed Delivered - Halv Fjorton">
+            <img src="https://i.ytimg.com/vi/V2Nb8jMKUCk/hqdefault.jpg" alt="Förhandsbild: Halv Fjorton som bröllopsband i södra Sverige" width="1280" height="720" loading="lazy" decoding="async">
+          </button>
+        </div>
+      </div>
+    </section>
     <section class="alt-intro" aria-labelledby="alt-intro-rubrik" data-reveal>
       <div class="alt-intro__inner">
         <h2 id="alt-intro-rubrik">En kontakt, hela bilden</h2>
@@ -293,6 +404,7 @@
   </footer>
 
   <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/video-facade.js" defer></script>
   <style>
     .visually-hidden {
       position: absolute;
