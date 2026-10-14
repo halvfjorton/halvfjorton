@@ -1318,10 +1318,11 @@ def patch_alt_page():
             '  <script src="../assets/js/nav.js"></script>\n  <script src="../assets/js/alt-nav.js" defer></script>',
         )
     html = re.sub(
-        r'<nav class="alt-nav" aria-label="Huvudmeny">[\s\S]*?</nav>',
+        r'^[ \t]*<nav class="alt-nav" aria-label="Huvudmeny">[\s\S]*?</nav>',
         alt_nav_block(),
         html,
         count=1,
+        flags=re.MULTILINE,
     )
     html = re.sub(
         r'href="mailto:halvfjorton@gmail.com\?subject=Beg%C3%A4r%20offert[^"]*"',
