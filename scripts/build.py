@@ -73,9 +73,19 @@ def load_org() -> dict:
     return json.loads(ORGANIZATION_JSON.read_text(encoding="utf-8"))
 
 
+BRAND_MARK_PX = 42
+
 def brand_logo_markup() -> str:
     svg = H14_LOGO.read_text(encoding="utf-8")
-    return svg.replace("<svg ", '<svg class="brand-mark" focusable="false" ', 1)
+    svg = re.sub(
+        r'<svg\s+',
+        '<svg class="brand-mark" focusable="false" ',
+        svg,
+        count=1,
+    )
+    svg = re.sub(r'\bwidth="[^"]*"', f'width="{BRAND_MARK_PX}"', svg, count=1)
+    svg = re.sub(r'\bheight="[^"]*"', f'height="{BRAND_MARK_PX}"', svg, count=1)
+    return svg
 
 
 def aeo_answer(text: str) -> str:
@@ -1167,6 +1177,13 @@ def patch_alt_page():
         r'<img src="\.\./assets/img/logo-mark\.png"[^>]*>\s*',
         logo + "\n",
         html,
+    )
+    html = re.sub(
+        r"\s*<svg class=\"brand-mark\".*?</svg>\s*",
+        "\n" + logo + "\n",
+        html,
+        count=1,
+        flags=re.DOTALL,
     )
     html = html.replace(
         '<a class="alt-brand brand" href="../">',
