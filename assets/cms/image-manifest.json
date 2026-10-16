@@ -157,6 +157,17 @@
       "srcset": "/assets/img/gallery/halvfjorton-06-480w.webp 480w, /assets/img/gallery/halvfjorton-06-800w.webp 800w, /assets/img/gallery/halvfjorton-06-1200w.webp 1200w, /assets/img/gallery/halvfjorton-06-1920w.webp 1920w"
     },
     {
+      "id": "gallery/halvfjorton-acoustic-trio-white-room.webp",
+      "label": "halvfjorton-acoustic-trio-white-room.webp",
+      "default": "/assets/img/gallery/halvfjorton-acoustic-trio-white-room-800w.webp",
+      "variants": {
+        "1600w": "/assets/img/gallery/halvfjorton-acoustic-trio-white-room-1600w.webp",
+        "800w": "/assets/img/gallery/halvfjorton-acoustic-trio-white-room-800w.webp",
+        "default": "/assets/img/gallery/halvfjorton-acoustic-trio-white-room-800w.webp"
+      },
+      "srcset": "/assets/img/gallery/halvfjorton-acoustic-trio-white-room-800w.webp 800w, /assets/img/gallery/halvfjorton-acoustic-trio-white-room-1600w.webp 1600w"
+    },
+    {
       "id": "gallery/halvfjorton-band-forest-bw.webp",
       "label": "halvfjorton-band-forest-bw.webp",
       "default": "/assets/img/gallery/halvfjorton-band-forest-bw-800w.webp",
@@ -223,6 +234,17 @@
       "srcset": "/assets/img/gallery/halvfjorton-keys-guitarists-pink-800w.webp 800w, /assets/img/gallery/halvfjorton-keys-guitarists-pink-1600w.webp 1600w"
     },
     {
+      "id": "gallery/halvfjorton-singer-bw-pointing.webp",
+      "label": "halvfjorton-singer-bw-pointing.webp",
+      "default": "/assets/img/gallery/halvfjorton-singer-bw-pointing-800w.webp",
+      "variants": {
+        "1600w": "/assets/img/gallery/halvfjorton-singer-bw-pointing-1600w.webp",
+        "800w": "/assets/img/gallery/halvfjorton-singer-bw-pointing-800w.webp",
+        "default": "/assets/img/gallery/halvfjorton-singer-bw-pointing-800w.webp"
+      },
+      "srcset": "/assets/img/gallery/halvfjorton-singer-bw-pointing-800w.webp 800w, /assets/img/gallery/halvfjorton-singer-bw-pointing-1600w.webp 1600w"
+    },
+    {
       "id": "gallery/halvfjorton-stage-blue-dining-hall.webp",
       "label": "halvfjorton-stage-blue-dining-hall.webp",
       "default": "/assets/img/gallery/halvfjorton-stage-blue-dining-hall-800w.webp",
@@ -264,6 +286,17 @@
         "default": "/assets/img/gallery/halvfjorton-trumpet-barn-wedding.webp"
       },
       "srcset": "/assets/img/gallery/halvfjorton-trumpet-barn-wedding-800w.webp 800w"
+    },
+    {
+      "id": "gallery/halvfjorton-trumpet-sax-bw-stage.webp",
+      "label": "halvfjorton-trumpet-sax-bw-stage.webp",
+      "default": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp",
+      "variants": {
+        "1600w": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-1600w.webp",
+        "800w": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp",
+        "default": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp"
+      },
+      "srcset": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-1600w.webp 1600w"
     },
     {
       "id": "gallery/halvfjorton-warehouse-green-stage.webp",

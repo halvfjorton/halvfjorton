@@ -320,7 +320,7 @@
         applyHeroListToDom(container, working, manifest);
         var cmsId = heroCmsId(heroKey);
         var source =
-          heroKey === "home" ? "home/index.html" : "scripts/build.py";
+          heroKey === "home" ? "scripts/templates/home/index.html" : "scripts/build.py";
         deps.recordChange(store, {
           cmsId: cmsId,
           page: deps.pagePath(),

@@ -8,6 +8,10 @@ import re
 from pathlib import Path
 
 CMS_STUB_MARK = 'data-cms-stub="1"'
+CMS_STUB_SCRIPT_RE = re.compile(
+    r'\n?\s*<script src="[^"]*cmsmode-stub\.js[^"]*" defer data-cms-stub="1"></script>',
+    re.IGNORECASE,
+)
 
 # Default alt for CMS image picker (manifest id -> Swedish description).
 IMAGE_MANIFEST_DEFAULT_ALT: dict[str, str] = {}
@@ -27,6 +31,10 @@ def cms_asset_version(source_root: Path) -> str:
     if not blobs:
         return "0"
     return hashlib.sha256(b"".join(blobs)).hexdigest()[:10]
+
+
+def strip_cms_stub_script(html: str) -> str:
+    return CMS_STUB_SCRIPT_RE.sub("", html)
 
 
 def cms_stub_script(url_prefix: str, version: str = "") -> str:
@@ -86,7 +94,7 @@ def _page_slug(rel_html: str) -> str:
 def _source_file_for_page(rel_html: str) -> str:
     rel = rel_html.replace("\\", "/")
     if rel == "index.html":
-        return "home/index.html"
+        return "scripts/templates/home/index.html"
     return "scripts/build.py"
 
 
@@ -188,6 +196,7 @@ def annotate_html(
     source_file: str,
     url_prefix: str = "",
     cms_version: str = "",
+    inject_stub: bool = False,
 ) -> str:
     text_counters: dict[str, int] = {}
 
@@ -197,7 +206,9 @@ def annotate_html(
         slash = match.group("slash") or ""
         pos = match.start()
 
-        if tag == "body" and "data-cms-page-source" not in attrs:
+        if tag == "body":
+            attrs = re.sub(r'\sdata-cms-page-source="[^"]*"', "", attrs)
+            attrs = re.sub(r"\sdata-cms-page-slug=\"[^\"]*\"", "", attrs)
             attrs = _inject_attr(attrs, "data-cms-page-source", source_file)
             attrs = _inject_attr(attrs, "data-cms-page-slug", page_slug)
             return f"<{tag}{attrs}{slash}>"
@@ -232,24 +243,37 @@ def annotate_html(
 
     html = _OPEN_TAG.sub(repl, html)
 
-    if CMS_STUB_MARK not in html:
-        prefix = url_prefix.rstrip("/") if url_prefix else ""
-        html = html.replace("</body>", f"{cms_stub_script(prefix, cms_version)}</body>")
+    if inject_stub:
+        if CMS_STUB_MARK not in html:
+            prefix = url_prefix.rstrip("/") if url_prefix else ""
+            html = html.replace("</body>", f"{cms_stub_script(prefix, cms_version)}</body>")
+    else:
+        html = strip_cms_stub_script(html)
     return html
 
 
-def annotate_site_html(target: Path, url_prefix: str = "", cms_version: str = "") -> None:
+def annotate_site_html(
+    target: Path,
+    url_prefix: str = "",
+    cms_version: str = "",
+    inject_stub: bool = False,
+) -> None:
     for file_path in sorted(target.rglob("*.html")):
         if not file_path.is_file():
             continue
         rel = str(file_path.relative_to(target))
-        if rel.startswith("home/"):
+        if rel.startswith(("home/", "scripts/")):
             continue
         slug = _page_slug(rel)
         source = _source_file_for_page(rel)
         text = file_path.read_text(encoding="utf-8")
         patched = annotate_html(
-            text, slug, source, url_prefix=url_prefix, cms_version=cms_version
+            text,
+            slug,
+            source,
+            url_prefix=url_prefix,
+            cms_version=cms_version,
+            inject_stub=inject_stub,
         )
         if patched != text:
             file_path.write_text(patched, encoding="utf-8")
@@ -345,9 +369,20 @@ def write_image_manifest(img_root: Path, out_path: Path, url_prefix: str = "") -
     print("wrote", out_path)
 
 
-def run_cms_build_steps(target: Path, source_root: Path, subpath: str) -> None:
+def run_cms_build_steps(
+    target: Path,
+    source_root: Path,
+    subpath: str,
+    *,
+    inject_cms_stub: bool = False,
+) -> None:
     prefix = subpath.rstrip("/") if subpath else ""
     cms_version = cms_asset_version(source_root)
     manifest_out = target / "assets" / "cms" / "image-manifest.json"
     write_image_manifest(source_root / "assets" / "img", manifest_out, url_prefix=prefix)
-    annotate_site_html(target, url_prefix=prefix, cms_version=cms_version)
+    annotate_site_html(
+        target,
+        url_prefix=prefix,
+        cms_version=cms_version,
+        inject_stub=inject_cms_stub,
+    )
