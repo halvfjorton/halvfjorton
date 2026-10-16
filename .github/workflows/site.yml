@@ -1,0 +1,19 @@
+name: Site build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build site
+        run: python3 scripts/build.py
+      - name: Assert CNAME
+        run: test "$(cat CNAME)" = "halvfjorton.se"
