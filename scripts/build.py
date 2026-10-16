@@ -2261,7 +2261,6 @@ Kärnregion i södra Sverige: Växjö, Älmhult, Kalmar, Jönköping, Lund, Malm
 - Bröllop: {SITE}/brollop/
 - Företag: {SITE}/foretag/
 - Fest och mingel: {SITE}/fest-och-mingel/
-- Egen julkonsert (A Soulful Christmas, Nygatan 6 Växjö sedan 2023): /julkonsert/
 
 ## Viktiga sidor
 - Startsida: {SITE}/

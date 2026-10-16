@@ -15,5 +15,7 @@ jobs:
           python-version: "3.12"
       - name: Build site
         run: python3 scripts/build.py
+      - name: Assert build output matches committed files
+        run: git diff --exit-code
       - name: Assert CNAME
         run: test "$(cat CNAME)" = "halvfjorton.se"
