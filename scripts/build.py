@@ -123,26 +123,6 @@ NAV_SERVICES = [
     ("/fest-och-mingel/", "Fest och mingel"),
 ]
 
-# Service landing pages kept in build output but omitted from nav, sitemap, and llms.txt.
-HIDDEN_SERVICE_PATHS = frozenset(
-    {
-        "/kompband/",
-        "/50-arsfest/",
-        "/brollopsband-smaland/",
-        "/coverband-skane-malmo/",
-        "/for-eventbolag/",
-    }
-)
-
-SERVICE_LINK_REDIRECTS = {
-    "/kompband/": "/brollop/",
-    "/50-arsfest/": "/fest-och-mingel/",
-    "/mingel/": "/fest-och-mingel/",
-    "/brollopsband-smaland/": "/brollop/",
-    "/coverband-skane-malmo/": "/foretag/",
-    "/for-eventbolag/": "/foretag/",
-}
-
 NAV_PRIMARY = [
     ("/", "Hem"),
     ("/om-oss/", "Om oss"),
@@ -1782,7 +1762,6 @@ def page(
     outfile: Path | None = None,
     breadcrumb_name: str | None = None,
     extra_scripts: str = "",
-    hidden: bool = False,
     robots_tag: str | None = None,
     include_canonical: bool = True,
 ):
@@ -1801,13 +1780,7 @@ def page(
     nav_block = home_nav_block(path, "/#offert")
     mobile_menu = mobile_menu_block(path, "/#offert")
     toggle = alt_header_mobile_controls_markup("mobile-menu")
-    if hidden and path not in HIDDEN_SERVICE_PATHS:
-        raise ValueError(f"hidden=True requires path in HIDDEN_SERVICE_PATHS, got {path}")
-    if not hidden and path in HIDDEN_SERVICE_PATHS:
-        raise ValueError(f"path {path} must use hidden=True")
-    robots = robots_tag if robots_tag is not None else (
-        "noindex,nofollow" if hidden else "index,follow"
-    )
+    robots = robots_tag if robots_tag is not None else "index,follow"
     canonical_line = (
         f'  <link rel="canonical" href="{canonical}">\n' if include_canonical else ""
     )
@@ -1927,80 +1900,7 @@ def write_pages():
         body=standard_service_page_body(MINGEL_STANDARD_PAGE),
     )
 
-    page(
-        "/kompband/",
-        f"Kompband för artist i Småland och Skåne | {BRAND_TITLE}",
-        "Kompband för solist eller inhyrd artist på bröllop, fest och företagsevent. Växjö, Malmö, Lund och övriga södra Sverige.",
-        breadcrumb_name="Kompband",
-        hidden=True,
-        extra_ld=[
-            service_ld(
-                "Kompband för artist",
-                "Livekompri för solist eller inhyrd artist på bröllop, fest och företagsevent.",
-                "/kompband/",
-            )
-        ],
-        body=f"""    <header class="page-hero compact">
-      <div class="page-hero-copy">
-        <h1>Kompband för solist och artist</h1>
-{aeo_answer("Halv Fjorton fungerar som kompband när ni vill att en solist, gäst eller inhyrd artist ska framföras med fullt liveband. Samma åtta musiker och egen blåssektion som på våra vanliga gig.")}
-        <p class="lead">Vanligt vid vigsel, psalmer, gästsång eller när eventbolag tar in en artist som behöver ordnat komp.</p>
-      </div>
-    </header>
-    <section class="section">
-      <div class="wrap grid-2">
-        <div>
-          <h2>När det passar</h2>
-          <ul class="list-check">
-            <li>Bröllopsvigsel med solist eller psalmer</li>
-            <li>Gäst som vill sjunga med band</li>
-            <li>Företagsevent med inhyrd artist</li>
-            <li>Specialmoment under fest eller mingel</li>
-          </ul>
-        </div>
-        <div>
-          <p>Skicka låtlista, tonart och ungefärliga tider i god tid. Vi återkommer med förslag och offert via <a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a>.</p>
-          <div class="actions">
-            <a class="btn btn-primary" href="/kontakt/#offert">Begär offert</a>
-            <a class="btn btn-ghost" href="/brollop/">Bröllop</a>
-          </div>
-        </div>
-      </div>
-    </section>
-""",
-    )
 
-    page(
-        "/50-arsfest/",
-        f"50-årsfest och privatfest | liveband {BRAND_TITLE.split(' | ')[0]}",
-        "Liveband till 50-årsfest, privatfest och födelsedag i Växjö, Småland och Skåne. Två set soul, funk och svenska klassiker.",
-        breadcrumb_name="50-årsfest",
-        hidden=True,
-        extra_ld=[
-            service_ld(
-                "50-årsfest och privatfest",
-                "Festmusik till 50-årsfest, privatfest och födelsedag med två set live.",
-                "/50-arsfest/",
-            )
-        ],
-        body=f"""    <header class="page-hero compact">
-      <div class="page-hero-copy">
-        <h1>Liveband till 50-årsfest och privatfest</h1>
-{aeo_answer("Vi spelar 50-årsfester och andra privata tillställningar med samma sättning som till bröllop och företag: två set med dans, blås och igenkännbara låtar.")}
-        <p class="lead">Lokal, loge eller hembygdsgård i Småland eller Skåne. Hör av er med datum och ort.</p>
-      </div>
-    </header>
-    <section class="section">
-      <div class="wrap">
-        <p>Repertoaren växlar mellan soul, funk, rock och svenska klassiker så att både dansgolv och generationsmix fungerar. Mingel samma kväll går att kombinera.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="/kontakt/">Hör av er</a>
-          <a class="btn btn-ghost" href="/faq/">Vanliga frågor</a>
-        </div>
-      </div>
-    </section>
-""",
-    )
 
     page(
         "/julkonsert/",
@@ -2051,65 +1951,7 @@ def write_pages():
 """,
     )
 
-    page(
-        "/brollopsband-smaland/",
-        f"Bröllopsband Småland, Växjö, Kalmar, Älmhult | {BRAND_TITLE}",
-        "Bröllopsband i Småland: Växjö, Kalmar, Älmhult och Jönköping. Två set partymusik, mingel och vigselmusik. Egen blåssektion.",
-        breadcrumb_name="Bröllopsband Småland",
-        hidden=True,
-        extra_ld=[
-            service_ld(
-                "Bröllopsband Småland",
-                "Bröllopsband i Småland med två set partymusik till bröllop i Växjö, Kalmar, Älmhult och Jönköping.",
-                "/brollopsband-smaland/",
-            )
-        ],
-        body=f"""    <header class="page-hero compact">
-      <div class="page-hero-copy">
-        <h1>Bröllopsband i Småland</h1>
-{aeo_answer("Halv Fjorton är hemmahörande i Växjö och spelar bröllop i hela Småland, från Kalmar och Älmhult till Jönköping. Två set dansmusik med egen blåssektion.")}
-        <p class="lead">Samma band till mingel, vigsel och fest. Andra orter utanför listan kan fungera - fråga i mejlet.</p>
-      </div>
-    </header>
-    <section class="section">
-      <div class="wrap">
-        <p>Se hela upplägget på <a href="/brollop/">bröllop</a> eller begär offert direkt.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="/kontakt/#offert">Begär offert</a>
-          <a class="btn btn-ghost" href="/foretag/">Skåne och Malmö</a>
-        </div>
-      </div>
-    </section>
-""",
-    )
 
-    page(
-        "/coverband-skane-malmo/",
-        f"Coverband Skåne, Malmö, Lund, Helsingborg | {BRAND_TITLE}",
-        "Coverband och festband i Skåne: Malmö, Lund och Helsingborg. Bröllop, företagsfest och privatfest med åtta musiker.",
-        breadcrumb_name="Coverband Skåne",
-        hidden=True,
-        extra_ld=[
-            service_ld(
-                "Coverband Skåne",
-                "Coverband och festband i Malmö, Lund, Helsingborg och övriga Skåne.",
-                "/coverband-skane-malmo/",
-            )
-        ],
-        body=f"""    <header class="page-hero compact">
-      <div class="page-hero-copy">
-        <h1>Coverband i Malmö och Skåne</h1>
-{aeo_answer("Vi spelar regelbundet i Skåne med bas i södra Sverige: Malmö, Lund och Helsingborg är vanliga orter. Samma åtta mannasband med soul, funk och svenska klassiker.")}
-        <p class="lead">Personalfest, bröllop eller privatfest. Spelningar utanför Skåne och Småland går att diskutera.</p>
-      </div>
-    </header>
-    <section class="section">
-      <div class="wrap">
-        <p>Läs mer om <a href="/foretag/">företagsfest</a> och <a href="/brollop/">bröllop</a>, eller maila <a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a>.</p>
-      </div>
-    </section>
-""",
-    )
 
     page(
         "/om-oss/",
@@ -2227,88 +2069,6 @@ def write_pages():
 """,
     )
 
-    page(
-        "/for-eventbolag/",
-        "Boka Halv Fjorton via eventbolag | underlag för bokare",
-        "Underlag för eventbolag: kort bio, vad som ingår, teknik, presskit, organisationsuppgifter och bokningsgång för Halv Fjorton.",
-        hidden=True,
-        extra_ld=[
-            service_ld(
-                "Bokning via eventbolag",
-                "Coverband för eventbyråer i södra Sverige.",
-                "/for-eventbolag/",
-            )
-        ],
-        body=f"""    <header class="page-hero compact">
-      <div class="page-hero-copy">
-        <h1>Info för eventbolag</h1>
-        <p class="lead">Halv Fjorton är åtta musiker med egen blåssektion. Rötter i Växjö, spelningar i södra Sverige. Soul, funk, rock och svenska klassiker.</p>
-      </div>
-    </header>
-    <section class="section">
-      <div class="wrap grid-2">
-        <div>
-          <h2>Kort bio</h2>
-          <p>Halv Fjorton är ett cover- och partyband från södra Sverige. Bandet har åtta permanenta medlemmar, egen blåssektion och en repertoar med tyngdpunkt i soul och funk - Stevie Wonder, Ray Charles, Earth, Wind &amp; Fire - plus svenska klassiker som Björn Skifs och Tomas Ledin. Vanliga bokningar: bröllop (även vigsel/psalmer), mingel, personalfest, kickoff och jubileum.</p>
-        </div>
-        <div>
-          <h2>Det här ingår</h2>
-          <ul class="list-check">
-            <li>8 musiker på scen (sång, gitarr, bas, trummor, klaviatur, slagverk, trumpet, saxofon)</li>
-            <li>Egen blåssektion och komplett sättning på scen.</li>
-            <li>{LOKAL_TEKNIK_COPY}</li>
-            <li>Möjlighet att kombinera mingel och dansspelning samma kväll</li>
-            <li>Specialönskemål: middag, sambatåg, fanfar, utvald första dans</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    <section class="section section-alt">
-      <div class="wrap">
-        <h2>Teknik i korthet</h2>
-        <p>{LOKAL_TEKNIK_COPY} Exakt inputlista, scenskiss och strömbehov skickas per spelning - underlaget här är en sammanfattning, inte ett färdigt rider.</p>
-        <div class="faq-grid">
-          <article><h3>Ljud</h3><p>{LOKAL_TEKNIK_COPY}</p></article>
-          <article><h3>Scen</h3><p>Åtta musiker på scen. Bekräfta scendmått och bärväg i lokalen så att vi inte gissar lastning.</p></article>
-          <article><h3>Rider</h3><p><em>Teknisk rider, kanallista och scenskiss läggs till som nedladdningsbara PDF:er här.</em></p></article>
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="wrap grid-2">
-        <div>
-          <h2>Presskit</h2>
-          <ul class="list-check">
-            <li>Film: <a href="/lyssna/">Signed Sealed Delivered 2025</a> och <a href="/lyssna/">Reel 2022</a></li>
-            <li>Foton: scenfoton på den här sajten</li>
-            <li><em>Högupplösta pressfoton och logotyppaket läggs till</em></li>
-            <li>Instagram: <a href="https://www.instagram.com/halvfjorton/">@halvfjorton</a></li>
-          </ul>
-        </div>
-        <div>
-          <h2>Organisation och avtal</h2>
-          <p>Halv Fjorton EK. FÖR.<br>Org.nr 769641-5418<br><a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a></p>
-          <p>Faktura mot företag och byrå. En bokningskontakt från vår sida. Inga påhittade referenslogotyper här - be oss om aktuella referenser till liknande event.</p>
-        </div>
-      </div>
-    </section>
-    <section class="section section-alt">
-      <div class="wrap">
-        <h2>Bokningsgång</h2>
-        <div class="faq-grid">
-          <article><h3>Förfrågan</h3><p>Datum, ort, typ av event, antal gäster, mingel plus fest eller bara en del, sluttid.</p></article>
-          <article><h3>Förslag</h3><p>Vi återkommer om tillgänglighet, sättning och ett konkret upplägg. Därefter offert.</p></article>
-          <article><h3>Bekräftelse</h3><p>Skriftlig bokning. Teknikdetaljer och tidsplan närmare eventet. Deposition enligt överenskommelse.</p></article>
-        </div>
-        <p>Säsongstoppar är lördagar vår-sommar och julperioder. Hör av er tidigt om datumet är låst.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="/kontakt/">Hör av er</a>
-          <a class="btn btn-ghost" href="/faq/">FAQ</a>
-        </div>
-      </div>
-    </section>
-""",
-    )
 
     faqs = [
         (
@@ -2939,41 +2699,6 @@ def assert_no_eyebrows_in_build(target: Path) -> None:
         raise SystemExit(f"Build check failed: eyebrow kickers found in output:\n{sample}{extra}")
 
 
-def assert_hidden_services_excluded(target: Path) -> None:
-    sitemap = (target / "sitemap.xml").read_text(encoding="utf-8")
-    for path in HIDDEN_SERVICE_PATHS:
-        loc = f"{SITE}{path}"
-        if loc in sitemap:
-            raise SystemExit(f"Build check failed: hidden service {path} still in sitemap")
-    llms = (target / "llms.txt").read_text(encoding="utf-8")
-    for path in HIDDEN_SERVICE_PATHS:
-        if path in llms or f"{SITE}{path}" in llms:
-            raise SystemExit(f"Build check failed: hidden service {path} still in llms.txt")
-    for path in HIDDEN_SERVICE_PATHS:
-        page_file = target / path.lstrip("/") / "index.html"
-        if not page_file.is_file():
-            raise SystemExit(f"Build check failed: missing hidden page output {path}")
-        html = page_file.read_text(encoding="utf-8")
-        if 'name="robots" content="noindex,nofollow"' not in html:
-            raise SystemExit(f"Build check failed: {path} missing noindex robots meta")
-    visible_samples = (
-        "index.html",
-        "brollop/index.html",
-        "foretag/index.html",
-        "fest-och-mingel/index.html",
-        "faq/index.html",
-    )
-    for rel in visible_samples:
-        page_file = target / rel
-        if not page_file.is_file():
-            continue
-        text = page_file.read_text(encoding="utf-8")
-        for path in HIDDEN_SERVICE_PATHS:
-            if f'href="{path}' in text:
-                raise SystemExit(
-                    f"Build check failed: visible page {rel} still links to hidden {path}"
-                )
-
 
 def assert_integritetspolicy_links_in_build(target: Path) -> None:
     footer_offenders: list[str] = []
@@ -3136,7 +2861,6 @@ def run_build(
     assert_no_eyebrows_in_build(OUT_ROOT)
     assert_no_duplicate_gallery_images_on_page(OUT_ROOT)
     assert_offert_bullet_cap(OUT_ROOT)
-    assert_hidden_services_excluded(OUT_ROOT)
     assert_integritetspolicy_links_in_build(OUT_ROOT)
     assert_footer_styles_in_css(OUT_ROOT / "assets" / "css" / "alt.css")
 
