@@ -5,24 +5,24 @@
     {
       "id": "events/a-soulful-christmas-2026.webp",
       "label": "a-soulful-christmas-2026.webp",
-      "default": "/assets/img/events/a-soulful-christmas-2026.webp",
+      "default": "/assets/img/events/a-soulful-christmas-2026-480w.webp",
       "variants": {
         "1200w": "/assets/img/events/a-soulful-christmas-2026-1200w.webp",
         "480w": "/assets/img/events/a-soulful-christmas-2026-480w.webp",
         "800w": "/assets/img/events/a-soulful-christmas-2026-800w.webp",
-        "default": "/assets/img/events/a-soulful-christmas-2026.webp"
+        "default": "/assets/img/events/a-soulful-christmas-2026-480w.webp"
       },
       "srcset": "/assets/img/events/a-soulful-christmas-2026-480w.webp 480w, /assets/img/events/a-soulful-christmas-2026-800w.webp 800w, /assets/img/events/a-soulful-christmas-2026-1200w.webp 1200w"
     },
     {
       "id": "events/a-soulful-lucia-2025.webp",
       "label": "a-soulful-lucia-2025.webp",
-      "default": "/assets/img/events/a-soulful-lucia-2025.webp",
+      "default": "/assets/img/events/a-soulful-lucia-2025-480w.webp",
       "variants": {
         "1200w": "/assets/img/events/a-soulful-lucia-2025-1200w.webp",
         "480w": "/assets/img/events/a-soulful-lucia-2025-480w.webp",
         "800w": "/assets/img/events/a-soulful-lucia-2025-800w.webp",
-        "default": "/assets/img/events/a-soulful-lucia-2025.webp"
+        "default": "/assets/img/events/a-soulful-lucia-2025-480w.webp"
       },
       "srcset": "/assets/img/events/a-soulful-lucia-2025-480w.webp 480w, /assets/img/events/a-soulful-lucia-2025-800w.webp 800w, /assets/img/events/a-soulful-lucia-2025-1200w.webp 1200w"
     },
@@ -32,15 +32,6 @@
       "default": "/assets/img/favicon.png",
       "variants": {
         "default": "/assets/img/favicon.png"
-      },
-      "srcset": ""
-    },
-    {
-      "id": "fest.jpg",
-      "label": "fest.jpg",
-      "default": "/assets/img/fest.jpg",
-      "variants": {
-        "default": "/assets/img/fest.jpg"
       },
       "srcset": ""
     },
@@ -60,39 +51,26 @@
     {
       "id": "gallery/halvfjorton-01.webp",
       "label": "halvfjorton-01.webp",
-      "default": "/assets/img/gallery/halvfjorton-01.webp",
+      "default": "/assets/img/gallery/halvfjorton-01-480w.webp",
       "variants": {
         "1200w": "/assets/img/gallery/halvfjorton-01-1200w.webp",
         "1920w": "/assets/img/gallery/halvfjorton-01-1920w.webp",
         "480w": "/assets/img/gallery/halvfjorton-01-480w.webp",
         "800w": "/assets/img/gallery/halvfjorton-01-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-01.webp"
+        "default": "/assets/img/gallery/halvfjorton-01-480w.webp"
       },
       "srcset": "/assets/img/gallery/halvfjorton-01-480w.webp 480w, /assets/img/gallery/halvfjorton-01-800w.webp 800w, /assets/img/gallery/halvfjorton-01-1200w.webp 1200w, /assets/img/gallery/halvfjorton-01-1920w.webp 1920w"
     },
     {
-      "id": "gallery/halvfjorton-02-hero.webp",
-      "label": "halvfjorton-02-hero.webp",
-      "default": "/assets/img/gallery/halvfjorton-02-hero-480w.webp",
-      "variants": {
-        "1200w": "/assets/img/gallery/halvfjorton-02-hero-1200w.webp",
-        "1920w": "/assets/img/gallery/halvfjorton-02-hero-1920w.webp",
-        "480w": "/assets/img/gallery/halvfjorton-02-hero-480w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-02-hero-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-02-hero-480w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-02-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-02-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-02-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-02-hero-1920w.webp 1920w"
-    },
-    {
       "id": "gallery/halvfjorton-02.webp",
       "label": "halvfjorton-02.webp",
-      "default": "/assets/img/gallery/halvfjorton-02.webp",
+      "default": "/assets/img/gallery/halvfjorton-02-480w.webp",
       "variants": {
         "1200w": "/assets/img/gallery/halvfjorton-02-1200w.webp",
         "1920w": "/assets/img/gallery/halvfjorton-02-1920w.webp",
         "480w": "/assets/img/gallery/halvfjorton-02-480w.webp",
         "800w": "/assets/img/gallery/halvfjorton-02-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-02.webp"
+        "default": "/assets/img/gallery/halvfjorton-02-480w.webp"
       },
       "srcset": "/assets/img/gallery/halvfjorton-02-480w.webp 480w, /assets/img/gallery/halvfjorton-02-800w.webp 800w, /assets/img/gallery/halvfjorton-02-1200w.webp 1200w, /assets/img/gallery/halvfjorton-02-1920w.webp 1920w"
     },
@@ -112,13 +90,13 @@
     {
       "id": "gallery/halvfjorton-03.webp",
       "label": "halvfjorton-03.webp",
-      "default": "/assets/img/gallery/halvfjorton-03.webp",
+      "default": "/assets/img/gallery/halvfjorton-03-480w.webp",
       "variants": {
         "1200w": "/assets/img/gallery/halvfjorton-03-1200w.webp",
         "1920w": "/assets/img/gallery/halvfjorton-03-1920w.webp",
         "480w": "/assets/img/gallery/halvfjorton-03-480w.webp",
         "800w": "/assets/img/gallery/halvfjorton-03-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-03.webp"
+        "default": "/assets/img/gallery/halvfjorton-03-480w.webp"
       },
       "srcset": "/assets/img/gallery/halvfjorton-03-480w.webp 480w, /assets/img/gallery/halvfjorton-03-800w.webp 800w, /assets/img/gallery/halvfjorton-03-1200w.webp 1200w, /assets/img/gallery/halvfjorton-03-1920w.webp 1920w"
     },
@@ -138,13 +116,13 @@
     {
       "id": "gallery/halvfjorton-04.webp",
       "label": "halvfjorton-04.webp",
-      "default": "/assets/img/gallery/halvfjorton-04.webp",
+      "default": "/assets/img/gallery/halvfjorton-04-480w.webp",
       "variants": {
         "1200w": "/assets/img/gallery/halvfjorton-04-1200w.webp",
         "1920w": "/assets/img/gallery/halvfjorton-04-1920w.webp",
         "480w": "/assets/img/gallery/halvfjorton-04-480w.webp",
         "800w": "/assets/img/gallery/halvfjorton-04-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-04.webp"
+        "default": "/assets/img/gallery/halvfjorton-04-480w.webp"
       },
       "srcset": "/assets/img/gallery/halvfjorton-04-480w.webp 480w, /assets/img/gallery/halvfjorton-04-800w.webp 800w, /assets/img/gallery/halvfjorton-04-1200w.webp 1200w, /assets/img/gallery/halvfjorton-04-1920w.webp 1920w"
     },
@@ -164,64 +142,28 @@
     {
       "id": "gallery/halvfjorton-05.webp",
       "label": "halvfjorton-05.webp",
-      "default": "/assets/img/gallery/halvfjorton-05.webp",
+      "default": "/assets/img/gallery/halvfjorton-05-480w.webp",
       "variants": {
         "1200w": "/assets/img/gallery/halvfjorton-05-1200w.webp",
         "1920w": "/assets/img/gallery/halvfjorton-05-1920w.webp",
         "480w": "/assets/img/gallery/halvfjorton-05-480w.webp",
         "800w": "/assets/img/gallery/halvfjorton-05-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-05.webp"
+        "default": "/assets/img/gallery/halvfjorton-05-480w.webp"
       },
       "srcset": "/assets/img/gallery/halvfjorton-05-480w.webp 480w, /assets/img/gallery/halvfjorton-05-800w.webp 800w, /assets/img/gallery/halvfjorton-05-1200w.webp 1200w, /assets/img/gallery/halvfjorton-05-1920w.webp 1920w"
     },
     {
-      "id": "gallery/halvfjorton-06-hero.webp",
-      "label": "halvfjorton-06-hero.webp",
-      "default": "/assets/img/gallery/halvfjorton-06-hero-480w.webp",
-      "variants": {
-        "1200w": "/assets/img/gallery/halvfjorton-06-hero-1200w.webp",
-        "1920w": "/assets/img/gallery/halvfjorton-06-hero-1920w.webp",
-        "480w": "/assets/img/gallery/halvfjorton-06-hero-480w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-06-hero-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-06-hero-480w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-06-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-06-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-06-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-06-hero-1920w.webp 1920w"
-    },
-    {
       "id": "gallery/halvfjorton-06.webp",
       "label": "halvfjorton-06.webp",
-      "default": "/assets/img/gallery/halvfjorton-06.webp",
+      "default": "/assets/img/gallery/halvfjorton-06-480w.webp",
       "variants": {
         "1200w": "/assets/img/gallery/halvfjorton-06-1200w.webp",
         "1920w": "/assets/img/gallery/halvfjorton-06-1920w.webp",
         "480w": "/assets/img/gallery/halvfjorton-06-480w.webp",
         "800w": "/assets/img/gallery/halvfjorton-06-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-06.webp"
+        "default": "/assets/img/gallery/halvfjorton-06-480w.webp"
       },
       "srcset": "/assets/img/gallery/halvfjorton-06-480w.webp 480w, /assets/img/gallery/halvfjorton-06-800w.webp 800w, /assets/img/gallery/halvfjorton-06-1200w.webp 1200w, /assets/img/gallery/halvfjorton-06-1920w.webp 1920w"
-    },
-    {
-      "id": "gallery/halvfjorton-acoustic-trio-white-room.webp",
-      "label": "halvfjorton-acoustic-trio-white-room.webp",
-      "default": "/assets/img/gallery/halvfjorton-acoustic-trio-white-room-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-acoustic-trio-white-room-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-acoustic-trio-white-room-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-acoustic-trio-white-room-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-acoustic-trio-white-room-800w.webp 800w, /assets/img/gallery/halvfjorton-acoustic-trio-white-room-1600w.webp 1600w",
-      "alt": "Akustisk trio som spelar i ljus festlokal"
-    },
-    {
-      "id": "gallery/halvfjorton-active-sound-crew.webp",
-      "label": "halvfjorton-active-sound-crew.webp",
-      "default": "/assets/img/gallery/halvfjorton-active-sound-crew-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-active-sound-crew-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-active-sound-crew-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-active-sound-crew-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-active-sound-crew-800w.webp 800w, /assets/img/gallery/halvfjorton-active-sound-crew-1600w.webp 1600w"
     },
     {
       "id": "gallery/halvfjorton-band-forest-bw.webp",
@@ -279,40 +221,6 @@
       "srcset": "/assets/img/gallery/halvfjorton-garden-sax-barn-800w.webp 800w, /assets/img/gallery/halvfjorton-garden-sax-barn-1600w.webp 1600w"
     },
     {
-      "id": "gallery/halvfjorton-guitarist-bw-haze.webp",
-      "label": "halvfjorton-guitarist-bw-haze.webp",
-      "default": "/assets/img/gallery/halvfjorton-guitarist-bw-haze-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-guitarist-bw-haze-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-guitarist-bw-haze-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-guitarist-bw-haze-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-guitarist-bw-haze-800w.webp 800w, /assets/img/gallery/halvfjorton-guitarist-bw-haze-1600w.webp 1600w",
-      "alt": "Gitarrist p\u00e5 scen i r\u00f6k, svartvit bild"
-    },
-    {
-      "id": "gallery/halvfjorton-keys-barn-wedding.webp",
-      "label": "halvfjorton-keys-barn-wedding.webp",
-      "default": "/assets/img/gallery/halvfjorton-keys-barn-wedding-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-keys-barn-wedding-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-keys-barn-wedding-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-keys-barn-wedding-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-keys-barn-wedding-800w.webp 800w, /assets/img/gallery/halvfjorton-keys-barn-wedding-1600w.webp 1600w"
-    },
-    {
-      "id": "gallery/halvfjorton-keys-colorful-venue.webp",
-      "label": "halvfjorton-keys-colorful-venue.webp",
-      "default": "/assets/img/gallery/halvfjorton-keys-colorful-venue-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-keys-colorful-venue-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-keys-colorful-venue-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-keys-colorful-venue-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-keys-colorful-venue-800w.webp 800w, /assets/img/gallery/halvfjorton-keys-colorful-venue-1600w.webp 1600w"
-    },
-    {
       "id": "gallery/halvfjorton-keys-guitarists-pink.webp",
       "label": "halvfjorton-keys-guitarists-pink.webp",
       "default": "/assets/img/gallery/halvfjorton-keys-guitarists-pink-800w.webp",
@@ -322,167 +230,6 @@
         "default": "/assets/img/gallery/halvfjorton-keys-guitarists-pink-800w.webp"
       },
       "srcset": "/assets/img/gallery/halvfjorton-keys-guitarists-pink-800w.webp 800w, /assets/img/gallery/halvfjorton-keys-guitarists-pink-1600w.webp 1600w"
-    },
-    {
-      "id": "gallery/halvfjorton-keys-tent-purple.webp",
-      "label": "halvfjorton-keys-tent-purple.webp",
-      "default": "/assets/img/gallery/halvfjorton-keys-tent-purple-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-keys-tent-purple-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-keys-tent-purple-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-keys-tent-purple-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-keys-tent-purple-800w.webp 800w, /assets/img/gallery/halvfjorton-keys-tent-purple-1600w.webp 1600w"
-    },
-    {
-      "id": "gallery/halvfjorton-pov-sax-purple-stage.webp",
-      "label": "halvfjorton-pov-sax-purple-stage.webp",
-      "default": "/assets/img/gallery/halvfjorton-pov-sax-purple-stage-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-pov-sax-purple-stage-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-pov-sax-purple-stage-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-pov-sax-purple-stage-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-pov-sax-purple-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-pov-sax-purple-stage-1600w.webp 1600w"
-    },
-    {
-      "id": "gallery/halvfjorton-sax-barn-wedding.webp",
-      "label": "halvfjorton-sax-barn-wedding.webp",
-      "default": "/assets/img/gallery/halvfjorton-sax-barn-wedding-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-sax-barn-wedding-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-sax-barn-wedding-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-sax-barn-wedding-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-sax-barn-wedding-800w.webp 800w, /assets/img/gallery/halvfjorton-sax-barn-wedding-1600w.webp 1600w"
-    },
-    {
-      "id": "gallery/halvfjorton-sax-red-tent.webp",
-      "label": "halvfjorton-sax-red-tent.webp",
-      "default": "/assets/img/gallery/halvfjorton-sax-red-tent-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-sax-red-tent-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-sax-red-tent-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-sax-red-tent-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-sax-red-tent-800w.webp 800w, /assets/img/gallery/halvfjorton-sax-red-tent-1600w.webp 1600w"
-    },
-    {
-      "id": "gallery/halvfjorton-singer-bw-haze.webp",
-      "label": "halvfjorton-singer-bw-haze.webp",
-      "default": "/assets/img/gallery/halvfjorton-singer-bw-haze-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-singer-bw-haze-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-singer-bw-haze-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-singer-bw-haze-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-singer-bw-haze-800w.webp 800w, /assets/img/gallery/halvfjorton-singer-bw-haze-1600w.webp 1600w",
-      "alt": "S\u00e5ngare i scenr\u00f6k, svartvit bild"
-    },
-    {
-      "id": "gallery/halvfjorton-singer-bw-patterned-shirt.webp",
-      "label": "halvfjorton-singer-bw-patterned-shirt.webp",
-      "default": "/assets/img/gallery/halvfjorton-singer-bw-patterned-shirt-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-singer-bw-patterned-shirt-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-singer-bw-patterned-shirt-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-singer-bw-patterned-shirt-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-singer-bw-patterned-shirt-800w.webp 800w, /assets/img/gallery/halvfjorton-singer-bw-patterned-shirt-1600w.webp 1600w",
-      "alt": "S\u00e5ngare i m\u00f6nstrad skjorta, svartvit bild"
-    },
-    {
-      "id": "gallery/halvfjorton-singer-bw-pointing.webp",
-      "label": "halvfjorton-singer-bw-pointing.webp",
-      "default": "/assets/img/gallery/halvfjorton-singer-bw-pointing-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-singer-bw-pointing-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-singer-bw-pointing-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-singer-bw-pointing-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-singer-bw-pointing-800w.webp 800w, /assets/img/gallery/halvfjorton-singer-bw-pointing-1600w.webp 1600w",
-      "alt": "S\u00e5ngare som pekar mot publiken, svartvit bild"
-    },
-    {
-      "id": "gallery/halvfjorton-singer-chandelier-hall.webp",
-      "label": "halvfjorton-singer-chandelier-hall.webp",
-      "default": "/assets/img/gallery/halvfjorton-singer-chandelier-hall-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-singer-chandelier-hall-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-singer-chandelier-hall-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-singer-chandelier-hall-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-singer-chandelier-hall-800w.webp 800w, /assets/img/gallery/halvfjorton-singer-chandelier-hall-1600w.webp 1600w"
-    },
-    {
-      "id": "gallery/halvfjorton-singer-guitar-pink-stage.webp",
-      "label": "halvfjorton-singer-guitar-pink-stage.webp",
-      "default": "/assets/img/gallery/halvfjorton-singer-guitar-pink-stage-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-singer-guitar-pink-stage-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-singer-guitar-pink-stage-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-singer-guitar-pink-stage-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-singer-guitar-pink-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-singer-guitar-pink-stage-1600w.webp 1600w",
-      "alt": "S\u00e5ngare med gitarr i rosa scenljus"
-    },
-    {
-      "id": "gallery/halvfjorton-singer-guitarist-bw-stage.webp",
-      "label": "halvfjorton-singer-guitarist-bw-stage.webp",
-      "default": "/assets/img/gallery/halvfjorton-singer-guitarist-bw-stage-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-singer-guitarist-bw-stage-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-singer-guitarist-bw-stage-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-singer-guitarist-bw-stage-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-singer-guitarist-bw-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-singer-guitarist-bw-stage-1600w.webp 1600w",
-      "alt": "S\u00e5ngare och gitarrist p\u00e5 scen, svartvit bild"
-    },
-    {
-      "id": "gallery/halvfjorton-singer-sax-bw-pointing.webp",
-      "label": "halvfjorton-singer-sax-bw-pointing.webp",
-      "default": "/assets/img/gallery/halvfjorton-singer-sax-bw-pointing-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-singer-sax-bw-pointing-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-singer-sax-bw-pointing-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-singer-sax-bw-pointing-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-singer-sax-bw-pointing-800w.webp 800w, /assets/img/gallery/halvfjorton-singer-sax-bw-pointing-1600w.webp 1600w",
-      "alt": "S\u00e5ngare och saxofon p\u00e5 scen, svartvit bild"
-    },
-    {
-      "id": "gallery/halvfjorton-singer-sax-purple-stage.webp",
-      "label": "halvfjorton-singer-sax-purple-stage.webp",
-      "default": "/assets/img/gallery/halvfjorton-singer-sax-purple-stage-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-singer-sax-purple-stage-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-singer-sax-purple-stage-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-singer-sax-purple-stage-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-singer-sax-purple-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-singer-sax-purple-stage-1600w.webp 1600w",
-      "alt": "S\u00e5ngare och saxofonist p\u00e5 scen i lila ljus"
-    },
-    {
-      "id": "gallery/halvfjorton-singers-green-tent.webp",
-      "label": "halvfjorton-singers-green-tent.webp",
-      "default": "/assets/img/gallery/halvfjorton-singers-green-tent-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-singers-green-tent-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-singers-green-tent-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-singers-green-tent-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-singers-green-tent-800w.webp 800w, /assets/img/gallery/halvfjorton-singers-green-tent-1600w.webp 1600w"
-    },
-    {
-      "id": "gallery/halvfjorton-soundcheck-purple-room.webp",
-      "label": "halvfjorton-soundcheck-purple-room.webp",
-      "default": "/assets/img/gallery/halvfjorton-soundcheck-purple-room-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-soundcheck-purple-room-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-soundcheck-purple-room-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-soundcheck-purple-room-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-soundcheck-purple-room-800w.webp 800w, /assets/img/gallery/halvfjorton-soundcheck-purple-room-1600w.webp 1600w"
     },
     {
       "id": "gallery/halvfjorton-stage-blue-dining-hall.webp",
@@ -496,17 +243,6 @@
       "srcset": "/assets/img/gallery/halvfjorton-stage-blue-dining-hall-800w.webp 800w, /assets/img/gallery/halvfjorton-stage-blue-dining-hall-1600w.webp 1600w"
     },
     {
-      "id": "gallery/halvfjorton-stage-blue-room.webp",
-      "label": "halvfjorton-stage-blue-room.webp",
-      "default": "/assets/img/gallery/halvfjorton-stage-blue-room-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-stage-blue-room-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-stage-blue-room-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-stage-blue-room-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-stage-blue-room-800w.webp 800w, /assets/img/gallery/halvfjorton-stage-blue-room-1600w.webp 1600w"
-    },
-    {
       "id": "gallery/halvfjorton-stage-from-above-blue.webp",
       "label": "halvfjorton-stage-from-above-blue.webp",
       "default": "/assets/img/gallery/halvfjorton-stage-from-above-blue-800w.webp",
@@ -516,39 +252,6 @@
         "default": "/assets/img/gallery/halvfjorton-stage-from-above-blue-800w.webp"
       },
       "srcset": "/assets/img/gallery/halvfjorton-stage-from-above-blue-800w.webp 800w, /assets/img/gallery/halvfjorton-stage-from-above-blue-1600w.webp 1600w"
-    },
-    {
-      "id": "gallery/halvfjorton-stage-purple-smoke.webp",
-      "label": "halvfjorton-stage-purple-smoke.webp",
-      "default": "/assets/img/gallery/halvfjorton-stage-purple-smoke-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-stage-purple-smoke-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-stage-purple-smoke-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-stage-purple-smoke-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-stage-purple-smoke-800w.webp 800w, /assets/img/gallery/halvfjorton-stage-purple-smoke-1600w.webp 1600w"
-    },
-    {
-      "id": "gallery/halvfjorton-stage-red-blue.webp",
-      "label": "halvfjorton-stage-red-blue.webp",
-      "default": "/assets/img/gallery/halvfjorton-stage-red-blue-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-stage-red-blue-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-stage-red-blue-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-stage-red-blue-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-stage-red-blue-800w.webp 800w, /assets/img/gallery/halvfjorton-stage-red-blue-1600w.webp 1600w"
-    },
-    {
-      "id": "gallery/halvfjorton-stage-red-smoke.webp",
-      "label": "halvfjorton-stage-red-smoke.webp",
-      "default": "/assets/img/gallery/halvfjorton-stage-red-smoke-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-stage-red-smoke-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-stage-red-smoke-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-stage-red-smoke-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-stage-red-smoke-800w.webp 800w, /assets/img/gallery/halvfjorton-stage-red-smoke-1600w.webp 1600w"
     },
     {
       "id": "gallery/halvfjorton-tent-party-guests.webp",
@@ -572,18 +275,6 @@
       "srcset": "/assets/img/gallery/halvfjorton-trumpet-barn-wedding-800w.webp 800w"
     },
     {
-      "id": "gallery/halvfjorton-trumpet-sax-bw-stage.webp",
-      "label": "halvfjorton-trumpet-sax-bw-stage.webp",
-      "default": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp",
-      "variants": {
-        "1600w": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-1600w.webp",
-        "800w": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp"
-      },
-      "srcset": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-1600w.webp 1600w",
-      "alt": "Trumpet och saxofon p\u00e5 scen, svartvit bild"
-    },
-    {
       "id": "gallery/halvfjorton-warehouse-green-stage.webp",
       "label": "halvfjorton-warehouse-green-stage.webp",
       "default": "/assets/img/gallery/halvfjorton-warehouse-green-stage-800w.webp",
@@ -600,33 +291,6 @@
       "default": "/assets/img/h14-logo.svg",
       "variants": {
         "default": "/assets/img/h14-logo.svg"
-      },
-      "srcset": ""
-    },
-    {
-      "id": "hero.jpg",
-      "label": "hero.jpg",
-      "default": "/assets/img/hero.jpg",
-      "variants": {
-        "default": "/assets/img/hero.jpg"
-      },
-      "srcset": ""
-    },
-    {
-      "id": "logo-mark.png",
-      "label": "logo-mark.png",
-      "default": "/assets/img/logo-mark.png",
-      "variants": {
-        "default": "/assets/img/logo-mark.png"
-      },
-      "srcset": ""
-    },
-    {
-      "id": "logo.svg",
-      "label": "logo.svg",
-      "default": "/assets/img/logo.svg",
-      "variants": {
-        "default": "/assets/img/logo.svg"
       },
       "srcset": ""
     },

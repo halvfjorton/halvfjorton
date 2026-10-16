@@ -10,34 +10,7 @@ from pathlib import Path
 CMS_STUB_MARK = 'data-cms-stub="1"'
 
 # Default alt for CMS image picker (manifest id -> Swedish description).
-IMAGE_MANIFEST_DEFAULT_ALT: dict[str, str] = {
-    "gallery/halvfjorton-singer-sax-purple-stage.webp": (
-        "Sångare och saxofonist på scen i lila ljus"
-    ),
-    "gallery/halvfjorton-acoustic-trio-white-room.webp": (
-        "Akustisk trio som spelar i ljus festlokal"
-    ),
-    "gallery/halvfjorton-singer-guitar-pink-stage.webp": (
-        "Sångare med gitarr i rosa scenljus"
-    ),
-    "gallery/halvfjorton-singer-bw-pointing.webp": (
-        "Sångare som pekar mot publiken, svartvit bild"
-    ),
-    "gallery/halvfjorton-singer-sax-bw-pointing.webp": (
-        "Sångare och saxofon på scen, svartvit bild"
-    ),
-    "gallery/halvfjorton-singer-bw-haze.webp": "Sångare i scenrök, svartvit bild",
-    "gallery/halvfjorton-guitarist-bw-haze.webp": "Gitarrist på scen i rök, svartvit bild",
-    "gallery/halvfjorton-trumpet-sax-bw-stage.webp": (
-        "Trumpet och saxofon på scen, svartvit bild"
-    ),
-    "gallery/halvfjorton-singer-bw-patterned-shirt.webp": (
-        "Sångare i mönstrad skjorta, svartvit bild"
-    ),
-    "gallery/halvfjorton-singer-guitarist-bw-stage.webp": (
-        "Sångare och gitarrist på scen, svartvit bild"
-    ),
-}
+IMAGE_MANIFEST_DEFAULT_ALT: dict[str, str] = {}
 
 
 def cms_asset_version(source_root: Path) -> str:
