@@ -465,7 +465,7 @@ html.alt-header-state-init .alt-header::before {
   color: var(--alt-ink);
 }
 
-/* Shared nav components (alt does not load style.css) */
+/* Shared nav components */
 .alt-page .nav-toggle {
   display: none;
   position: relative;

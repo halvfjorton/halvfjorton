@@ -1806,7 +1806,7 @@ def page(
   <meta name="twitter:image" content="{OG}">
 {favicon_head_links()}
 {font_preloads('/assets')}
-  <link rel="stylesheet" href="/assets/css/alt.css">
+  <link rel="stylesheet" href="/assets/css/site.css">
   <script type="application/ld+json">
   {jsonld}
   </script>
@@ -2296,8 +2296,8 @@ def write_home_jsonld():
         )
     else:
         html = html.replace(
-            '  <link rel="stylesheet" href="/assets/css/alt.css">\n',
-            f'  <link rel="stylesheet" href="/assets/css/alt.css">\n{block}',
+            '  <link rel="stylesheet" href="/assets/css/site.css">\n',
+            f'  <link rel="stylesheet" href="/assets/css/site.css">\n{block}',
         )
     home_path.write_text(html, encoding="utf-8")
     print("wrote", home_path.relative_to(OUT_ROOT), "(json-ld)")
@@ -2475,8 +2475,8 @@ def patch_home_page():
     )
     if "InterVariable.woff2" not in html:
         html = html.replace(
-            '  <link rel="stylesheet" href="/assets/css/alt.css">\n',
-            font_preloads("/assets") + '\n  <link rel="stylesheet" href="/assets/css/alt.css">\n',
+            '  <link rel="stylesheet" href="/assets/css/site.css">\n',
+            font_preloads("/assets") + '\n  <link rel="stylesheet" href="/assets/css/site.css">\n',
         )
     html = re.sub(
         r'  <footer class="site-footer"[\s\S]*?  </footer>',
@@ -2732,10 +2732,10 @@ def assert_integritetspolicy_links_in_build(target: Path) -> None:
         )
 
 
-def assert_footer_styles_in_css(alt_css: Path) -> None:
-    if not alt_css.is_file():
-        raise SystemExit(f"Build check failed: missing stylesheet {alt_css}")
-    text = alt_css.read_text(encoding="utf-8")
+def assert_footer_styles_in_css(site_css: Path) -> None:
+    if not site_css.is_file():
+        raise SystemExit(f"Build check failed: missing stylesheet {site_css}")
+    text = site_css.read_text(encoding="utf-8")
     required = (
         ".alt-page .site-footer__links",
         "list-style: none",
@@ -2744,7 +2744,7 @@ def assert_footer_styles_in_css(alt_css: Path) -> None:
     missing = [needle for needle in required if needle not in text]
     if missing:
         raise SystemExit(
-            "Build check failed: alt.css footer rules missing: " + ", ".join(missing)
+            "Build check failed: site.css footer rules missing: " + ", ".join(missing)
         )
 
 
@@ -2862,7 +2862,7 @@ def run_build(
     assert_no_duplicate_gallery_images_on_page(OUT_ROOT)
     assert_offert_bullet_cap(OUT_ROOT)
     assert_integritetspolicy_links_in_build(OUT_ROOT)
-    assert_footer_styles_in_css(OUT_ROOT / "assets" / "css" / "alt.css")
+    assert_footer_styles_in_css(OUT_ROOT / "assets" / "css" / "site.css")
 
 
 if __name__ == "__main__":
