@@ -3327,40 +3327,16 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
 }
 
 .alt-page--om-oss .member-compact-card__avatar.is-spinning {
-  animation: om-oss-avatar-spin-giggle 1.15s linear both;
+  animation: om-oss-avatar-spin 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
   transition: none;
 }
 
-@keyframes om-oss-avatar-spin-giggle {
-  0% {
+@keyframes om-oss-avatar-spin {
+  from {
     transform: rotate(0deg) scale(1);
   }
 
-  45% {
-    transform: rotate(360deg) scale(1.03);
-  }
-
-  58% {
-    transform: rotate(372deg) scale(1.02);
-  }
-
-  70% {
-    transform: rotate(354deg) scale(1.01);
-  }
-
-  80% {
-    transform: rotate(366deg) scale(1.005);
-  }
-
-  88% {
-    transform: rotate(357deg) scale(1);
-  }
-
-  94% {
-    transform: rotate(362deg) scale(1);
-  }
-
-  100% {
+  to {
     transform: rotate(360deg) scale(1);
   }
 }
