@@ -19,6 +19,14 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT_ROOT = ROOT
 SITE = "https://halvfjorton.se"
 OG = f"{SITE}/assets/img/og.jpg"
+CLOUDFLARE_WEB_ANALYTICS_TOKEN = "920bacfc410443e3805ce3c92c173af5"
+CLOUDFLARE_WEB_ANALYTICS_SNIPPET = (
+    "<!-- Cloudflare Web Analytics -->"
+    '<script defer src=\'https://static.cloudflareinsights.com/beacon.min.js\' '
+    f'data-cf-beacon=\'{{"token": "{CLOUDFLARE_WEB_ANALYTICS_TOKEN}"}}\'></script>'
+    "<!-- End Cloudflare Web Analytics -->\n"
+)
+CLOUDFLARE_ANALYTICS_MARKER = "static.cloudflareinsights.com/beacon.min.js"
 ORGANIZATION_JSON = ROOT / "assets/schema/organization.json"
 H14_LOGO = ROOT / "assets/img/h14-logo.svg"
 BRAND_TITLE = "Halv Fjorton | coverband & bröllopsband i Småland och Skåne"
@@ -306,6 +314,8 @@ Kontakt: <a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a>.</p>
           <p>Förfrågningar som inte leder till en bokning raderar vi senast 24 månader efter att de kom in. Uppgifter som hör till en bokning, som avtal och fakturor, sparar vi så länge bokföringslagen kräver.</p>
           <h2 class="alt-legal-page__heading">Delning</h2>
           <p>Vi säljer inte personuppgifter och delar dem inte med tredje part i marknadsföringssyfte.</p>
+          <h2 class="alt-legal-page__heading">Webbstatistik</h2>
+          <p>Vi använder Cloudflare Web Analytics som räknar besök anonymt utan cookies eller lagring av personuppgifter.</p>
           <h2 class="alt-legal-page__heading">Dina rättigheter</h2>
           <p>Du kan begära tillgång, rättelse eller radering av dina uppgifter. Mejla <a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a>.</p>
         </div>
@@ -2949,6 +2959,41 @@ def assert_labs_asset_urls(target: Path, subpath: str) -> None:
         )
 
 
+def inject_production_cloudflare_analytics(target: Path) -> None:
+    """Append Cloudflare Web Analytics before </body> on every shipped HTML page."""
+    for file_path in sorted(target.rglob("*.html")):
+        if not file_path.is_file():
+            continue
+        rel = file_path.relative_to(target).as_posix()
+        if rel.startswith("home/"):
+            continue
+        text = file_path.read_text(encoding="utf-8")
+        if CLOUDFLARE_ANALYTICS_MARKER in text:
+            continue
+        if "</body>" not in text:
+            continue
+        file_path.write_text(
+            text.replace("</body>", f"{CLOUDFLARE_WEB_ANALYTICS_SNIPPET}</body>", 1),
+            encoding="utf-8",
+        )
+
+
+def assert_no_cloudflare_analytics_in_labs(target: Path) -> None:
+    offenders: list[str] = []
+    for file_path in target.rglob("*.html"):
+        if not file_path.is_file():
+            continue
+        text = file_path.read_text(encoding="utf-8")
+        if "cloudflareinsights.com" in text:
+            offenders.append(str(file_path.relative_to(target)))
+    if offenders:
+        sample = "\n".join(f"  - {line}" for line in offenders[:15])
+        raise SystemExit(
+            "Build check failed: Cloudflare Web Analytics must not ship in labs/subpath builds:\n"
+            f"{sample}"
+        )
+
+
 def run_build(output_dir: Path | None = None, subpath: str = "") -> None:
     global OUT_ROOT
     OUT_ROOT = output_dir.resolve() if output_dir else ROOT
@@ -2964,6 +3009,10 @@ def run_build(output_dir: Path | None = None, subpath: str = "") -> None:
     patch_home_page()
     rewrite_root_relative_urls(OUT_ROOT, subpath)
     run_cms_build_steps(OUT_ROOT, ROOT, normalize_subpath(subpath))
+    if normalize_subpath(subpath):
+        assert_no_cloudflare_analytics_in_labs(OUT_ROOT)
+    else:
+        inject_production_cloudflare_analytics(OUT_ROOT)
     # Labs output must never ship with root-absolute /assets/ (see b4a2667 manual-copy incident).
     assert_labs_asset_urls(OUT_ROOT, subpath)
     assert_no_ai_dashes_in_build(OUT_ROOT)

@@ -41,9 +41,10 @@ Use this before switching production traffic to the new site. Check items off in
 
 ## Privacy & analytics
 
-- [ ] **Cloudflare Web Analytics** for `halvfjorton.se`: owner creates account/token, then add the beacon script to the site layout (via `scripts/build.py` / shared head partial) with the site token.
-- [ ] Add **one sentence** to `/integritetspolicy/` describing anonymous Cloudflare Web Analytics (no cookies for tracking).
+- [x] **Cloudflare Web Analytics** beacon injected on every page in production builds only (`python3 scripts/build.py` with empty `--subpath`; omitted for labs `--subpath /testing/halfbandnew2026`).
+- [x] **Integritetspolicy** includes a sentence on anonymous Cloudflare Web Analytics without cookies.
 - [ ] In DevTools → Application: after page load, confirm **no** analytics cookies or `localStorage` entries from Cloudflare beacon (Web Analytics is cookieless; re-check after any other scripts).
+- [ ] No **Content-Security-Policy** in the static site today; if you add one later, allow `static.cloudflareinsights.com` and `cloudflareinsights.com`.
 - [ ] Tally embed: confirm only expected third-party storage; document in integritetspolicy if needed.
 
 ## YouTube embeds
