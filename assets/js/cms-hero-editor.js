@@ -324,7 +324,7 @@
         deps.recordChange(store, {
           cmsId: cmsId,
           page: deps.pagePath(),
-          sourceFile: "_src/halfbandnew2026/" + source,
+          sourceFile: "_src/halvfjorton/" + source,
           selector: '[data-cms-hero="' + heroKey + '"]',
           type: "imageList",
           oldValue: JSON.stringify(original),

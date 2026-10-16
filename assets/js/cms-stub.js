@@ -15,7 +15,7 @@
     if (src) {
       var qIndex = src.indexOf("?");
       versionQuery = qIndex >= 0 ? src.slice(qIndex) : "";
-      base = src.replace(/\/assets\/js\/cmsmode-stub\.js(?:\?.*)?$/, "");
+      base = src.replace(/\/assets\/js\/cms-stub\.js(?:\?.*)?$/, "");
     }
 
     var css = document.createElement("link");

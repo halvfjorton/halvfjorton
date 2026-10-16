@@ -158,7 +158,6 @@ LOKAL_TEKNIK_COPY = (
     "Vid större saler eller särskilda önskemål har vi kontakter bland uthyrare."
 )
 
-LABS_SUBPATH_DEFAULT = "/testing/halfbandnew2026"
 BUILD_YEAR = datetime.now(timezone.utc).year
 
 ORG_STREET_ADDRESS = "Fabriksgatan 12"
@@ -847,7 +846,7 @@ def write_redirect_page(
 
 
 SERVICE_HERO_TYPEWRITER_SCRIPT = (
-    '  <script src="/assets/js/alt-hero-typewriter.js" defer></script>\n'
+    '  <script src="/assets/js/hero-typewriter.js" defer></script>\n'
 )
 
 
@@ -926,11 +925,11 @@ BROLLOP_FAQS: tuple[tuple[str, str], ...] = (
 
 SERVICE_HERO_SLIDESHOW_KEYS = frozenset({"brollop", "foretag"})
 SERVICE_HERO_SLIDESHOW_SCRIPT = (
-    '  <script src="/assets/js/alt-service-hero-slideshow.js" defer></script>\n'
+    '  <script src="/assets/js/service-hero-slideshow.js" defer></script>\n'
 )
 
 SERVICE_FAQ_ACCORDION_SCRIPT = (
-    '  <script src="/assets/js/alt-faq-accordion.js" defer></script>\n'
+    '  <script src="/assets/js/faq-accordion.js" defer></script>\n'
 )
 TALLY_EMBED_SCRIPT = '  <script src="/assets/js/tally-embed.js" defer></script>\n'
 FORETAG_PAGE_SCRIPTS = SERVICE_FAQ_ACCORDION_SCRIPT
@@ -1775,7 +1774,7 @@ def page(
     if page_class:
         body_class = f"{body_class} {page_class}"
     if "alt-page--service-banner" in page_class:
-        if "alt-hero-typewriter.js" not in extra_scripts:
+        if "hero-typewriter.js" not in extra_scripts:
             extra_scripts = f"{extra_scripts}{SERVICE_HERO_TYPEWRITER_SCRIPT}"
     nav_block = home_nav_block(path, "/#offert")
     mobile_menu = mobile_menu_block(path, "/#offert")
@@ -1829,7 +1828,7 @@ def page(
   </main>
 {modern_footer_markup()}
   <script src="/assets/js/nav.js" defer></script>
-  <script src="/assets/js/alt-nav.js" defer></script>
+  <script src="/assets/js/header-scroll.js" defer></script>
   <script src="/assets/js/footer-year.js" defer></script>
   <script src="/assets/js/video-facade.js" defer></script>
 {extra_scripts}</body>
@@ -2149,7 +2148,7 @@ def write_pages():
         "Vanliga frågor om Halv Fjorton | bokning, teknik och repertoar",
         "FAQ om Halv Fjorton: bandstorlek, teknik, tillfällen, södra Sverige, bokning, framförhållning och skräddarsydd repertoar.",
         extra_ld=[faq_ld],
-        extra_scripts='  <script src="/assets/js/alt-faq-accordion.js" defer></script>\n',
+        extra_scripts='  <script src="/assets/js/faq-accordion.js" defer></script>\n',
         body=f"""    <header class="page-hero compact">
       <div class="page-hero-copy">
         <h1>Vanliga frågor</h1>
@@ -2355,10 +2354,10 @@ def patch_home_page():
         '  <script src="/assets/js/nav.js"></script>',
         '  <script src="/assets/js/nav.js" defer></script>',
     )
-    if 'src="/assets/js/alt-nav.js"' not in html:
+    if 'src="/assets/js/header-scroll.js"' not in html:
         html = html.replace(
             '  <script src="/assets/js/nav.js" defer></script>',
-            '  <script src="/assets/js/nav.js" defer></script>\n  <script src="/assets/js/alt-nav.js" defer></script>',
+            '  <script src="/assets/js/nav.js" defer></script>\n  <script src="/assets/js/header-scroll.js" defer></script>',
         )
     html = re.sub(
         r'^[ \t]*<nav class="alt-nav" aria-label="Huvudmeny">[\s\S]*?</nav>',
@@ -2420,8 +2419,8 @@ def patch_home_page():
         )
     if 'tally-embed.js' not in html:
         html = html.replace(
-            '  <script src="/assets/js/alt-nav.js" defer></script>',
-            '  <script src="/assets/js/alt-nav.js" defer></script>\n  <script src="/assets/js/tally-embed.js" defer></script>',
+            '  <script src="/assets/js/header-scroll.js" defer></script>',
+            '  <script src="/assets/js/header-scroll.js" defer></script>\n  <script src="/assets/js/tally-embed.js" defer></script>',
         )
     home_tw_phrases = esc(
         json.dumps(
@@ -2443,15 +2442,15 @@ def patch_home_page():
         html,
         count=1,
     )
-    if 'alt-hero-typewriter.js' not in html:
+    if 'hero-typewriter.js' not in html:
         html = html.replace(
-            '  <script src="/assets/js/alt-nav.js" defer></script>',
-            '  <script src="/assets/js/alt-nav.js" defer></script>\n  <script src="/assets/js/alt-hero-typewriter.js" defer></script>',
+            '  <script src="/assets/js/header-scroll.js" defer></script>',
+            '  <script src="/assets/js/header-scroll.js" defer></script>\n  <script src="/assets/js/hero-typewriter.js" defer></script>',
         )
-    if 'alt-section-typewriter.js' not in html:
+    if 'section-typewriter.js' not in html:
         html = html.replace(
-            '  <script src="/assets/js/alt-hero-typewriter.js" defer></script>',
-            '  <script src="/assets/js/alt-hero-typewriter.js" defer></script>\n  <script src="/assets/js/alt-section-typewriter.js" defer></script>',
+            '  <script src="/assets/js/hero-typewriter.js" defer></script>',
+            '  <script src="/assets/js/hero-typewriter.js" defer></script>\n  <script src="/assets/js/section-typewriter.js" defer></script>',
         )
     toggle = alt_header_mobile_controls_markup("mobile-menu")
     html = re.sub(
@@ -2488,43 +2487,6 @@ def patch_home_page():
     print("wrote", home_path.relative_to(OUT_ROOT), "(home patches)")
 
 
-def normalize_subpath(subpath: str) -> str:
-    subpath = subpath.strip()
-    if not subpath:
-        return ""
-    if not subpath.startswith("/"):
-        subpath = "/" + subpath
-    return subpath.rstrip("/")
-
-
-def prepare_output_directory(target: Path) -> None:
-    if target.resolve() == ROOT.resolve():
-        return
-    if target.exists():
-        shutil.rmtree(target)
-    target.mkdir(parents=True)
-    shutil.copytree(ROOT / "assets", target / "assets")
-    shutil.copy2(HOME_SOURCE, target / "index.html")
-    for name in (
-        "robots.txt",
-        ".nojekyll",
-        "favicon.ico",
-        "favicon.svg",
-        "apple-touch-icon.png",
-        "icon-192.png",
-        "icon-512.png",
-        "site.webmanifest",
-    ):
-        src = ROOT / name
-        if src.exists():
-            shutil.copy2(src, target / name)
-
-
-_ROOT_RELATIVE_URL = re.compile(
-    r'(?P<attr>href|src|content|data-tally-src|srcset|imagesrcset)=(?P<q>["\'])(?P<path>/[^"\']*)(?P=q)'
-)
-
-
 _DASH_CHARS = ("\u2013", "\u2014")  # en dash, em dash
 
 
@@ -2544,76 +2506,6 @@ def assert_no_ai_dashes_in_build(target: Path) -> None:
         sample = "\n".join(f"  - {line}" for line in offenders[:20])
         extra = f"\n  ... and {len(offenders) - 20} more" if len(offenders) > 20 else ""
         raise SystemExit(f"Build check failed: en/em dash found in output:\n{sample}{extra}")
-
-
-def _prefix_asset_root(url: str, prefix: str) -> str:
-    if not prefix or not url.startswith("/assets/"):
-        return url
-    if url.startswith(f"{prefix}/"):
-        return url
-    return f"{prefix}{url}"
-
-
-def _prefix_bare_asset_urls(text: str, prefix: str) -> str:
-    """Ensure srcset/imagesrcset candidates use the labs subpath (idempotent)."""
-    if not prefix:
-        return text
-
-    def fix_set(match: re.Match[str]) -> str:
-        attr, q, value = match.group(1), match.group(2), match.group(3)
-        parts: list[str] = []
-        for candidate in value.split(","):
-            candidate = candidate.strip()
-            if not candidate:
-                continue
-            bits = candidate.split()
-            bits[0] = _prefix_asset_root(bits[0], prefix)
-            parts.append(" ".join(bits))
-        if not parts:
-            return match.group(0)
-        return f"{attr}={q}{', '.join(parts)}{q}"
-
-    return re.sub(
-        r'(?P<attr>srcset|imagesrcset)=(?P<q>["\'])(?P<val>[^"\']*)(?P=q)',
-        fix_set,
-        text,
-    )
-
-
-def rewrite_root_relative_urls(target: Path, subpath: str) -> None:
-    prefix = normalize_subpath(subpath)
-    if not prefix:
-        return
-
-    def replace_url(match: re.Match[str]) -> str:
-        path = match.group("path")
-        if path.startswith("//"):
-            return match.group(0)
-        attr = match.group("attr")
-        q = match.group("q")
-        if attr in ("srcset", "imagesrcset"):
-            parts: list[str] = []
-            for candidate in path.split(","):
-                candidate = candidate.strip()
-                if not candidate:
-                    continue
-                bits = candidate.split()
-                bits[0] = _prefix_asset_root(bits[0], prefix)
-                parts.append(" ".join(bits))
-            path = ", ".join(parts) if parts else path
-        else:
-            path = f"{prefix}{path}"
-        return f"{attr}={q}{path}{q}"
-
-    extensions = {".html", ".xml", ".css", ".js", ".txt"}
-    for file_path in target.rglob("*"):
-        if not file_path.is_file() or file_path.suffix not in extensions:
-            continue
-        text = file_path.read_text(encoding="utf-8")
-        updated = _ROOT_RELATIVE_URL.sub(replace_url, text)
-        updated = _prefix_bare_asset_urls(updated, prefix)
-        if updated != text:
-            file_path.write_text(updated, encoding="utf-8")
 
 
 _EYEBROW_IN_HTML = re.compile(r"""class\s*=\s*["'][^"']*\beyebrow\b""", re.IGNORECASE)
@@ -2748,31 +2640,6 @@ def assert_footer_styles_in_css(site_css: Path) -> None:
         )
 
 
-_UNPREFIXED_LABS_ASSET = re.compile(
-    r"""(?P<attr>href|src|data-tally-src|srcset|imagesrcset|content)=(?P<q>["'])/assets/"""
-)
-
-
-def assert_labs_asset_urls(target: Path, subpath: str) -> None:
-    prefix = normalize_subpath(subpath)
-    if not prefix:
-        return
-    offenders: list[str] = []
-    extensions = {".html", ".css", ".js", ".xml", ".txt"}
-    for file_path in target.rglob("*"):
-        if not file_path.is_file() or file_path.suffix not in extensions:
-            continue
-        text = file_path.read_text(encoding="utf-8")
-        if _UNPREFIXED_LABS_ASSET.search(text):
-            offenders.append(str(file_path.relative_to(target)))
-    if offenders:
-        sample = "\n".join(f"  - {line}" for line in offenders[:25])
-        extra = f"\n  ... and {len(offenders) - 25} more" if len(offenders) > 25 else ""
-        raise SystemExit(
-            "Build check failed: unprefixed /assets/ URLs in labs output "
-            f"(expected prefix {prefix}):\n{sample}{extra}"
-        )
-
 
 def inject_production_cloudflare_analytics(target: Path) -> None:
     """Append Cloudflare Web Analytics before </body> on every shipped HTML page."""
@@ -2793,22 +2660,6 @@ def inject_production_cloudflare_analytics(target: Path) -> None:
         )
 
 
-def assert_no_cloudflare_analytics_in_labs(target: Path) -> None:
-    offenders: list[str] = []
-    for file_path in target.rglob("*.html"):
-        if not file_path.is_file():
-            continue
-        text = file_path.read_text(encoding="utf-8")
-        if "cloudflareinsights.com" in text:
-            offenders.append(str(file_path.relative_to(target)))
-    if offenders:
-        sample = "\n".join(f"  - {line}" for line in offenders[:15])
-        raise SystemExit(
-            "Build check failed: Cloudflare Web Analytics must not ship in labs/subpath builds:\n"
-            f"{sample}"
-        )
-
-
 def assert_lyssna_yt_posters_exist() -> None:
     for video_id in ("gm5C41wqYuU", "vV8aavPxYss", "UytyTLnKDWQ"):
         path = LYSSNA_POSTERS_DIR / f"{video_id}.webp"
@@ -2826,7 +2677,6 @@ def remove_legacy_home_publish_dir() -> None:
 
 def run_build(
     output_dir: Path | None = None,
-    subpath: str = "",
     *,
     inject_cms_stub: bool = False,
 ) -> None:
@@ -2844,19 +2694,12 @@ def run_build(
     write_llms_txt()
     write_home_jsonld()
     patch_home_page()
-    rewrite_root_relative_urls(OUT_ROOT, subpath)
     run_cms_build_steps(
         OUT_ROOT,
         ROOT,
-        normalize_subpath(subpath),
         inject_cms_stub=inject_cms_stub,
     )
-    if normalize_subpath(subpath):
-        assert_no_cloudflare_analytics_in_labs(OUT_ROOT)
-    else:
-        inject_production_cloudflare_analytics(OUT_ROOT)
-    # Labs output must never ship with root-absolute /assets/ (see b4a2667 manual-copy incident).
-    assert_labs_asset_urls(OUT_ROOT, subpath)
+    inject_production_cloudflare_analytics(OUT_ROOT)
     assert_no_ai_dashes_in_build(OUT_ROOT)
     assert_no_eyebrows_in_build(OUT_ROOT)
     assert_no_duplicate_gallery_images_on_page(OUT_ROOT)
@@ -2873,24 +2716,13 @@ if __name__ == "__main__":
         default=None,
         help=(
             "Write generated site to this directory (copies assets/ and homepage template first). "
-            "Omit for production (halvfjorton.se): build in place at repo root with empty --subpath."
-        ),
-    )
-    parser.add_argument(
-        "--subpath",
-        default="",
-        help=(
-            f"Rewrite root-relative URLs for hosting under a path "
-            f"(labs default when --output-dir is set: {LABS_SUBPATH_DEFAULT})."
+            "Omit for production (halvfjorton.se): build in place at repo root."
         ),
     )
     parser.add_argument(
         "--cms",
         action="store_true",
-        help="Inject cmsmode-stub.js on built HTML pages (local/dev CMS editing). Off by default for production.",
+        help="Inject cms-stub.js on built HTML pages (local/dev CMS editing). Off by default for production.",
     )
     args = parser.parse_args()
-    subpath = args.subpath
-    if args.output_dir and not subpath:
-        subpath = LABS_SUBPATH_DEFAULT
-    run_build(output_dir=args.output_dir, subpath=subpath, inject_cms_stub=args.cms)
+    run_build(output_dir=args.output_dir, inject_cms_stub=args.cms)

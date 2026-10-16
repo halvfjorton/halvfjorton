@@ -1,5 +1,5 @@
 (function () {
-  var STORAGE_KEY = "halfbandnew2026-cms-changes-v2";
+  var STORAGE_KEY = "halvfjorton-cms-changes-v2";
   var DEFAULT_TYPEWRITER_PHRASES = [
     "bröllopsfesten",
     "kickoffen",
@@ -13,7 +13,7 @@
   function assetBase() {
     var stub = document.querySelector("script[data-cms-stub]");
     if (stub && stub.src) {
-      return stub.src.replace(/\/assets\/js\/cmsmode-stub\.js(?:\?.*)?$/, "");
+      return stub.src.replace(/\/assets\/js\/cms-stub\.js(?:\?.*)?$/, "");
     }
     return "";
   }
@@ -264,7 +264,7 @@
     });
     return {
       version: 1,
-      site: "halfbandnew2026",
+      site: "halvfjorton",
       exportedAt: new Date().toISOString(),
       page: pagePath(),
       changes: list,
@@ -381,7 +381,7 @@
       recordChange(store, {
         cmsId: cmsId,
         page: pagePath(),
-        sourceFile: "_src/halfbandnew2026/" + sourceFile(),
+        sourceFile: "_src/halvfjorton/" + sourceFile(),
         selector: '[data-cms-id="' + cmsId + '"]',
         type: "typewriter",
         oldValue: originalPhrases.join(" | "),
@@ -447,7 +447,7 @@
           recordChange(store, {
             cmsId: cmsId,
             page: pagePath(),
-            sourceFile: "_src/halfbandnew2026/" + sourceFile(),
+            sourceFile: "_src/halvfjorton/" + sourceFile(),
             selector: '[data-cms-id="' + cmsId + '"]',
             type: "image",
             oldValue: oldSrc,
@@ -649,7 +649,7 @@
             recordChange(store, {
               cmsId: cmsId,
               page: pagePath(),
-              sourceFile: "_src/halfbandnew2026/" + sourceFile(),
+              sourceFile: "_src/halvfjorton/" + sourceFile(),
               selector: '[data-cms-id="' + cmsId + '"]',
               type: "text",
               oldValue: oldValue,
