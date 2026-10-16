@@ -4651,7 +4651,8 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
   position: relative;
   z-index: 2;
   margin-top: 0;
-  background: var(--alt-bg);
+  /* Keep transparent so page grain shows through (hero scrim already fades to --alt-bg) */
+  background: transparent;
 }
 
 .alt-page--service-banner main > .alt-service-hero + section.alt-svc-chapter.section {
