@@ -127,7 +127,18 @@
   }
 
   var parallaxTicking = false;
-  var BLEED_RATIO = 0.25;
+  var BLEED_BASE = 0.28;
+
+  /* Higher = closer / more travel; lower = farther / subtler. */
+  function depthForCard(card) {
+    if (card.classList.contains("alt-gallery__card--feature")) return 1.25;
+    if (card.classList.contains("alt-gallery__card--wide-bottom")) return 1.05;
+    if (card.classList.contains("alt-gallery__card--wide-top")) return 0.7;
+    if (card.classList.contains("alt-gallery__card--tall")) return 0.45;
+    if (card.classList.contains("alt-gallery__card--tall-right")) return 0.6;
+    if (card.classList.contains("alt-gallery__card--sm")) return 0.3;
+    return 0.75;
+  }
 
   function sizeGalleryImages() {
     images.forEach(function (img) {
@@ -135,7 +146,7 @@
       if (!card) return;
       var cardH = card.clientHeight;
       if (!cardH) return;
-      var bleed = cardH * BLEED_RATIO;
+      var bleed = cardH * BLEED_BASE * depthForCard(card);
       img.style.height = cardH + bleed * 2 + "px";
       img.style.top = -bleed + "px";
       img.style.width = "100%";
@@ -156,7 +167,7 @@
       var progress = (center - vh * 0.5) / vh;
       progress = Math.max(-1, Math.min(1, progress));
       var cardH = card.clientHeight || rect.height;
-      var maxTravel = Math.max(0, cardH * BLEED_RATIO - 2);
+      var maxTravel = Math.max(0, cardH * BLEED_BASE * depthForCard(card) - 2);
       var yPx = progress * -maxTravel;
       img.style.transform = "translate3d(0," + yPx.toFixed(2) + "px,0)";
     });

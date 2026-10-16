@@ -965,8 +965,8 @@ SERVICE_HERO_SLIDES: dict[str, list[tuple[str, str, int, int, str]]] = {
     ],
     "foretag": [
         (
-            "halvfjorton-01",
-            "Band på stor scen med varmt ljus och publik i festsal",
+            "halvfjorton-05",
+            "Band i rustik lokal med publik i silhuett och blå scenbelysning",
             2400,
             1600,
             "center",
@@ -974,11 +974,11 @@ SERVICE_HERO_SLIDES: dict[str, list[tuple[str, str, int, int, str]]] = {
     ],
     "mingel": [
         (
-            "halvfjorton-04",
-            "Sångare och band på rustik träscen med professionellt scenljus",
-            1280,
-            853,
-            "center",
+            "halvfjorton-trumpet-sax-bw-stage",
+            "Trumpet och saxofon på scen i rök och scenljus",
+            768,
+            1024,
+            "",
         ),
     ],
 }
@@ -990,6 +990,11 @@ def _service_hero_img_urls(stem: str) -> tuple[str, str]:
         return (
             f"{base}-800w.webp",
             f"{base}.webp 2400w, {base}-800w.webp 800w",
+        )
+    if stem in GALLERY_STEMS_800_1600:
+        return (
+            f"{base}-800w.webp",
+            f"{base}-800w.webp 800w, {base}-1600w.webp 1600w",
         )
     return (
         f"{base}-800w.webp",
@@ -1104,6 +1109,8 @@ def service_addon_figure(
     *,
     width: int = 2400,
     height: int = 1600,
+    object_position: str = "",
+    scale: float | None = None,
 ) -> str:
     return wedding_figure(
         stem,
@@ -1112,6 +1119,8 @@ def service_addon_figure(
         width=width,
         height=height,
         figure_class="alt-svc-addon__figure",
+        object_position=object_position,
+        scale=scale,
     )
 
 
@@ -1121,10 +1130,13 @@ GALLERY_STEMS_800_1600 = frozenset(
         "halvfjorton-band-pink-haze",
         "halvfjorton-barn-purple-stage",
         "halvfjorton-garden-mingel",
+        "halvfjorton-acoustic-trio-white-room",
         "halvfjorton-garden-sax-barn",
         "halvfjorton-keys-guitarists-pink",
         "halvfjorton-stage-blue-dining-hall",
         "halvfjorton-stage-from-above-blue",
+        "halvfjorton-singer-bw-pointing",
+        "halvfjorton-trumpet-sax-bw-stage",
         "halvfjorton-warehouse-green-stage",
     }
 )
@@ -1154,8 +1166,17 @@ def wedding_figure(
     height: int = 1600,
     figure_class: str = "alt-wedding-figure",
     loading: str = "lazy",
+    object_position: str = "",
+    scale: float | None = None,
 ) -> str:
     src, srcset = _gallery_src_and_srcset(stem)
+    style_bits: list[str] = []
+    if object_position:
+        style_bits.append(f"object-position: {object_position}")
+    if scale is not None and scale != 1:
+        style_bits.append(f"transform: scale({scale})")
+        style_bits.append(f"transform-origin: {object_position or 'center'}")
+    style_attr = f' style="{"; ".join(style_bits)};"' if style_bits else ""
     return f"""          <figure class="{figure_class}">
             <img
               src="{src}"
@@ -1165,7 +1186,7 @@ def wedding_figure(
               width="{width}"
               height="{height}"
               loading="{loading}"
-              decoding="async"
+              decoding="async"{style_attr}
             >
           </figure>"""
 
@@ -1222,6 +1243,8 @@ class ServiceAddon(NamedTuple):
     body: str
     width: int = 1280
     height: int = 720
+    object_position: str = ""
+    scale: float | None = None
 
 
 class StandardServicePage(NamedTuple):
@@ -1306,12 +1329,12 @@ BROLLOP_STANDARD_PAGE = StandardServicePage(
             "Före middagen spelar vi lugnare och jazzigare musik medan gästerna minglar. Vi tar med ett eget ljudsystem för detta.",
         ),
         ServiceAddon(
-            "halvfjorton-garden-sax-barn",
-            "Sång och slagverk på scen i dramatiskt ljus",
+            "halvfjorton-acoustic-trio-white-room",
+            "Musikgrupp i ljus lokal med bas, trummor och blås",
             "Vigselmusik",
             "Till vigseln har vi solist och komp, och låtarna väljer vi tillsammans med er. Har ni andra önskemål för vigseln löser vi det efter dem.",
-            width=1280,
-            height=720,
+            width=800,
+            height=628,
         ),
     ),
     faqs=BROLLOP_FAQS,
@@ -1377,10 +1400,13 @@ MINGEL_STANDARD_PAGE = StandardServicePage(
     split_alt="Musiker på scen med ljus och scenrök",
     addons=(
         ServiceAddon(
-            "halvfjorton-keys-guitarists-pink",
-            "Band som gör sig redo på scen inför publik",
+            "halvfjorton-singer-bw-pointing",
+            "Sångare på scen med mikrofon",
             "Festspelning",
             "När det är dags att dansa tar vi över och ställer till med ösigt dansgolv. Två set fullt ös med blåssektion, anpassat efter er publik och kvällens tempo.",
+            width=767,
+            height=1024,
+            object_position="center 15%",
         ),
         ServiceAddon(
             "halvfjorton-stage-from-above-blue",
@@ -1425,7 +1451,7 @@ def standard_service_page_body(page: StandardServicePage) -> str:
     for addon in page.addons:
         addon_blocks.append(
             f"""          <div class="alt-svc-addon">
-{service_addon_figure(addon.stem, addon.alt, width=addon.width, height=addon.height)}
+{service_addon_figure(addon.stem, addon.alt, width=addon.width, height=addon.height, object_position=addon.object_position, scale=addon.scale)}
             <h3 class="alt-svc-addon__title">{esc(addon.title)}</h3>
             <p>{esc(addon.body)}</p>
           </div>"""

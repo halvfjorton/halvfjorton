@@ -18,19 +18,24 @@ html:has(.alt-page) {
 
 .alt-page {
   --alt-bg: #0a0a0b;
-  --alt-bg-elevated: #121214;
+  --alt-bg-elevated: #0c0c0e;
   --alt-gallery-quote-bg: #ff8560;
   --alt-gallery-quote-border: rgba(10, 10, 11, 0.14);
   --alt-gallery-quote-ink: #0a0a0b;
   --alt-gallery-quote-muted: #2a1812;
-  --alt-ink: #f2f0ec;
-  --alt-muted: #a8a29c;
-  --alt-link: #f2f0ec;
+  --alt-ink: #faf9f7;
+  --alt-muted: #b0aaa4;
+  --alt-link: #faf9f7;
   --alt-link-hover: #fff;
   --alt-btn-primary-bg: #fff;
-  --alt-btn-primary-hover: #e8e6e2;
+  --alt-btn-primary-hover: #f0eeea;
   --alt-btn-primary-ink: #0a0a0b;
-  --alt-line: rgba(242, 240, 236, 0.1);
+  --alt-line: rgba(250, 249, 247, 0.12);
+  --alt-grain-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch' result='t'/%3E%3CfeColorMatrix in='t' type='saturate' values='0' result='g'/%3E%3CfeComponentTransfer in='g'%3E%3CfeFuncR type='discrete' tableValues='0 0 1'/%3E%3CfeFuncG type='discrete' tableValues='0 0 1'/%3E%3CfeFuncB type='discrete' tableValues='0 0 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --alt-grain-size: 200px 200px;
+  --alt-grain-opacity: 0.075;
+  --alt-grain-surface-size: 280px 280px;
+  --alt-grain-surface-opacity: 0.11;
   --alt-max: 75rem;
   --alt-gutter: 1.25rem;
   --alt-pad-left: max(var(--alt-gutter), env(safe-area-inset-left, 0px));
@@ -60,12 +65,13 @@ html:has(.alt-page) {
 
 @media (min-width: 901px) {
   .alt-page {
-    --alt-hero-h1-size: clamp(2.85rem, calc(0.85rem + 10vw), 6.5rem);
+    --alt-hero-h1-size: clamp(2.5rem, calc(0.7rem + 8.5vw), 5.25rem);
   }
 }
 
 .alt-page {
   position: relative;
+  isolation: isolate;
   margin: 0;
   overflow-x: clip;
   min-height: 100vh;
@@ -79,6 +85,12 @@ html:has(.alt-page) {
   font-size: 1.0625rem;
   font-weight: var(--font-body-weight);
   line-height: 1.62;
+}
+
+body.alt-page > main,
+body.alt-page > .site-footer {
+  position: relative;
+  z-index: 1;
 }
 
 body.alt-page > main {
@@ -109,7 +121,40 @@ body.alt-page > main {
 }
 
 .alt-page::before {
-  display: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--alt-grain-opacity);
+  mix-blend-mode: screen;
+  background-image: var(--alt-grain-image);
+  background-repeat: repeat;
+  background-size: var(--alt-grain-size);
+}
+
+/* Grain on elevated dark surfaces (tiles, panels) — sits under content, not over photos */
+.alt-page :is(.alt-offer-card, .alt-cta__box, .section-alt, .nav-dropdown__menu) {
+  isolation: isolate;
+}
+
+.alt-page :is(.alt-offer-card, .alt-cta__box, .section-alt, .nav-dropdown__menu)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--alt-grain-surface-opacity);
+  mix-blend-mode: screen;
+  background-image: var(--alt-grain-image);
+  background-repeat: repeat;
+  background-size: var(--alt-grain-surface-size);
+}
+
+.alt-page :is(.alt-offer-card, .alt-cta__box, .section-alt, .nav-dropdown__menu) > * {
+  position: relative;
+  z-index: 1;
 }
 
 .alt-page a:not([class*="alt-btn"]):not([class~="btn"]):not(.site-footer__social):not(.alt-offer-card) {
@@ -337,14 +382,24 @@ html.alt-header-state-init .alt-header::before {
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  padding: 0.65rem 1.25rem;
+  box-sizing: border-box;
+  min-height: 2.75rem;
+  padding: 0.65rem 1.35rem;
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.9375rem;
+  line-height: 1.2;
   text-decoration: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  transition: transform 0.2s var(--alt-ease), background 0.2s var(--alt-ease), color 0.2s var(--alt-ease);
+  transform: scale(1);
+  transition: transform 0.2s var(--alt-ease), background 0.2s var(--alt-ease), color 0.2s var(--alt-ease), border-color 0.2s var(--alt-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .alt-btn:hover {
+    transform: scale(1.02);
+  }
 }
 
 .alt-btn:active {
@@ -549,7 +604,7 @@ html.alt-header-state-init .alt-header::before {
   margin: 0.5rem 0 0;
   padding: 0.4375rem;
   list-style: none;
-  background: #0a0a0b;
+  background: var(--alt-bg);
   border: 1px solid var(--alt-line);
   border-radius: var(--alt-radius);
   opacity: 0;
@@ -1751,6 +1806,13 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
   object-fit: cover;
 }
 
+/* Garden mingel: zoom + pin right everywhere this asset is used */
+.alt-page img[src*="halvfjorton-garden-mingel"] {
+  object-position: right center;
+  transform: scale(1.65);
+  transform-origin: right center;
+}
+
 .alt-offer-card__body {
   display: flex;
   flex: 1;
@@ -1830,6 +1892,12 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
   padding-left: var(--alt-pad-left);
   padding-right: var(--alt-pad-right);
   box-sizing: border-box;
+}
+
+@media (min-width: 901px) {
+  .alt-gallery__inner {
+    max-width: calc(var(--alt-max) * 1.2);
+  }
 }
 
 .alt-gallery__bento {
@@ -2598,6 +2666,7 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
 }
 
 .alt-cta__box {
+  position: relative;
   max-width: var(--alt-max);
   margin: 0 auto;
   padding: 3rem 2rem;
@@ -2605,6 +2674,7 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
   border-radius: calc(var(--alt-radius) + 8px);
   border: 1px solid var(--alt-line);
   background: var(--alt-bg-elevated);
+  overflow: hidden;
 }
 
 .alt-cta__box h2 {
@@ -2874,6 +2944,19 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
     transition: none;
   }
 
+  .alt-btn,
+  .alt-btn:hover,
+  .alt-btn:active,
+  .alt-page--inner .btn,
+  .alt-page--inner a.btn,
+  .alt-page--inner .btn:hover,
+  .alt-page--inner a.btn:hover,
+  .alt-page--inner .btn:active,
+  .alt-page--inner a.btn:active {
+    transform: none;
+    transition: background 0.2s var(--alt-ease), color 0.2s var(--alt-ease), border-color 0.2s var(--alt-ease);
+  }
+
   .alt-offer-card:hover {
     transform: none;
   }
@@ -2993,6 +3076,10 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
     object-position: center;
   }
 
+  .alt-page .alt-offer-card__img[src*="halvfjorton-garden-mingel"] {
+    object-position: right center;
+  }
+
   .alt-offer-card__body {
     grid-column: 2;
     grid-row: 1;
@@ -3106,8 +3193,10 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
 }
 
 .alt-page--inner .section-alt {
+  position: relative;
   background: var(--alt-bg-elevated);
   border-block: 1px solid var(--alt-line);
+  overflow: hidden;
 }
 
 .alt-page--inner .page-hero-copy h1 {
@@ -3428,13 +3517,29 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.65rem 1.2rem;
+  box-sizing: border-box;
+  min-height: 2.75rem;
+  padding: 0.65rem 1.35rem;
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.9375rem;
+  line-height: 1.2;
   text-decoration: none;
   border: 1px solid transparent;
-  box-sizing: border-box;
+  transform: scale(1);
+  transition: transform 0.2s var(--alt-ease), background 0.2s var(--alt-ease), color 0.2s var(--alt-ease), border-color 0.2s var(--alt-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .alt-page--inner .btn:hover,
+  .alt-page--inner a.btn:hover {
+    transform: scale(1.02);
+  }
+}
+
+.alt-page--inner .btn:active,
+.alt-page--inner a.btn:active {
+  transform: scale(0.98);
 }
 
 .alt-page--inner .btn-primary,
@@ -4587,17 +4692,31 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
   overflow: hidden;
 }
 
-.alt-service-hero__img {
+.alt-page .alt-service-hero__img {
   position: absolute;
   inset: 0;
   display: block;
   width: 100%;
   height: 100%;
+  max-width: none;
   min-width: 100%;
   min-height: 100%;
   object-fit: cover;
   object-position: center;
   transform: scale(1.04) translateZ(0);
+}
+
+[data-cms-hero="mingel"] .alt-service-hero__img {
+  /* Portrait shot: subjects sit high — bias up so heads stay in frame */
+  object-position: center 22%;
+  transform-origin: center 22%;
+}
+
+@media (min-width: 901px) {
+  [data-cms-hero="mingel"] .alt-service-hero__img {
+    object-position: center 14%;
+    transform-origin: center 14%;
+  }
 }
 
 .alt-service-hero__scrim {
@@ -4832,6 +4951,7 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
   max-width: none;
 }
 
+.alt-section-kicker,
 .alt-page--om-oss .om-oss-section-label {
   font-family: var(--font-sans);
   font-size: clamp(0.6875rem, 1.45vw, 0.75rem);
@@ -4843,6 +4963,18 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
   margin: 0 0 var(--alt-heading-content-gap);
   padding-bottom: 0.85rem;
   border-bottom: 1px solid var(--alt-line);
+}
+
+.alt-offers__header {
+  max-width: var(--alt-max);
+  margin: 0 auto;
+  padding-left: var(--alt-pad-left);
+  padding-right: var(--alt-pad-right);
+  box-sizing: border-box;
+}
+
+.alt-offers__header .alt-section-kicker {
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
 }
 
 .alt-page--om-oss .om-oss-desc-grid {
