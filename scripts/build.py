@@ -184,9 +184,8 @@ ORG_STREET_ADDRESS = "Fabriksgatan 12"
 ORG_POSTAL_CITY_LINE = "342 50 Vislanda"
 ORG_POSTAL_ADDRESS_LD = {
     "@type": "PostalAddress",
-    "streetAddress": ORG_STREET_ADDRESS,
-    "postalCode": "342 50",
-    "addressLocality": "Vislanda",
+    "addressLocality": "Växjö",
+    "addressRegion": "Kronobergs län",
     "addressCountry": "SE",
 }
 
