@@ -118,7 +118,7 @@
       escapeAttr(src) +
       '"' +
       (srcset ? ' srcset="' + escapeAttr(srcset) + '"' : "") +
-      ' sizes="(max-width: 900px) 150vh, 100vw" alt="' +
+      ' sizes="(max-width: 900px) 100vw, 100vw" alt="' +
       escapeAttr(alt) +
       '" width="' +
       w +

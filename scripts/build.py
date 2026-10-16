@@ -20,6 +20,7 @@ OUT_ROOT = ROOT
 HOME_SOURCE = ROOT / "scripts/templates/home/index.html"
 SITE = "https://halvfjorton.se"
 OG = f"{SITE}/assets/img/og.jpg"
+HERO_IMAGE_SIZES = "(max-width: 900px) 100vw, 100vw"
 CLOUDFLARE_WEB_ANALYTICS_TOKEN = "920bacfc410443e3805ce3c92c173af5"
 CLOUDFLARE_WEB_ANALYTICS_SNIPPET = (
     "<!-- Cloudflare Web Analytics -->"
@@ -654,6 +655,13 @@ LYSSNA_VIDEO_MODAL_SCRIPT = (
     '  <script src="/assets/js/lyssna-video-modal.js" defer></script>\n'
 )
 LYSSNA_REPERTOIRE_JSON = ROOT / "assets/data/lyssna-repertoire.json"
+LYSSNA_POSTERS_DIR = ROOT / "assets/img/lyssna-posters"
+
+
+def lyssna_yt_poster_path(video_id: str) -> str:
+    return f"/assets/img/lyssna-posters/{video_id}.webp"
+
+
 SPOTIFY_REPERTOIRE_EMBED = (
     "https://open.spotify.com/embed/playlist/0q8DLuLfZE25an41tppmvu?utm_source=generator"
 )
@@ -684,19 +692,18 @@ def lyssna_video_tile(
     video_id: str,
     label: str,
     title: str,
-    poster: str | None = None,
+    poster: str,
     start_seconds: int | None = None,
 ) -> str:
-    yt_max = f"https://i.ytimg.com/vi/{video_id}/maxresdefault.jpg"
-    yt_hq = f"https://i.ytimg.com/vi/{video_id}/hqdefault.jpg"
-    thumb_src = poster or yt_max
-    thumb_fallback = yt_hq
-    srcset = _lyssna_poster_srcset(poster) if poster else ""
+    if not poster.endswith(".webp"):
+        raise ValueError(f"lyssna poster must be a local .webp path, got {poster!r}")
+    srcset = _lyssna_poster_srcset(poster)
+    thumb_src = poster.replace("-1200w.webp", "-800w.webp") if srcset else poster
     sizes = ' sizes="(max-width: 640px) 50vw, (max-width: 900px) 50vw, 36rem"'
     start_attr = f' data-lyssna-start="{start_seconds}"' if start_seconds else ""
     return f"""        <button type="button" class="lyssna-video-tile" data-lyssna-video="{video_id}" data-lyssna-title="{esc(title)}"{start_attr} aria-label="Spela video: {esc(title)}">
           <span class="lyssna-video-tile__media">
-            <img class="lyssna-video-tile__thumb" src="{esc(thumb_src)}"{srcset}{sizes} alt="" width="1280" height="720" loading="lazy" decoding="async" data-lyssna-thumb-fallback="{thumb_fallback}">
+            <img class="lyssna-video-tile__thumb" src="{esc(thumb_src)}"{srcset}{sizes} alt="" width="1280" height="720" loading="lazy" decoding="async">
           </span>
           <span class="lyssna-video-tile__meta">
             <span class="lyssna-video-tile__label">{esc(label)}</span>
@@ -1574,7 +1581,6 @@ def wedding_video_ld() -> str:
 
 
 def lyssna_page_video_ld() -> list[str]:
-    yt_thumb = lambda vid: f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg"
     return [
         youtube_video_object_ld(
             "Signed Sealed Delivered - Halv Fjorton 2025",
@@ -1586,7 +1592,7 @@ def lyssna_page_video_ld() -> list[str]:
             "Halv Fjorton Reel 2022",
             "Kortare klipp från spelningar 2022.",
             "gm5C41wqYuU",
-            yt_thumb("gm5C41wqYuU"),
+            f"{SITE}{lyssna_yt_poster_path('gm5C41wqYuU')}",
         ),
         youtube_video_object_ld(
             "A Soulful Lucia 2025",
@@ -1598,13 +1604,13 @@ def lyssna_page_video_ld() -> list[str]:
             "A Soulful Christmas 2024 - 8 december, Nygatan 6",
             "Julkonsert A Soulful Christmas 2024 på Nygatan 6 i Växjö.",
             "vV8aavPxYss",
-            yt_thumb("vV8aavPxYss"),
+            f"{SITE}{lyssna_yt_poster_path('vV8aavPxYss')}",
         ),
         youtube_video_object_ld(
             "A Soulful Christmas 2023 - 3 december, Nygatan 6",
             "Julkonsert A Soulful Christmas 2023 på Nygatan 6 i Växjö.",
             "UytyTLnKDWQ",
-            yt_thumb("UytyTLnKDWQ"),
+            f"{SITE}{lyssna_yt_poster_path('UytyTLnKDWQ')}",
         ),
     ]
 
@@ -1777,6 +1783,8 @@ def page(
     breadcrumb_name: str | None = None,
     extra_scripts: str = "",
     hidden: bool = False,
+    robots_tag: str | None = None,
+    include_canonical: bool = True,
 ):
     canonical = f"{SITE}{path}"
     crumb_label = breadcrumb_name or title.split(" | ")[0].split(", ")[0]
@@ -1797,7 +1805,12 @@ def page(
         raise ValueError(f"hidden=True requires path in HIDDEN_SERVICE_PATHS, got {path}")
     if not hidden and path in HIDDEN_SERVICE_PATHS:
         raise ValueError(f"path {path} must use hidden=True")
-    robots = "noindex,nofollow" if hidden else "index,follow"
+    robots = robots_tag if robots_tag is not None else (
+        "noindex,nofollow" if hidden else "index,follow"
+    )
+    canonical_line = (
+        f'  <link rel="canonical" href="{canonical}">\n' if include_canonical else ""
+    )
     html = f"""<!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -1806,8 +1819,7 @@ def page(
   <meta name="format-detection" content="telephone=no, date=no, email=no, address=no">
   <title>{esc(title)}</title>
   <meta name="description" content="{esc(description)}">
-  <link rel="canonical" href="{canonical}">
-  <meta name="robots" content="{robots}">
+{canonical_line}  <meta name="robots" content="{robots}">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="sv_SE">
   <meta property="og:site_name" content="Halv Fjorton">
@@ -1843,7 +1855,7 @@ def page(
 {body}
   </main>
 {modern_footer_markup()}
-  <script src="/assets/js/nav.js"></script>
+  <script src="/assets/js/nav.js" defer></script>
   <script src="/assets/js/alt-nav.js" defer></script>
   <script src="/assets/js/footer-year.js" defer></script>
   <script src="/assets/js/video-facade.js" defer></script>
@@ -2165,7 +2177,12 @@ def write_pages():
         "Signed Sealed Delivered - Halv Fjorton 2025",
         poster="/assets/img/gallery/halvfjorton-01-1200w.webp",
     ),
-    lyssna_video_tile("gm5C41wqYuU", "Reel 2022", "Halv Fjorton Reel 2022"),
+    lyssna_video_tile(
+        "gm5C41wqYuU",
+        "Reel 2022",
+        "Halv Fjorton Reel 2022",
+        poster=lyssna_yt_poster_path("gm5C41wqYuU"),
+    ),
 )}
       </div>
     </section>
@@ -2183,11 +2200,13 @@ def write_pages():
         "vV8aavPxYss",
         "A Soulful Christmas 2024",
         "A Soulful Christmas 2024 - 8 december, Nygatan 6",
+        poster=lyssna_yt_poster_path("vV8aavPxYss"),
     ),
     lyssna_video_tile(
         "UytyTLnKDWQ",
         "A Soulful Christmas 2023",
         "A Soulful Christmas 2023 - 3 december, Nygatan 6",
+        poster=lyssna_yt_poster_path("UytyTLnKDWQ"),
     ),
 )}
       </div>
@@ -2411,6 +2430,8 @@ def write_pages():
         "Sidan hittades inte | Halv Fjorton",
         "Sidan finns inte. Gå till startsidan eller kontakta Halv Fjorton.",
         outfile=OUT_ROOT / "404.html",
+        robots_tag="noindex,nofollow",
+        include_canonical=False,
         body="""    <header class="page-hero compact">
       <div class="page-hero-copy">
         <h1>Sidan finns inte</h1>
@@ -2469,12 +2490,13 @@ def write_llms_txt():
 
 ## Kontakt
 - E-post: halvfjorton@gmail.com
+- Org.nr: 769641-5418
 - Bokning: en kontakt, offert som PDF på begäran
 - Instagram: https://www.instagram.com/halvfjorton/
 - YouTube: https://www.youtube.com/@halvfjorton9292
 
 ## Område
-Kärnregion: Växjö, Älmhult, Kalmar, Jönköping, Lund, Malmö, Helsingborg (Småland och Skåne). Spelningar utanför går att diskutera.
+Kärnregion i södra Sverige: Växjö, Älmhult, Kalmar, Jönköping, Lund, Malmö, Helsingborg (Småland och Skåne). Spelningar utanför går att diskutera.
 
 ## Tjänster
 - Bröllop: {SITE}/brollop/
@@ -2557,10 +2579,26 @@ def patch_home_page():
         html,
         count=1,
     )
+    if 'name="twitter:card"' not in html:
+        twitter_block = (
+            '  <meta name="twitter:card" content="summary_large_image">\n'
+            '  <meta name="twitter:title" content="Halv Fjorton | Coverband från Växjö">\n'
+            '  <meta name="twitter:description" content="Soul, funk, rock och svenska klassiker med åtta musiker. Bröllop, företag och event i södra Sverige.">\n'
+            f'  <meta name="twitter:image" content="{OG}">\n'
+        )
+        html = html.replace(
+            '  <meta property="og:image" content="https://halvfjorton.se/assets/img/og.jpg">',
+            '  <meta property="og:image" content="https://halvfjorton.se/assets/img/og.jpg">\n' + twitter_block,
+            1,
+        )
+    html = html.replace(
+        '  <script src="/assets/js/nav.js"></script>',
+        '  <script src="/assets/js/nav.js" defer></script>',
+    )
     if 'src="/assets/js/alt-nav.js"' not in html:
         html = html.replace(
-            '  <script src="/assets/js/nav.js"></script>',
-            '  <script src="/assets/js/nav.js"></script>\n  <script src="/assets/js/alt-nav.js" defer></script>',
+            '  <script src="/assets/js/nav.js" defer></script>',
+            '  <script src="/assets/js/nav.js" defer></script>\n  <script src="/assets/js/alt-nav.js" defer></script>',
         )
     html = re.sub(
         r'^[ \t]*<nav class="alt-nav" aria-label="Huvudmeny">[\s\S]*?</nav>',
@@ -3046,6 +3084,13 @@ def assert_no_cloudflare_analytics_in_labs(target: Path) -> None:
         )
 
 
+def assert_lyssna_yt_posters_exist() -> None:
+    for video_id in ("gm5C41wqYuU", "vV8aavPxYss", "UytyTLnKDWQ"):
+        path = LYSSNA_POSTERS_DIR / f"{video_id}.webp"
+        if not path.is_file():
+            raise SystemExit(f"Build check failed: missing lyssna poster {path.relative_to(ROOT)}")
+
+
 def remove_legacy_home_publish_dir() -> None:
     """Drop /home/ from site output (homepage source lives under scripts/templates/)."""
     legacy = OUT_ROOT / "home"
@@ -3067,6 +3112,7 @@ def run_build(
     else:
         OUT_ROOT.mkdir(parents=True, exist_ok=True)
         remove_legacy_home_publish_dir()
+    assert_lyssna_yt_posters_exist()
     shutil.copy2(HOME_SOURCE, OUT_ROOT / "index.html")
     write_pages()
     write_sitemap()

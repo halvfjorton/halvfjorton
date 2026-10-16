@@ -319,6 +319,33 @@
       "srcset": ""
     },
     {
+      "id": "lyssna-posters/UytyTLnKDWQ.webp",
+      "label": "UytyTLnKDWQ.webp",
+      "default": "/assets/img/lyssna-posters/UytyTLnKDWQ.webp",
+      "variants": {
+        "default": "/assets/img/lyssna-posters/UytyTLnKDWQ.webp"
+      },
+      "srcset": ""
+    },
+    {
+      "id": "lyssna-posters/gm5C41wqYuU.webp",
+      "label": "gm5C41wqYuU.webp",
+      "default": "/assets/img/lyssna-posters/gm5C41wqYuU.webp",
+      "variants": {
+        "default": "/assets/img/lyssna-posters/gm5C41wqYuU.webp"
+      },
+      "srcset": ""
+    },
+    {
+      "id": "lyssna-posters/vV8aavPxYss.webp",
+      "label": "vV8aavPxYss.webp",
+      "default": "/assets/img/lyssna-posters/vV8aavPxYss.webp",
+      "variants": {
+        "default": "/assets/img/lyssna-posters/vV8aavPxYss.webp"
+      },
+      "srcset": ""
+    },
+    {
       "id": "member-adam.jpg",
       "label": "member-adam.jpg",
       "default": "/assets/img/member-adam.jpg",
