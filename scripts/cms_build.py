@@ -9,7 +9,7 @@ from pathlib import Path
 
 CMS_STUB_MARK = 'data-cms-stub="1"'
 CMS_STUB_SCRIPT_RE = re.compile(
-    r'\n?\s*<script src="[^"]*cmsmode-stub\.js[^"]*" defer data-cms-stub="1"></script>',
+    r'\n?\s*<script src="[^"]*cms-stub\.js[^"]*" defer data-cms-stub="1"></script>',
     re.IGNORECASE,
 )
 
@@ -22,7 +22,7 @@ def cms_asset_version(source_root: Path) -> str:
     for rel in (
         "assets/js/cms-mode.js",
         "assets/js/cms-hero-editor.js",
-        "assets/js/cmsmode-stub.js",
+        "assets/js/cms-stub.js",
         "assets/css/cms-mode.css",
     ):
         path = source_root / rel
@@ -40,7 +40,7 @@ def strip_cms_stub_script(html: str) -> str:
 def cms_stub_script(url_prefix: str, version: str = "") -> str:
     query = f"?v={version}" if version else ""
     return (
-        f'  <script src="{url_prefix}/assets/js/cmsmode-stub.js{query}" defer data-cms-stub="1"></script>\n'
+        f'  <script src="{url_prefix}/assets/js/cms-stub.js{query}" defer data-cms-stub="1"></script>\n'
     )
 
 # Tags that receive data-cms-id for inline text editing (within main/footer).
@@ -372,17 +372,15 @@ def write_image_manifest(img_root: Path, out_path: Path, url_prefix: str = "") -
 def run_cms_build_steps(
     target: Path,
     source_root: Path,
-    subpath: str,
     *,
     inject_cms_stub: bool = False,
 ) -> None:
-    prefix = subpath.rstrip("/") if subpath else ""
     cms_version = cms_asset_version(source_root)
     manifest_out = target / "assets" / "cms" / "image-manifest.json"
-    write_image_manifest(source_root / "assets" / "img", manifest_out, url_prefix=prefix)
+    write_image_manifest(source_root / "assets" / "img", manifest_out, url_prefix="")
     annotate_site_html(
         target,
-        url_prefix=prefix,
+        url_prefix="",
         cms_version=cms_version,
         inject_stub=inject_cms_stub,
     )
