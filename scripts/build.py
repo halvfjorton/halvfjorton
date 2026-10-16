@@ -1776,8 +1776,8 @@ def page(
     if "alt-page--service-banner" in page_class:
         if "hero-typewriter.js" not in extra_scripts:
             extra_scripts = f"{extra_scripts}{SERVICE_HERO_TYPEWRITER_SCRIPT}"
-    nav_block = home_nav_block(path, "/#offert")
-    mobile_menu = mobile_menu_block(path, "/#offert")
+    nav_block = home_nav_block(path, "/kontakt/")
+    mobile_menu = mobile_menu_block(path, "/kontakt/")
     toggle = alt_header_mobile_controls_markup("mobile-menu")
     robots = robots_tag if robots_tag is not None else "index,follow"
     canonical_line = (
