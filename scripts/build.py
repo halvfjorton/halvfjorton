@@ -17,6 +17,7 @@ from cms_build import run_cms_build_steps  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_ROOT = ROOT
+HOME_SOURCE = ROOT / "scripts/templates/home/index.html"
 SITE = "https://halvfjorton.se"
 OG = f"{SITE}/assets/img/og.jpg"
 CLOUDFLARE_WEB_ANALYTICS_TOKEN = "920bacfc410443e3805ce3c92c173af5"
@@ -602,12 +603,7 @@ def modern_footer_markup() -> str:
         <div class="site-footer__col site-footer__col--contact">
           <p class="site-footer__col-label">Kontakt</p>
           <ul class="site-footer__links site-footer__links--plain">
-            <li>
-              <address class="site-footer__address">
-                {ORG_STREET_ADDRESS}<br>
-                {ORG_POSTAL_CITY_LINE}
-              </address>
-            </li>
+            <li><span class="site-footer__contact-line">Halv Fjorton ek. för.</span></li>
             <li><span class="site-footer__contact-line">Org.nr 769641-5418</span></li>
             <li><a class="site-footer__email" href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a></li>
           </ul>
@@ -831,7 +827,14 @@ def members_compact_grid(cards: str) -> str:
         </div>"""
 
 
-def write_redirect_page(path: str, target: str, link_label: str = "Lyssna") -> None:
+def write_redirect_page(
+    path: str,
+    target: str,
+    *,
+    title: str,
+    message: str,
+    link_label: str,
+) -> None:
     canonical = f"{SITE}{target.split('#')[0]}"
     html = f"""<!DOCTYPE html>
 <html lang="sv">
@@ -840,12 +843,12 @@ def write_redirect_page(path: str, target: str, link_label: str = "Lyssna") -> N
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta http-equiv="refresh" content="0; url={target}">
   <link rel="canonical" href="{canonical}">
-  <title>Repertoar | omdirigering</title>
+  <title>{esc(title)}</title>
   <meta name="robots" content="noindex,follow">
   <script>location.replace("{target}");</script>
 </head>
 <body>
-  <p>Repertoaren finns nu under Lyssna. <a href="{target}">Fortsätt till {esc(link_label)}</a>.</p>
+  <p>{message} <a href="{target}">Fortsätt till {esc(link_label)}</a>.</p>
 </body>
 </html>
 """
@@ -2420,8 +2423,20 @@ def write_pages():
 """,
     )
 
-    write_redirect_page("/repertoar/", "/lyssna/#repertoar")
-    write_redirect_page("/mingel/", "/fest-och-mingel/", "Fest och mingel")
+    write_redirect_page(
+        "/repertoar/",
+        "/lyssna/#repertoar",
+        title="Repertoar | omdirigering",
+        message="Repertoaren finns nu under Lyssna.",
+        link_label="Lyssna",
+    )
+    write_redirect_page(
+        "/mingel/",
+        "/fest-och-mingel/",
+        title="Fest och mingel | omdirigering",
+        message="Den gamla adressen /mingel/ pekar nu till Fest och mingel.",
+        link_label="Fest och mingel",
+    )
 
 
 def write_sitemap():
@@ -2690,7 +2705,7 @@ def prepare_output_directory(target: Path) -> None:
         shutil.rmtree(target)
     target.mkdir(parents=True)
     shutil.copytree(ROOT / "assets", target / "assets")
-    shutil.copy2(ROOT / "home/index.html", target / "index.html")
+    shutil.copy2(HOME_SOURCE, target / "index.html")
     for name in (
         "robots.txt",
         ".nojekyll",
@@ -2928,7 +2943,7 @@ def assert_integritetspolicy_links_in_build(target: Path) -> None:
         if not file_path.is_file():
             continue
         rel = str(file_path.relative_to(target))
-        if rel.startswith("repertoar/") or rel == "home/index.html":
+        if rel.startswith("repertoar/") or rel.startswith("mingel/"):
             continue
         text = file_path.read_text(encoding="utf-8")
         if 'class="site-footer"' in text:
@@ -3030,21 +3045,40 @@ def assert_no_cloudflare_analytics_in_labs(target: Path) -> None:
         )
 
 
-def run_build(output_dir: Path | None = None, subpath: str = "") -> None:
+def remove_legacy_home_publish_dir() -> None:
+    """Drop /home/ from site output (homepage source lives under scripts/templates/)."""
+    legacy = OUT_ROOT / "home"
+    if legacy.is_dir():
+        shutil.rmtree(legacy)
+        print("removed", legacy.relative_to(OUT_ROOT), "(legacy publish path)")
+
+
+def run_build(
+    output_dir: Path | None = None,
+    subpath: str = "",
+    *,
+    inject_cms_stub: bool = False,
+) -> None:
     global OUT_ROOT
     OUT_ROOT = output_dir.resolve() if output_dir else ROOT
     if output_dir and OUT_ROOT != ROOT.resolve():
         prepare_output_directory(OUT_ROOT)
     else:
         OUT_ROOT.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(ROOT / "home/index.html", OUT_ROOT / "index.html")
+        remove_legacy_home_publish_dir()
+    shutil.copy2(HOME_SOURCE, OUT_ROOT / "index.html")
     write_pages()
     write_sitemap()
     write_llms_txt()
     write_home_jsonld()
     patch_home_page()
     rewrite_root_relative_urls(OUT_ROOT, subpath)
-    run_cms_build_steps(OUT_ROOT, ROOT, normalize_subpath(subpath))
+    run_cms_build_steps(
+        OUT_ROOT,
+        ROOT,
+        normalize_subpath(subpath),
+        inject_cms_stub=inject_cms_stub,
+    )
     if normalize_subpath(subpath):
         assert_no_cloudflare_analytics_in_labs(OUT_ROOT)
     else:
@@ -3067,7 +3101,7 @@ if __name__ == "__main__":
         type=Path,
         default=None,
         help=(
-            "Write generated site to this directory (copies assets/ and home/ source first). "
+            "Write generated site to this directory (copies assets/ and homepage template first). "
             "Omit for production (halvfjorton.se): build in place at repo root with empty --subpath."
         ),
     )
@@ -3079,8 +3113,13 @@ if __name__ == "__main__":
             f"(labs default when --output-dir is set: {LABS_SUBPATH_DEFAULT})."
         ),
     )
+    parser.add_argument(
+        "--cms",
+        action="store_true",
+        help="Inject cmsmode-stub.js on built HTML pages (local/dev CMS editing). Off by default for production.",
+    )
     args = parser.parse_args()
     subpath = args.subpath
     if args.output_dir and not subpath:
         subpath = LABS_SUBPATH_DEFAULT
-    run_build(output_dir=args.output_dir, subpath=subpath)
+    run_build(output_dir=args.output_dir, subpath=subpath, inject_cms_stub=args.cms)

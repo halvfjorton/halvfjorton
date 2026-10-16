@@ -10,11 +10,11 @@ From the repository root:
 python3 scripts/build.py
 ```
 
-This regenerates page HTML, `sitemap.xml`, `llms.txt`, `404.html`, redirects, and `assets/cms/image-manifest.json`. Root-relative URLs stay at `/` (no labs subpath).
+This regenerates page HTML, `sitemap.xml`, `llms.txt`, `404.html`, redirects, and `assets/cms/image-manifest.json`. Root-relative URLs stay at `/` (no labs subpath). Production builds do **not** inject the in-browser CMS editor; use `python3 scripts/build.py --cms` when editing copy locally.
 
 ## Edit workflow
 
-1. Change copy in `scripts/build.py`, layout/CSS/JS/images under `assets/`, or `home/index.html` (startsida source).
+1. Change copy in `scripts/build.py`, layout/CSS/JS/images under `assets/`, or `scripts/templates/home/index.html` (startsida source, not served as `/home/`).
 2. Run `python3 scripts/build.py`.
 3. Commit source and generated HTML together.
 

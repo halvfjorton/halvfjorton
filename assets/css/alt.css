@@ -133,7 +133,7 @@ body.alt-page > main {
   background-size: var(--alt-grain-size);
 }
 
-/* Grain on elevated dark surfaces (tiles, panels) — sits under content, not over photos */
+/* Grain on elevated dark surfaces (tiles, panels) - sits under content, not over photos */
 .alt-page :is(.alt-offer-card, .alt-cta__box, .section-alt, .nav-dropdown__menu) {
   isolation: isolate;
 }
@@ -4707,7 +4707,7 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
 }
 
 [data-cms-hero="mingel"] .alt-service-hero__img {
-  /* Portrait shot: subjects sit high — bias up so heads stay in frame */
+  /* Portrait shot: subjects sit high - bias up so heads stay in frame */
   object-position: center 22%;
   transform-origin: center 22%;
 }
