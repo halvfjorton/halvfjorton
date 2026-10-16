@@ -2074,28 +2074,29 @@ def write_pages():
         f"Om Halv Fjorton | grundat 2018 i Växjö | {BRAND_TITLE}",
         "Coverband från Växjö. Soul, funk och svenska allsångslåtar med blåssektion. Möt bandet och medlemmarna här.",
         breadcrumb_name="Om oss",
+        page_class="alt-page--om-oss",
+        extra_scripts='  <script src="/assets/js/om-oss-member-avatar.js" defer></script>\n',
         body=f"""    <header class="page-hero compact">
-      <div class="page-hero-copy">
-        <h1>Om oss</h1>
-        <p>Halv Fjorton är ett coverband från Växjö. Vi var sju från början, och hälften av fjorton är ju sju. Nu är vi åtta, men namnet fick stå kvar. Vårt mål är att ni ska minnas festen länge, och att gästerna fortfarande nynnar på låtarna dagen efter.</p>
+      <div class="page-hero-split">
+        <div class="page-hero-copy">
+          <h1>Om Halv Fjorton</h1>
+          <p>Vi är åtta musiker från Växjö som älskar att spela tillsammans, och det hörs. Funkigt komp, blås i taket och ett groove som får även de blygsammaste att tappa fotfästet. Målet är en kväll som sitter kvar, så att ni fortfarande nynnar på blåsriffen dagen efter.</p>
+        </div>
+{gallery_img("halvfjorton-band-forest-bw", "Hela bandet i kostym i skogen, svartvit bild", sizes="(max-width: 900px) 100vw, 50vw", width=1600, height=1112)}
       </div>
     </header>
     <section class="section">
-      <div class="wrap split">
-        <div>
-          <h2>Vad spelar vi?</h2>
-          <p>Vår grund är soul och funk, och därifrån tar vi oss vidare till schlager, rock och svenska allsångslåtar. Det viktigaste är att det svänger. Har vi kul på scen har ni kul på dansgolvet.</p>
-          <p>Vi är ett coverband med blåssektion, så vi spelar gärna låtar med blåsriff och saxofonsolon. Kort och gott: vi har repertoar för både farfar och de yngre.</p>
-        </div>
-        <div>
-{gallery_img("halvfjorton-band-forest-bw", "Hela bandet i kostym i skogen, svartvit bild", width=1600, height=1112)}
+      <div class="wrap">
+        <h2 class="om-oss-section-label">Det här kan ni vänta er...</h2>
+        <div class="grid-2 om-oss-desc-grid">
+          <p>Vår grund är soul och funk, och därifrån tar vi oss vidare till schlager, rock och svenska allsångslåtar. Det viktigaste är att det svänger, och när något gör det spelar vi det. Vi väljer låtar som är roliga att spela och dansa till, och brukar landa i något som både ni och vi kan sjunga med i.</p>
+          <p>Vi är ett coverband med blåssektion, så vi spelar gärna låtar med blåsriff och saxofonsolon. Där trivs vi bäst, och där vaknar dansgolvet ofta. Kort och gott: vi har repertoar för både farmor och de yngre.</p>
         </div>
       </div>
     </section>
     <section class="section om-oss-members-section">
       <div class="wrap">
-        <h2>Bandet</h2>
-        <p>Vi består av åtta fasta musiker: sångare, kompmusiker, slagverk och en eminent blåssektion.</p>
+        <h2>Medlemmar</h2>
 {members_compact_grid(om_oss_member_cards)}
       </div>
     </section>
