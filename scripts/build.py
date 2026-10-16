@@ -397,6 +397,17 @@ def font_preloads(asset_root: str = "/assets") -> str:
   <link rel="preload" href="{root}/fonts/Outfit-Variable.woff2" as="font" type="font/woff2" crossorigin>"""
 
 
+SITE_THEME_COLOR = "#121212"
+
+
+def favicon_head_links() -> str:
+    return f"""  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="{SITE_THEME_COLOR}">"""
+
+
 def nav_path(href: str, prefix: str = "") -> str:
     if not prefix:
         return href
@@ -1778,8 +1789,7 @@ def page(
   <meta name="twitter:title" content="{esc(title)}">
   <meta name="twitter:description" content="{esc(description)}">
   <meta name="twitter:image" content="{OG}">
-  <link rel="icon" href="/assets/img/favicon.png" type="image/png">
-  <link rel="apple-touch-icon" href="/assets/img/favicon.png">
+{favicon_head_links()}
 {font_preloads('/assets')}
   <link rel="stylesheet" href="/assets/css/alt.css">
   <script type="application/ld+json">
@@ -2654,7 +2664,16 @@ def prepare_output_directory(target: Path) -> None:
     target.mkdir(parents=True)
     shutil.copytree(ROOT / "assets", target / "assets")
     shutil.copy2(ROOT / "home/index.html", target / "index.html")
-    for name in ("robots.txt", ".nojekyll"):
+    for name in (
+        "robots.txt",
+        ".nojekyll",
+        "favicon.ico",
+        "favicon.svg",
+        "apple-touch-icon.png",
+        "icon-192.png",
+        "icon-512.png",
+        "site.webmanifest",
+    ):
         src = ROOT / name
         if src.exists():
             shutil.copy2(src, target / name)

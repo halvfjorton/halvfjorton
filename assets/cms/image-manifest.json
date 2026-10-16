@@ -27,15 +27,6 @@
       "srcset": "/assets/img/events/a-soulful-lucia-2025-480w.webp 480w, /assets/img/events/a-soulful-lucia-2025-800w.webp 800w, /assets/img/events/a-soulful-lucia-2025-1200w.webp 1200w"
     },
     {
-      "id": "favicon.png",
-      "label": "favicon.png",
-      "default": "/assets/img/favicon.png",
-      "variants": {
-        "default": "/assets/img/favicon.png"
-      },
-      "srcset": ""
-    },
-    {
       "id": "gallery/halvfjorton-01-hero.webp",
       "label": "halvfjorton-01-hero.webp",
       "default": "/assets/img/gallery/halvfjorton-01-hero-480w.webp",
