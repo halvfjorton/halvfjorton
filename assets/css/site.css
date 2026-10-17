@@ -5303,18 +5303,15 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
 .alt-page--lyssna .lyssna-spotify {
   width: 100%;
   min-width: 0;
-  border-radius: var(--alt-radius);
-  overflow: hidden;
-  border: 1px solid var(--alt-line);
-  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-.alt-page--lyssna .lyssna-spotify__embed {
-  display: block;
-  width: 100%;
-  min-height: 22rem;
-  height: min(32rem, 70vh);
-  border: 0;
+@media (min-width: 900px) {
+  .alt-page--lyssna .lyssna-spotify {
+    justify-content: center;
+  }
 }
 
 .lyssna-video-modal {
