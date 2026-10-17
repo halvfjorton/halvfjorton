@@ -641,9 +641,12 @@ def lyssna_yt_poster_path(video_id: str) -> str:
     return f"/assets/img/lyssna-posters/{video_id}.webp"
 
 
-SPOTIFY_REPERTOIRE_EMBED = (
-    "https://open.spotify.com/embed/playlist/0q8DLuLfZE25an41tppmvu?utm_source=generator"
+SPOTIFY_REPERTOIRE_PLAYLIST_URL = (
+    "https://open.spotify.com/playlist/0q8DLuLfZE25an41tppmvu"
 )
+SPOTIFY_ICON_BTN = """            <svg class="alt-btn__icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 14.36c-.2.32-.62.42-.94.22-2.57-1.57-5.8-1.92-9.62-1.05-.37.08-.74-.16-.82-.53-.08-.37.16-.74.53-.82 4.12-.94 7.7-.55 10.6 1.17.32.2.42.62.22.94zm1.23-2.74c-.25.41-.78.54-1.19.29-2.94-1.81-7.42-2.33-10.9-1.28-.46.14-.95-.12-1.09-.58-.14-.46.12-.95.58-1.09 3.93-1.2 8.82-.62 12.16 1.55.41.25.54.78.29 1.19zm.1-2.86C14.03 8.85 8.16 8.63 4.41 9.76c-.55.17-1.13-.14-1.3-.69-.17-.55.14-1.13.69-1.3 4.28-1.3 10.84-1.05 15.09 1.48.5.3.66.94.36 1.44-.3.5-.94.66-1.44.36z"/>
+            </svg>"""
 
 LYSSNA_TILE_PLAY_ICON = """            <svg class="lyssna-video-tile__play-icon" viewBox="8.6 6.9 9.4 10.2" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M9.15 7.35v9.3l8.7-4.65-8.7-4.65z" fill="currentColor" stroke="currentColor" stroke-width="1.15" stroke-linejoin="round" stroke-linecap="round"/>
@@ -709,9 +712,12 @@ def lyssna_repertoire_song_list_markup() -> str:
         </ol>"""
 
 
-def lyssna_spotify_embed_markup() -> str:
+def lyssna_spotify_link_markup() -> str:
     return f"""        <div class="lyssna-spotify">
-          <iframe class="lyssna-spotify__embed" src="{SPOTIFY_REPERTOIRE_EMBED}" title="Halv Fjorton repertoar 2026 på Spotify" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          <a class="alt-btn alt-btn--primary" href="{SPOTIFY_REPERTOIRE_PLAYLIST_URL}" target="_blank" rel="noopener noreferrer">
+{SPOTIFY_ICON_BTN}
+            <span>Lyssna på Spotify</span>
+          </a>
         </div>"""
 
 
@@ -2060,7 +2066,7 @@ def write_pages():
             <p>Vi bygger kvällar kring funk och soul: Stevie Wonder, Ray Charles, Earth, Wind &amp; Fire. Därtill kommer svenska favoriter som Björn Skifs och Tomas Ledin, och repertoaren är bred nog för blandade sällskap och generationer. Vi tar gärna emot önskemål inför bokning, mejla <a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a> så tar vi dialogen där.</p>
           </div>
           <div class="lyssna-repertoire-split__spotify">
-{lyssna_spotify_embed_markup()}
+{lyssna_spotify_link_markup()}
           </div>
         </div>
       </div>
