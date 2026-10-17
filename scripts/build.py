@@ -289,7 +289,7 @@ Kontakt: <a href="mailto:halvfjorton@gmail.com">halvfjorton@gmail.com</a>.</p>
           <h2 class="alt-legal-page__heading">Vad vi samlar in</h2>
           <p>Namn, e-postadress, telefonnummer om du anger det, och meddelandet du skickar i kontaktformuläret.</p>
           <h2 class="alt-legal-page__heading">Kontaktformulär</h2>
-          <p>Formuläret för offert och kontakt tillhandahålls av Tally (Tally BV, Belgien, EU), som agerar som personuppgiftsbiträde för Halv Fjorton. De uppgifter du lämnar, bland annat namn, e-postadress och uppgifter om evenemanget, används endast för att besvara din förfrågan. Mer om hur Tally behandlar personuppgifter finns i <a href="https://tally.so/help/privacy-policy">Tallys integritetspolicy</a>.</p>
+          <p>Formuläret för offert och kontakt tillhandahålls av Tally (Tally BV, Belgien, EU), som agerar som personuppgiftsbiträde för Halv Fjorton. De uppgifter du lämnar, bland annat namn, e-postadress och uppgifter om evenemanget, används endast för att besvara din förfrågan. För att formuläret ska fungera sparar Tally viss tekniskt nödvändig information lokalt i din webbläsare. Den används inte för spårning eller marknadsföring. Mer om hur Tally behandlar personuppgifter finns i <a href="https://tally.so/help/privacy-policy">Tallys integritetspolicy</a>.</p>
           <h2 class="alt-legal-page__heading">Varför</h2>
           <p>Vi använder uppgifterna för att besvara din förfrågan och ta fram offert när det behövs.</p>
           <h2 class="alt-legal-page__heading">Hur länge</h2>
