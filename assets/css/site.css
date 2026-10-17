@@ -670,6 +670,23 @@ html.alt-header-state-init .alt-header::before {
   background: currentColor;
 }
 
+/* Mobile menu: no grain overlays (global .nav-dropdown__menu::after clips inside panels). */
+.alt-page .mobile-menu .nav-dropdown__menu::after {
+  content: none;
+  display: none;
+}
+
+.alt-page .mobile-menu .nav-dropdown__menu {
+  isolation: auto;
+}
+
+@media (max-width: 900px) {
+  body.alt-page.nav-open::before {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 /* Mobile menu: top-level sibling of header (not inside backdrop-filter stack). */
 .mobile-menu {
   --mobile-menu-motion: 320ms;
