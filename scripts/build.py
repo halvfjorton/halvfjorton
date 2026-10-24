@@ -20,7 +20,48 @@ OUT_ROOT = ROOT
 HOME_SOURCE = ROOT / "scripts/templates/home/index.html"
 SITE = "https://halvfjorton.se"
 OG = f"{SITE}/assets/img/og.jpg"
-HERO_IMAGE_SIZES = "(max-width: 900px) 100vw, 100vw"
+# Full-bleed object-fit:cover heroes on portrait phones need far more than 100vw (see alt-hero CSS).
+HERO_HOME_COVER_SCALE = 1.35  # mobile Ken Burns peaks ~1.28 on .alt-hero__slide img
+SERVICE_HERO_COVER_SCALE_SLIDESHOW = 1.12  # slideshow img scale(1.06)
+SERVICE_HERO_COVER_SCALE_STATIC = 1.05
+
+
+def hero_cover_sizes(img_width: int, img_height: int, cover_scale: float) -> str:
+    aspect = round(img_width / img_height, 4)
+    return (
+        f"(max-width: 900px) calc(max(100vw, 100svh * {aspect}) * {cover_scale}), 100vw"
+    )
+
+
+_HOME_HERO_IMG_TAG = re.compile(
+    r"<img([^>]*gallery/halvfjorton-\d+-hero[^>]*)>",
+    re.IGNORECASE,
+)
+
+
+def _patch_img_tag_sizes(tag_inner: str, cover_scale: float) -> str:
+    width_m = re.search(r'\bwidth="(\d+)"', tag_inner)
+    height_m = re.search(r'\bheight="(\d+)"', tag_inner)
+    if not width_m or not height_m:
+        return f"<img{tag_inner}>"
+    sizes = hero_cover_sizes(int(width_m.group(1)), int(height_m.group(1)), cover_scale)
+    inner = re.sub(r'\s*sizes="[^"]*"', "", tag_inner)
+    return f'<img{inner} sizes="{sizes}">'
+
+
+def patch_home_hero_src_sizes(html: str) -> str:
+    html = _HOME_HERO_IMG_TAG.sub(
+        lambda m: _patch_img_tag_sizes(m.group(1), HERO_HOME_COVER_SCALE),
+        html,
+    )
+    first_hero_sizes = hero_cover_sizes(2400, 1600, HERO_HOME_COVER_SCALE)
+    html = re.sub(
+        r'(<link rel="preload" as="image"[^>]*halvfjorton-01-hero[^>]*imagesizes=")[^"]*(")',
+        rf"\g<1>{first_hero_sizes}\2",
+        html,
+        count=1,
+    )
+    return html
 CLOUDFLARE_WEB_ANALYTICS_TOKEN = "920bacfc410443e3805ce3c92c173af5"
 CLOUDFLARE_WEB_ANALYTICS_SNIPPET = (
     "<!-- Cloudflare Web Analytics -->"
@@ -1031,12 +1072,13 @@ def _service_hero_slide_markup(
     pos = f' style="object-position: {position};"' if position else ""
     loading = "eager" if first else "lazy"
     fp = ' fetchpriority="high"' if first else ""
+    hero_sizes = hero_cover_sizes(width, height, SERVICE_HERO_COVER_SCALE_SLIDESHOW)
     return f"""          <div class="alt-service-hero__slide">
             <img
               class="alt-service-hero__img"
               src="{src}"
               srcset="{srcset}"
-              sizes="100vw"
+              sizes="{hero_sizes}"
               alt="{esc(alt)}"
               width="{width}"
               height="{height}"
@@ -1076,6 +1118,7 @@ def service_hero_banner(
     </header>"""
     stem, alt, width, height, position = slides[0]
     src, srcset = _service_hero_img_urls(stem)
+    hero_sizes = hero_cover_sizes(width, height, SERVICE_HERO_COVER_SCALE_STATIC)
     position_attr = f' style="object-position: {position};"' if position else ""
     return f"""    <header class="alt-service-hero">
       <div class="alt-service-hero__media" data-cms-hero="{service_key}" aria-hidden="true">
@@ -1083,7 +1126,7 @@ def service_hero_banner(
           class="alt-service-hero__img"
           src="{src}"
           srcset="{srcset}"
-          sizes="100vw"
+          sizes="{hero_sizes}"
           alt="{esc(alt)}"
           width="{width}"
           height="{height}"
@@ -2480,6 +2523,7 @@ def patch_home_page():
         html,
         count=1,
     )
+    html = patch_home_hero_src_sizes(html)
     home_path.write_text(html, encoding="utf-8")
     print("wrote", home_path.relative_to(OUT_ROOT), "(home patches)")
 

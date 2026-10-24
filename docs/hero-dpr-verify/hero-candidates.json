@@ -1,0 +1,75 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "deviceScaleFactor": 3
+  },
+  "before": [
+    {
+      "page": "home",
+      "currentSrc": "http://127.0.0.1:37699/assets/img/gallery/halvfjorton-01-hero-1200w.webp",
+      "naturalWidth": 390,
+      "naturalHeight": 260,
+      "sizes": "(max-width: 900px) 100vw, 100vw",
+      "srcset": "/assets/img/gallery/halvfjorton-01-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-01-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-01-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-01-hero-1920w.webp 1920w"
+    },
+    {
+      "page": "brollop",
+      "currentSrc": "http://127.0.0.1:37699/assets/img/gallery/halvfjorton-03-hero-1200w.webp",
+      "naturalWidth": 390,
+      "naturalHeight": 260,
+      "sizes": "100vw",
+      "srcset": "/assets/img/gallery/halvfjorton-03-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-03-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-03-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-03-hero-1920w.webp 1920w"
+    },
+    {
+      "page": "foretag",
+      "currentSrc": "http://127.0.0.1:37699/assets/img/gallery/halvfjorton-05-1200w.webp",
+      "naturalWidth": 390,
+      "naturalHeight": 260,
+      "sizes": "100vw",
+      "srcset": "/assets/img/gallery/halvfjorton-05-480w.webp 480w, /assets/img/gallery/halvfjorton-05-800w.webp 800w, /assets/img/gallery/halvfjorton-05-1200w.webp 1200w, /assets/img/gallery/halvfjorton-05-1920w.webp 1920w"
+    },
+    {
+      "page": "mingel",
+      "currentSrc": "http://127.0.0.1:37699/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-1600w.webp",
+      "naturalWidth": 187,
+      "naturalHeight": 249,
+      "sizes": "100vw",
+      "srcset": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-1600w.webp 1600w"
+    }
+  ],
+  "after": [
+    {
+      "page": "home",
+      "currentSrc": "http://127.0.0.1:39881/assets/img/gallery/halvfjorton-01-hero-1920w.webp",
+      "naturalWidth": 1709,
+      "naturalHeight": 1139,
+      "sizes": "(max-width: 900px) calc(max(100vw, 100svh * 1.5) * 1.35), 100vw",
+      "srcset": "/assets/img/gallery/halvfjorton-01-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-01-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-01-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-01-hero-1920w.webp 1920w"
+    },
+    {
+      "page": "brollop",
+      "currentSrc": "http://127.0.0.1:39881/assets/img/gallery/halvfjorton-03-hero-1920w.webp",
+      "naturalWidth": 1417,
+      "naturalHeight": 945,
+      "sizes": "(max-width: 900px) calc(max(100vw, 100svh * 1.5) * 1.12), 100vw",
+      "srcset": "/assets/img/gallery/halvfjorton-03-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-03-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-03-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-03-hero-1920w.webp 1920w"
+    },
+    {
+      "page": "foretag",
+      "currentSrc": "http://127.0.0.1:39881/assets/img/gallery/halvfjorton-05-1920w.webp",
+      "naturalWidth": 945,
+      "naturalHeight": 630,
+      "sizes": "(max-width: 900px) calc(max(100vw, 100svh * 1.5) * 1.12), 100vw",
+      "srcset": "/assets/img/gallery/halvfjorton-05-480w.webp 480w, /assets/img/gallery/halvfjorton-05-800w.webp 800w, /assets/img/gallery/halvfjorton-05-1200w.webp 1200w, /assets/img/gallery/halvfjorton-05-1920w.webp 1920w"
+    },
+    {
+      "page": "mingel",
+      "currentSrc": "http://127.0.0.1:39881/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-1600w.webp",
+      "naturalWidth": 319,
+      "naturalHeight": 425,
+      "sizes": "(max-width: 900px) calc(max(100vw, 100svh * 0.75) * 1.05), 100vw",
+      "srcset": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-1600w.webp 1600w"
+    }
+  ]
+}

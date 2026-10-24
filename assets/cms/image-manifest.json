@@ -282,21 +282,23 @@
       "label": "halvfjorton-trumpet-barn-wedding.webp",
       "default": "/assets/img/gallery/halvfjorton-trumpet-barn-wedding.webp",
       "variants": {
+        "480w": "/assets/img/gallery/halvfjorton-trumpet-barn-wedding-480w.webp",
         "800w": "/assets/img/gallery/halvfjorton-trumpet-barn-wedding-800w.webp",
         "default": "/assets/img/gallery/halvfjorton-trumpet-barn-wedding.webp"
       },
-      "srcset": "/assets/img/gallery/halvfjorton-trumpet-barn-wedding-800w.webp 800w"
+      "srcset": "/assets/img/gallery/halvfjorton-trumpet-barn-wedding-480w.webp 480w, /assets/img/gallery/halvfjorton-trumpet-barn-wedding-800w.webp 800w"
     },
     {
       "id": "gallery/halvfjorton-trumpet-sax-bw-stage.webp",
       "label": "halvfjorton-trumpet-sax-bw-stage.webp",
-      "default": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp",
+      "default": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-480w.webp",
       "variants": {
         "1600w": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-1600w.webp",
+        "480w": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-480w.webp",
         "800w": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp",
-        "default": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp"
+        "default": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-480w.webp"
       },
-      "srcset": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-1600w.webp 1600w"
+      "srcset": "/assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-480w.webp 480w, /assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-trumpet-sax-bw-stage-1600w.webp 1600w"
     },
     {
       "id": "gallery/halvfjorton-warehouse-green-stage.webp",
