@@ -226,6 +226,23 @@ def _indent_ld(data: dict) -> str:
     return "\n".join(f"  {line}" for line in raw.splitlines())
 
 
+def _ld_fragment_to_dict(fragment: str) -> dict:
+    return json.loads(fragment.strip())
+
+
+def jsonld_graph_markup(fragments: list[str]) -> str:
+    graph: list[dict] = []
+    for fragment in fragments:
+        node = _ld_fragment_to_dict(fragment)
+        node.pop("@context", None)
+        graph.append(node)
+    return _indent_ld({"@context": "https://schema.org", "@graph": graph})
+
+
+def head_resource_hints() -> str:
+    return '  <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin>\n'
+
+
 def music_group_ld() -> str:
     data = json.loads(ORGANIZATION_JSON.read_text(encoding="utf-8"))
     return _indent_ld(data)
@@ -313,7 +330,7 @@ def kontakt_page_body() -> str:
           <div class="contact-offert__copy">
             <header class="alt-contact-page__intro">
               <h1 id="kontakt-rubrik">Kontakta oss</h1>
-              <p class="contact-offert__lead">Fyll i formuläret så återkommer vi, oftast inom 24 timmar.</p>
+              <p class="contact-offert__lead">Fyll i formuläret så återkommer vi, oftast inom 24 timmar. Vi utgår från Växjö och spelar på begäran i hela södra Sverige, till exempel Kalmar, Jönköping, Malmö, Lund och Helsingborg.</p>
             </header>
             <ul class="list-check">
 {usp_items}
@@ -1738,7 +1755,7 @@ def soulful_christmas_ticket_card() -> str:
                   <path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
                   <circle cx="12" cy="10" r="2.25" stroke="currentColor" stroke-width="1.5"/>
                 </svg>
-                <span>Nygatan 6, Växjö</span>
+                <span><a class="event-ticket__venue-link" href="/julkonsert/">Nygatan 6</a>, Växjö</span>
               </p>
               <p class="event-ticket__text">Växjö stad i juleglans, och vad passar då bättre än en julkonsert? Halv Fjorton återvänder och bjuder på svängig julstämning med soul, funk, jazz och komiska inslag. Julklassikerna får en skrud du aldrig hört förut, och kanske smyger sig en och annan sketch in…</p>
               <div class="event-ticket__actions" aria-hidden="true">
@@ -1775,7 +1792,7 @@ def page(
     graphs = [music_group_ld(), breadcrumb_ld([("/", "Hem")] + ([] if path == "/" else [(path, crumb_label)]))]
     if extra_ld:
         graphs.extend(extra_ld)
-    jsonld = ",\n  ".join(graphs)
+    jsonld = jsonld_graph_markup(graphs)
     body_class = "alt-page alt-page--inner"
     if page_class:
         body_class = f"{body_class} {page_class}"
@@ -1811,7 +1828,7 @@ def page(
   <meta name="twitter:image" content="{OG}">
 {favicon_head_links()}
 {font_preloads('/assets')}
-  <link rel="stylesheet" href="/assets/css/site.css">
+{head_resource_hints()}  <link rel="stylesheet" href="/assets/css/site.css">
   <script type="application/ld+json">
   {jsonld}
   </script>
@@ -1865,7 +1882,7 @@ def write_pages():
 
     page(
         "/foretag/",
-        f"Coverband till företagsfest Malmö och Skåne | {BRAND_TITLE}",
+        "Coverband till företagsfest | Halv Fjorton",
         (
             "Personalfest, kickoff och jubileum med åtta musiker och blåssektion. "
             "Mingelmusik, artistkomp och middagsunderhållning i Småland, Skåne och hela södra Sverige."
@@ -1886,7 +1903,7 @@ def write_pages():
 
     page(
         "/fest-och-mingel/",
-        f"Liveband till fest och mingel | {BRAND_TITLE}",
+        "Liveband till fest och mingel | Halv Fjorton",
         (
             "Åttamannaband till fest och mingel med blåssektion. "
             "Från lugn stämning till fullt dansgolv i samma kväll."
@@ -1909,7 +1926,7 @@ def write_pages():
 
     page(
         "/julkonsert/",
-        f"Julkonsert A Soulful Christmas i Växjö | {BRAND_TITLE}",
+        "Julkonsert A Soulful Christmas | Halv Fjorton",
         "Halv Fjortons egen julkonsert med soul och funk sedan 2018. Spelas på Nygatan 6 i Växjö sedan 2023.",
         breadcrumb_name="Julkonsert",
         extra_ld=[
@@ -1936,7 +1953,7 @@ def write_pages():
 
     page(
         "/konserter/",
-        f"Konserter | {BRAND_TITLE}",
+        "Konserter | Halv Fjorton",
         "Publik konsert A Soulful Christmas 12 december 2026 på Nygatan 6 i Växjö. Två föreställningar med Halv Fjorton och gäster.",
         breadcrumb_name="Konserter",
         page_class="alt-page--konserter",
@@ -1960,7 +1977,7 @@ def write_pages():
 
     page(
         "/om-oss/",
-        f"Om Halv Fjorton | grundat 2018 i Växjö | {BRAND_TITLE}",
+        "Om Halv Fjorton | coverband från Växjö",
         "Coverband från Växjö. Soul, funk och svenska allsångslåtar med blåssektion. Möt bandet och medlemmarna här.",
         breadcrumb_name="Om oss",
         page_class="alt-page--om-oss",
@@ -2126,34 +2143,16 @@ def write_pages():
         ),
         (
             "Vem fakturerar?",
-            "Halv Fjorton EK. FÖR., organisationsnummer 769641-5418. Mejl halvfjorton@gmail.com.",
+            "Halv Fjorton, organisationsnummer 769641-5418. Mejl halvfjorton@gmail.com.",
         ),
     ]
     faq_list = faq_list_two_columns(faqs)
-    faq_ld_entities = ",\n".join(
-        f'''      {{
-        "@type": "Question",
-        "name": "{q}",
-        "acceptedAnswer": {{
-          "@type": "Answer",
-          "text": "{a.replace('"', '\\"')}"
-        }}
-      }}'''
-        for q, a in faqs
-    )
-    faq_ld = f"""{{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-{faq_ld_entities}
-    ]
-  }}"""
 
     page(
         "/faq/",
         "Vanliga frågor om Halv Fjorton | bokning, teknik och repertoar",
         "FAQ om Halv Fjorton: bandstorlek, teknik, tillfällen, södra Sverige, bokning, framförhållning och skräddarsydd repertoar.",
-        extra_ld=[faq_ld],
+        extra_ld=[faq_page_ld(tuple(faqs))],
         extra_scripts='  <script src="/assets/js/faq-accordion.js" defer></script>\n',
         body=f"""    <header class="page-hero compact">
       <div class="page-hero-copy">
@@ -2261,7 +2260,7 @@ def write_llms_txt():
 - YouTube: https://www.youtube.com/@halvfjorton9292
 
 ## Område
-Kärnregion i södra Sverige: Växjö, Älmhult, Kalmar, Jönköping, Lund, Malmö, Helsingborg (Småland och Skåne). Spelningar utanför går att diskutera.
+Bandet utgår från Växjö och spelar på begäran i hela södra Sverige (Småland och Skåne), till exempel Kalmar, Jönköping, Malmö, Lund och Helsingborg. Älmhult och andra orter ingår; spelningar utanför södra Sverige går att diskutera.
 
 ## Tjänster
 - Bröllop: {SITE}/brollop/
@@ -2283,11 +2282,9 @@ Kärnregion i södra Sverige: Växjö, Älmhult, Kalmar, Jönköping, Lund, Malm
 def write_home_jsonld():
     home_path = OUT_ROOT / "index.html"
     html = home_path.read_text(encoding="utf-8")
-    org = music_group_ld()
-    crumb = breadcrumb_ld([("/", "Hem")])
+    graph = jsonld_graph_markup([music_group_ld(), breadcrumb_ld([("/", "Hem")])])
     block = f"""  <script type="application/ld+json">
-  {org},
-  {crumb}
+  {graph}
   </script>
 """
     if re.search(r'<script type="application/ld\+json">', html):
@@ -2482,6 +2479,12 @@ def patch_home_page():
             '  <link rel="stylesheet" href="/assets/css/site.css">\n',
             font_preloads("/assets") + '\n  <link rel="stylesheet" href="/assets/css/site.css">\n',
         )
+    if "static.cloudflareinsights.com" not in html.split("</head>", 1)[0]:
+        html = html.replace(
+            '  <link rel="stylesheet" href="/assets/css/site.css">\n',
+            head_resource_hints() + '  <link rel="stylesheet" href="/assets/css/site.css">\n',
+            1,
+        )
     html = re.sub(
         r'  <footer class="site-footer"[\s\S]*?  </footer>',
         modern_footer_markup(),
@@ -2629,6 +2632,45 @@ def assert_integritetspolicy_links_in_build(target: Path) -> None:
         )
 
 
+def assert_valid_jsonld_in_build(target: Path) -> None:
+    """Every shipped page with JSON-LD must parse as one object with a @graph array."""
+    html_paths = sorted(target.rglob("*.html"))
+    offenders: list[str] = []
+    for file_path in html_paths:
+        if not file_path.is_file():
+            continue
+        rel = file_path.relative_to(target).as_posix()
+        if rel.startswith("home/") or rel.startswith("scripts/"):
+            continue
+        text = file_path.read_text(encoding="utf-8")
+        match = re.search(
+            r'<script type="application/ld\+json">\s*(.*?)\s*</script>',
+            text,
+            flags=re.DOTALL,
+        )
+        if not match:
+            continue
+        try:
+            data = json.loads(match.group(1).strip())
+        except json.JSONDecodeError as exc:
+            offenders.append(f"{rel}: invalid JSON ({exc})")
+            continue
+        if not isinstance(data, dict) or "@graph" not in data:
+            offenders.append(f"{rel}: missing @graph wrapper")
+            continue
+        graph = data["@graph"]
+        if not isinstance(graph, list) or not graph:
+            offenders.append(f"{rel}: @graph must be a non-empty array")
+            continue
+        for node in graph:
+            if not isinstance(node, dict) or "@type" not in node:
+                offenders.append(f"{rel}: graph node missing @type")
+                break
+    if offenders:
+        sample = "\n".join(f"  - {line}" for line in offenders[:25])
+        raise SystemExit("Build check failed: JSON-LD validation:\n" + sample)
+
+
 def assert_footer_styles_in_css(site_css: Path) -> None:
     if not site_css.is_file():
         raise SystemExit(f"Build check failed: missing stylesheet {site_css}")
@@ -2710,6 +2752,7 @@ def run_build(
     assert_no_duplicate_gallery_images_on_page(OUT_ROOT)
     assert_offert_bullet_cap(OUT_ROOT)
     assert_integritetspolicy_links_in_build(OUT_ROOT)
+    assert_valid_jsonld_in_build(OUT_ROOT)
     assert_footer_styles_in_css(OUT_ROOT / "assets" / "css" / "site.css")
 
 
