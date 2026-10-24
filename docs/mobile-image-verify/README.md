@@ -18,3 +18,7 @@ PR #27 was the only change that altered image assets or `<img>` markup on the si
 - `before-foretag-390-dpr3.png` / `after-foretag-390-dpr3.png` — subpage control (unchanged images)
 
 Full per-image `currentSrc` dump: `image-candidates.json`.
+
+## Julkonsert page vs Konserter card (390×DPR3)
+
+Screenshots: `konserter-card-390-dpr3.png` and `julkonsert-page-390-dpr3.png` (same `soulful_christmas_ticket_card()` markup).

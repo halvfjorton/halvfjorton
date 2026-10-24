@@ -1926,28 +1926,17 @@ def write_pages():
 
     page(
         "/julkonsert/",
-        "Julkonsert A Soulful Christmas | Halv Fjorton",
-        "Halv Fjortons egen julkonsert med soul och funk sedan 2018. Spelas på Nygatan 6 i Växjö sedan 2023.",
+        "A Soulful Christmas | Halv Fjorton",
+        "A Soulful Christmas med Halv Fjorton & gäster, lördag 12 december 2026 på Nygatan 6 i Växjö. Föreställningar 16:00 och 19:30.",
         breadcrumb_name="Julkonsert",
-        extra_ld=[
-            service_ld(
-                "Julkonsert",
-                "Egen årlig julkonsert med egna jullåtar och covers i soul- och funkstil, Växjö.",
-                "/julkonsert/",
-            )
-        ],
-        body="""    <header class="page-hero compact">
-      <div class="page-hero-copy">
-        <h1>A Soulful Christmas i Växjö</h1>
-        <p class="aeo-answer">Sedan 2018 arrangerar Halv Fjorton en egen julkonsert med egna låtar och jultolkningar i soul och funk. Sedan 2023 spelar vi på Nygatan 6 i Växjö, nästan varje år.</p>
-        <p class="lead">Det här är bandets egna konsert, inte en bokningstjänst. Följ datum via <a href="/lyssna/">Lyssna</a> och sociala medier.</p>
+        page_class="alt-page--konserter",
+        extra_ld=soulful_christmas_event_ld(),
+        extra_scripts='  <script src="/assets/js/event-ticket-card.js" defer></script>\n',
+        body=f"""    <div class="wrap alt-konserter-page">
+      <div class="event-ticket-wrap alt-konserter-page__tickets">
+{soulful_christmas_ticket_card()}
       </div>
-    </header>
-    <section class="section">
-      <div class="wrap">
-        <p>Vill ni boka bandet till er egen julfest eller företagsjul? Se <a href="/foretag/">företag</a> eller <a href="/kontakt/">kontakt</a>.</p>
-      </div>
-    </section>
+    </div>
 """,
     )
 
