@@ -1,0 +1,16 @@
+---
+description: Binding rules for Cursor agents working on halvfjorton.se (static site repo).
+alwaysApply: true
+---
+
+# halvfjorton.se — agent rules
+
+Full context: `AGENTS.md`. Summary:
+
+**Design & copy:** Design is final; technical fixes must be pixel-identical unless asked otherwise. Never write "ekonomisk förening" or "EK. FÖR." Do not change Om oss unless explicitly requested.
+
+**Image quality:** Do not trade resolution/quality for performance or Lighthouse. Heroes/stage must be sharp at 390×844 CSS px, DPR 3. Cover/Ken Burns heroes need crop-aware `sizes` via `hero_cover_sizes()` in `scripts/build.py` — not `100vw`. WebP ~q90+ from largest source, never upscaled. Verify `currentSrc` at 390×844 DPR 3 after image changes.
+
+**Repo hygiene:** Website only — no agent artifacts (screenshots, JSON verify reports, `docs/*-verify/`, capture scripts outside build/CI). No secrets or `.env`. Put evidence in the agent environment or PR description.
+
+**CI:** `python3 scripts/build.py` then `git diff --exit-code`.
