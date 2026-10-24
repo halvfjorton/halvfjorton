@@ -1,0 +1,427 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "deviceScaleFactor": 3
+  },
+  "before": [
+    {
+      "page": "/",
+      "images": [
+        {
+          "alt": "",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-01-hero-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-01-hero-1920w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-01-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-01-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-01-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-01-hero-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 100vw, 100vw",
+          "naturalWidth": 390,
+          "naturalHeight": 260,
+          "clientWidth": 390,
+          "clientHeight": 844
+        },
+        {
+          "alt": "",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-03-hero-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-03-hero-1920w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-03-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-03-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-03-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-03-hero-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 100vw, 100vw",
+          "naturalWidth": 390,
+          "naturalHeight": 260,
+          "clientWidth": 390,
+          "clientHeight": 844
+        },
+        {
+          "alt": "",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-05-hero-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-05-hero-1920w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-05-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-05-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-05-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-05-hero-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 100vw, 100vw",
+          "naturalWidth": 390,
+          "naturalHeight": 260,
+          "clientWidth": 390,
+          "clientHeight": 844
+        },
+        {
+          "alt": "",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-04-hero-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-04-hero-1920w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-04-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-04-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-04-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-04-hero-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 100vw, 100vw",
+          "naturalWidth": 390,
+          "naturalHeight": 260,
+          "clientWidth": 390,
+          "clientHeight": 844
+        },
+        {
+          "alt": "Fest med guldkonfetti och trummor bland gäster vid bord",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-03-480w.webp",
+          "src": "/assets/img/gallery/halvfjorton-03-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-03-480w.webp 480w, /assets/img/gallery/halvfjorton-03-800w.webp 800w, /assets/img/gallery/halvfjorton-03-1200w.webp 1200w, /assets/img/gallery/halvfjorton-03-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 36vw, 33vw",
+          "naturalWidth": 140,
+          "naturalHeight": 93,
+          "clientWidth": 126,
+          "clientHeight": 126
+        },
+        {
+          "alt": "Stor scen med blått ljus i festsal",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-stage-blue-dining-hall-800w.webp",
+          "src": "/assets/img/gallery/halvfjorton-stage-blue-dining-hall-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-stage-blue-dining-hall-800w.webp 800w, /assets/img/gallery/halvfjorton-stage-blue-dining-hall-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 36vw, 33vw",
+          "naturalWidth": 140,
+          "naturalHeight": 94,
+          "clientWidth": 126,
+          "clientHeight": 126
+        },
+        {
+          "alt": "Mingelband i trädgård",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-garden-mingel-800w.webp",
+          "src": "/assets/img/gallery/halvfjorton-garden-mingel-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-garden-mingel-800w.webp 800w, /assets/img/gallery/halvfjorton-garden-mingel-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 36vw, 33vw",
+          "naturalWidth": 140,
+          "naturalHeight": 105,
+          "clientWidth": 126,
+          "clientHeight": 126
+        },
+        {
+          "alt": "Pianist på scen med blått ljus och musiker bakom",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-02-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-02-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-02-480w.webp 480w, /assets/img/gallery/halvfjorton-02-800w.webp 800w, /assets/img/gallery/halvfjorton-02-1200w.webp 1200w, /assets/img/gallery/halvfjorton-02-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 72vw, 34vw",
+          "naturalWidth": 280,
+          "naturalHeight": 421,
+          "clientWidth": 348,
+          "clientHeight": 274
+        },
+        {
+          "alt": "Tält med festbelysning på kvällen",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-tent-party-guests-1600w.webp",
+          "src": "/assets/img/gallery/halvfjorton-tent-party-guests-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-tent-party-guests-800w.webp 800w, /assets/img/gallery/halvfjorton-tent-party-guests-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 72vw, 18vw",
+          "naturalWidth": 206,
+          "naturalHeight": 265,
+          "clientWidth": 168,
+          "clientHeight": 185
+        },
+        {
+          "alt": "Två sångare framför mikrofoner på träscen med varm belysning",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-04-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-04-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-04-480w.webp 480w, /assets/img/gallery/halvfjorton-04-800w.webp 800w, /assets/img/gallery/halvfjorton-04-1200w.webp 1200w, /assets/img/gallery/halvfjorton-04-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 72vw, 18vw",
+          "naturalWidth": 280,
+          "naturalHeight": 187,
+          "clientWidth": 168,
+          "clientHeight": 206
+        },
+        {
+          "alt": "Musikscen sett ovanför, keyboard och trummor",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-stage-from-above-blue-1600w.webp",
+          "src": "/assets/img/gallery/halvfjorton-stage-from-above-blue-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-stage-from-above-blue-800w.webp 800w, /assets/img/gallery/halvfjorton-stage-from-above-blue-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 72vw, 34vw",
+          "naturalWidth": 242,
+          "naturalHeight": 146,
+          "clientWidth": 348,
+          "clientHeight": 224
+        },
+        {
+          "alt": "Sång och slagverk på scen, svartvit bild i dramatiskt ljus",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-06-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-06-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-06-480w.webp 480w, /assets/img/gallery/halvfjorton-06-800w.webp 800w, /assets/img/gallery/halvfjorton-06-1200w.webp 1200w, /assets/img/gallery/halvfjorton-06-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 72vw, 18vw",
+          "naturalWidth": 280,
+          "naturalHeight": 421,
+          "clientWidth": 168,
+          "clientHeight": 165
+        },
+        {
+          "alt": "Trummor och feststämning med konfetti bland sittande gäster",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/stage-960w.webp",
+          "src": "/assets/img/stage-800w.webp",
+          "srcset": "/assets/img/stage-480w.webp 480w, /assets/img/stage-800w.webp 800w, /assets/img/stage-960w.webp 960w",
+          "sizes": "(max-width: 900px) 72vw, 18vw",
+          "naturalWidth": 280,
+          "naturalHeight": 250,
+          "clientWidth": 168,
+          "clientHeight": 188
+        }
+      ]
+    },
+    {
+      "page": "/foretag/",
+      "images": [
+        {
+          "alt": "Band i rustik lokal med publik i silhuett och blå scenbelysn",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-05-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-05-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-05-480w.webp 480w, /assets/img/gallery/halvfjorton-05-800w.webp 800w, /assets/img/gallery/halvfjorton-05-1200w.webp 1200w, /assets/img/gallery/halvfjorton-05-1920w.webp 1920w",
+          "sizes": "100vw",
+          "naturalWidth": 390,
+          "naturalHeight": 260,
+          "clientWidth": 390,
+          "clientHeight": 560
+        },
+        {
+          "alt": "Scen med blått ljus i festlokal",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-stage-blue-dining-hall-1600w.webp",
+          "src": "/assets/img/gallery/halvfjorton-stage-blue-dining-hall-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-stage-blue-dining-hall-800w.webp 800w, /assets/img/gallery/halvfjorton-stage-blue-dining-hall-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 100vw, min(46vw, 640px)",
+          "naturalWidth": 286,
+          "naturalHeight": 192,
+          "clientWidth": 350,
+          "clientHeight": 263
+        },
+        {
+          "alt": "Scen i lada med lila ljus och rök",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-barn-purple-stage-1600w.webp",
+          "src": "/assets/img/gallery/halvfjorton-barn-purple-stage-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-barn-purple-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-barn-purple-stage-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 100vw, min(42vw, 520px)",
+          "naturalWidth": 390,
+          "naturalHeight": 208,
+          "clientWidth": 348,
+          "clientHeight": 196
+        },
+        {
+          "alt": "Band på stor scen med varmt ljus och publik i festsal",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-01-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-01-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-01-480w.webp 480w, /assets/img/gallery/halvfjorton-01-800w.webp 800w, /assets/img/gallery/halvfjorton-01-1200w.webp 1200w, /assets/img/gallery/halvfjorton-01-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 100vw, min(42vw, 520px)",
+          "naturalWidth": 390,
+          "naturalHeight": 260,
+          "clientWidth": 348,
+          "clientHeight": 196
+        },
+        {
+          "alt": "Keyboard på scen i lagerlokal",
+          "currentSrc": "http://127.0.0.1:44955/assets/img/gallery/halvfjorton-warehouse-green-stage-1600w.webp",
+          "src": "/assets/img/gallery/halvfjorton-warehouse-green-stage-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-warehouse-green-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-warehouse-green-stage-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 100vw, min(42vw, 520px)",
+          "naturalWidth": 248,
+          "naturalHeight": 326,
+          "clientWidth": 348,
+          "clientHeight": 196
+        }
+      ]
+    }
+  ],
+  "after": [
+    {
+      "page": "/",
+      "images": [
+        {
+          "alt": "",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-01-hero-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-01-hero-1920w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-01-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-01-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-01-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-01-hero-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 100vw, 100vw",
+          "naturalWidth": 390,
+          "naturalHeight": 260,
+          "clientWidth": 390,
+          "clientHeight": 844
+        },
+        {
+          "alt": "",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-03-hero-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-03-hero-1920w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-03-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-03-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-03-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-03-hero-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 100vw, 100vw",
+          "naturalWidth": 390,
+          "naturalHeight": 260,
+          "clientWidth": 390,
+          "clientHeight": 844
+        },
+        {
+          "alt": "",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-05-hero-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-05-hero-1920w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-05-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-05-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-05-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-05-hero-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 100vw, 100vw",
+          "naturalWidth": 390,
+          "naturalHeight": 260,
+          "clientWidth": 390,
+          "clientHeight": 844
+        },
+        {
+          "alt": "",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-04-hero-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-04-hero-1920w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-04-hero-480w.webp 480w, /assets/img/gallery/halvfjorton-04-hero-800w.webp 800w, /assets/img/gallery/halvfjorton-04-hero-1200w.webp 1200w, /assets/img/gallery/halvfjorton-04-hero-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 100vw, 100vw",
+          "naturalWidth": 390,
+          "naturalHeight": 260,
+          "clientWidth": 390,
+          "clientHeight": 844
+        },
+        {
+          "alt": "Fest med guldkonfetti och trummor bland gäster vid bord",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-03-480w.webp",
+          "src": "/assets/img/gallery/halvfjorton-03-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-03-480w.webp 480w, /assets/img/gallery/halvfjorton-03-800w.webp 800w, /assets/img/gallery/halvfjorton-03-1200w.webp 1200w, /assets/img/gallery/halvfjorton-03-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 36vw, 33vw",
+          "naturalWidth": 140,
+          "naturalHeight": 93,
+          "clientWidth": 126,
+          "clientHeight": 126
+        },
+        {
+          "alt": "Stor scen med blått ljus i festsal",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-stage-blue-dining-hall-800w.webp",
+          "src": "/assets/img/gallery/halvfjorton-stage-blue-dining-hall-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-stage-blue-dining-hall-800w.webp 800w, /assets/img/gallery/halvfjorton-stage-blue-dining-hall-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 36vw, 33vw",
+          "naturalWidth": 140,
+          "naturalHeight": 94,
+          "clientWidth": 126,
+          "clientHeight": 126
+        },
+        {
+          "alt": "Mingelband i trädgård",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-garden-mingel-800w.webp",
+          "src": "/assets/img/gallery/halvfjorton-garden-mingel-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-garden-mingel-800w.webp 800w, /assets/img/gallery/halvfjorton-garden-mingel-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 36vw, 33vw",
+          "naturalWidth": 140,
+          "naturalHeight": 105,
+          "clientWidth": 126,
+          "clientHeight": 126
+        },
+        {
+          "alt": "Pianist på scen med blått ljus och musiker bakom",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-02-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-02-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-02-480w.webp 480w, /assets/img/gallery/halvfjorton-02-800w.webp 800w, /assets/img/gallery/halvfjorton-02-1200w.webp 1200w, /assets/img/gallery/halvfjorton-02-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 72vw, 34vw",
+          "naturalWidth": 280,
+          "naturalHeight": 421,
+          "clientWidth": 348,
+          "clientHeight": 274
+        },
+        {
+          "alt": "Tält med festbelysning på kvällen",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-tent-party-guests-1600w.webp",
+          "src": "/assets/img/gallery/halvfjorton-tent-party-guests-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-tent-party-guests-800w.webp 800w, /assets/img/gallery/halvfjorton-tent-party-guests-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 72vw, 18vw",
+          "naturalWidth": 206,
+          "naturalHeight": 265,
+          "clientWidth": 168,
+          "clientHeight": 185
+        },
+        {
+          "alt": "Två sångare framför mikrofoner på träscen med varm belysning",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-04-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-04-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-04-480w.webp 480w, /assets/img/gallery/halvfjorton-04-800w.webp 800w, /assets/img/gallery/halvfjorton-04-1200w.webp 1200w, /assets/img/gallery/halvfjorton-04-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 72vw, 18vw",
+          "naturalWidth": 280,
+          "naturalHeight": 187,
+          "clientWidth": 168,
+          "clientHeight": 206
+        },
+        {
+          "alt": "Musikscen sett ovanför, keyboard och trummor",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-stage-from-above-blue-1600w.webp",
+          "src": "/assets/img/gallery/halvfjorton-stage-from-above-blue-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-stage-from-above-blue-800w.webp 800w, /assets/img/gallery/halvfjorton-stage-from-above-blue-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 72vw, 34vw",
+          "naturalWidth": 242,
+          "naturalHeight": 146,
+          "clientWidth": 348,
+          "clientHeight": 224
+        },
+        {
+          "alt": "Sång och slagverk på scen, svartvit bild i dramatiskt ljus",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-06-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-06-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-06-480w.webp 480w, /assets/img/gallery/halvfjorton-06-800w.webp 800w, /assets/img/gallery/halvfjorton-06-1200w.webp 1200w, /assets/img/gallery/halvfjorton-06-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 72vw, 18vw",
+          "naturalWidth": 280,
+          "naturalHeight": 421,
+          "clientWidth": 168,
+          "clientHeight": 165
+        },
+        {
+          "alt": "Trummor och feststämning med konfetti bland sittande gäster",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/stage.jpg",
+          "src": "/assets/img/stage.jpg",
+          "srcset": "",
+          "sizes": "(max-width: 900px) 72vw, 18vw",
+          "naturalWidth": 960,
+          "naturalHeight": 858,
+          "clientWidth": 168,
+          "clientHeight": 188
+        }
+      ]
+    },
+    {
+      "page": "/foretag/",
+      "images": [
+        {
+          "alt": "Band i rustik lokal med publik i silhuett och blå scenbelysn",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-05-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-05-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-05-480w.webp 480w, /assets/img/gallery/halvfjorton-05-800w.webp 800w, /assets/img/gallery/halvfjorton-05-1200w.webp 1200w, /assets/img/gallery/halvfjorton-05-1920w.webp 1920w",
+          "sizes": "100vw",
+          "naturalWidth": 390,
+          "naturalHeight": 260,
+          "clientWidth": 390,
+          "clientHeight": 560
+        },
+        {
+          "alt": "Scen med blått ljus i festlokal",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-stage-blue-dining-hall-1600w.webp",
+          "src": "/assets/img/gallery/halvfjorton-stage-blue-dining-hall-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-stage-blue-dining-hall-800w.webp 800w, /assets/img/gallery/halvfjorton-stage-blue-dining-hall-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 100vw, min(46vw, 640px)",
+          "naturalWidth": 286,
+          "naturalHeight": 192,
+          "clientWidth": 350,
+          "clientHeight": 263
+        },
+        {
+          "alt": "Scen i lada med lila ljus och rök",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-barn-purple-stage-1600w.webp",
+          "src": "/assets/img/gallery/halvfjorton-barn-purple-stage-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-barn-purple-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-barn-purple-stage-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 100vw, min(42vw, 520px)",
+          "naturalWidth": 390,
+          "naturalHeight": 208,
+          "clientWidth": 348,
+          "clientHeight": 196
+        },
+        {
+          "alt": "Band på stor scen med varmt ljus och publik i festsal",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-01-1200w.webp",
+          "src": "/assets/img/gallery/halvfjorton-01-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-01-480w.webp 480w, /assets/img/gallery/halvfjorton-01-800w.webp 800w, /assets/img/gallery/halvfjorton-01-1200w.webp 1200w, /assets/img/gallery/halvfjorton-01-1920w.webp 1920w",
+          "sizes": "(max-width: 900px) 100vw, min(42vw, 520px)",
+          "naturalWidth": 390,
+          "naturalHeight": 260,
+          "clientWidth": 348,
+          "clientHeight": 196
+        },
+        {
+          "alt": "Keyboard på scen i lagerlokal",
+          "currentSrc": "http://127.0.0.1:39151/assets/img/gallery/halvfjorton-warehouse-green-stage-1600w.webp",
+          "src": "/assets/img/gallery/halvfjorton-warehouse-green-stage-800w.webp",
+          "srcset": "/assets/img/gallery/halvfjorton-warehouse-green-stage-800w.webp 800w, /assets/img/gallery/halvfjorton-warehouse-green-stage-1600w.webp 1600w",
+          "sizes": "(max-width: 900px) 100vw, min(42vw, 520px)",
+          "naturalWidth": 248,
+          "naturalHeight": 326,
+          "clientWidth": 348,
+          "clientHeight": 196
+        }
+      ]
+    }
+  ]
+}
