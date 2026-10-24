@@ -2982,6 +2982,12 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
   transform: none;
 }
 
+/* Home hero: ingress is LCP; show from first paint, keep reveal on title/actions */
+.alt-page--home [data-reveal-group="hero"] .alt-hero__lead {
+  opacity: 1;
+  transform: none;
+}
+
 /* Service hero: photo is full-bleed from first paint; reveal copy only */
 .alt-page--service-banner .alt-service-hero,
 .alt-page--service-banner .alt-service-hero__media,
@@ -3863,6 +3869,19 @@ body.alt-page.nav-open .alt-header-scroll-sentinel {
   margin: 0 0 1rem;
   font-size: 0.95rem;
   color: var(--alt-ink);
+}
+
+.alt-page--inner .event-ticket__venue-link {
+  position: relative;
+  z-index: 3;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--alt-ink) 45%, transparent);
+  text-underline-offset: 0.14em;
+}
+
+.alt-page--inner .event-ticket__venue-link:hover {
+  text-decoration-color: var(--alt-ink);
 }
 
 .alt-page--inner .event-ticket__pin {

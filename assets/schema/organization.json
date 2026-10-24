@@ -1,8 +1,7 @@
 {
   "@context": "https://schema.org",
-  "@type": ["MusicGroup", "PerformingGroup", "Organization"],
+  "@type": ["MusicGroup", "PerformingGroup", "Organization", "LocalBusiness"],
   "name": "Halv Fjorton",
-  "legalName": "Halv Fjorton EK. FÖR.",
   "alternateName": "Halv 14",
   "description": "Halv Fjorton är ett coverband och partyband med åtta musiker, rötter i Växjö och medlemmar över södra Sverige. Soul, funk, rock och svenska klassiker med egen blåssektion.",
   "url": "https://halvfjorton.se/",

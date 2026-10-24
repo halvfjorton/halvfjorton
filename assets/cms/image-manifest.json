@@ -427,6 +427,15 @@
       "srcset": ""
     },
     {
+      "id": "stage-960w.webp",
+      "label": "stage-960w.webp",
+      "default": "/assets/img/stage-960w.webp",
+      "variants": {
+        "default": "/assets/img/stage-960w.webp"
+      },
+      "srcset": ""
+    },
+    {
       "id": "stage.jpg",
       "label": "stage.jpg",
       "default": "/assets/img/stage.jpg",
@@ -434,6 +443,17 @@
         "default": "/assets/img/stage.jpg"
       },
       "srcset": ""
+    },
+    {
+      "id": "stage.webp",
+      "label": "stage.webp",
+      "default": "/assets/img/stage-480w.webp",
+      "variants": {
+        "480w": "/assets/img/stage-480w.webp",
+        "800w": "/assets/img/stage-800w.webp",
+        "default": "/assets/img/stage-480w.webp"
+      },
+      "srcset": "/assets/img/stage-480w.webp 480w, /assets/img/stage-800w.webp 800w"
     }
   ]
 }
