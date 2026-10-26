@@ -300,13 +300,22 @@
     }
   }
 
-  function startHeroGroup(group) {
-    if (group.classList.contains("is-in")) return;
-    group.classList.add("is-in");
+  var delayedRevealTimer = null;
+
+  function scheduleDelayedReveal() {
     if (!delayedReveal || delayedReveal.classList.contains("is-in")) return;
-    window.setTimeout(function () {
+    if (delayedRevealTimer !== null) return;
+    delayedRevealTimer = window.setTimeout(function () {
+      delayedRevealTimer = null;
       delayedReveal.classList.add("is-in");
     }, HERO_AFTER_DELAY_MS);
+  }
+
+  function startHeroGroup(group) {
+    if (!group.classList.contains("is-in")) {
+      group.classList.add("is-in");
+    }
+    scheduleDelayedReveal();
   }
 
   function observeReveals(nodes) {
@@ -347,6 +356,9 @@
         { threshold: 0.08 }
       );
       heroGroups.forEach(function (group) {
+        if (group.classList.contains("is-in")) {
+          scheduleDelayedReveal();
+        }
         heroIo.observe(group);
       });
     } else {
@@ -361,4 +373,19 @@
     otherReveals.push(node);
   });
   observeReveals(otherReveals);
+
+  if (delayedReveal && "IntersectionObserver" in window) {
+    var delayedFallbackIo = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            delayedFallbackIo.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    delayedFallbackIo.observe(delayedReveal);
+  }
 })();
