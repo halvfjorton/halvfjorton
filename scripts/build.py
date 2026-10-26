@@ -6,6 +6,7 @@ import json
 import re
 import shutil
 import sys
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import NamedTuple
@@ -884,6 +885,7 @@ def write_redirect_page(
     title: str,
     message: str,
     link_label: str,
+    also_without_trailing_slash: bool = False,
 ) -> None:
     canonical = f"{SITE}{target.split('#')[0]}"
     html = f"""<!DOCTYPE html>
@@ -902,10 +904,15 @@ def write_redirect_page(
 </body>
 </html>
 """
-    dest = OUT_ROOT / path.strip("/") / "index.html"
+    slug = unicodedata.normalize("NFC", path.strip("/"))
+    dest = OUT_ROOT / slug / "index.html"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(html, encoding="utf-8")
     print("wrote", dest.relative_to(OUT_ROOT), "(redirect)")
+    if also_without_trailing_slash:
+        bare = OUT_ROOT / f"{slug}.html"
+        bare.write_text(html, encoding="utf-8")
+        print("wrote", bare.relative_to(OUT_ROOT), "(redirect)")
 
 
 SERVICE_HERO_TYPEWRITER_SCRIPT = (
@@ -2254,6 +2261,14 @@ def write_pages():
         title="Fest och mingel | omdirigering",
         message="Den gamla adressen /mingel/ pekar nu till Fest och mingel.",
         link_label="Fest och mingel",
+    )
+    write_redirect_page(
+        "/lyssna-på-oss/",
+        "/lyssna/",
+        title="Lyssna | omdirigering",
+        message="Den gamla adressen /lyssna-på-oss/ pekar nu till Lyssna.",
+        link_label="Lyssna",
+        also_without_trailing_slash=True,
     )
 
 
