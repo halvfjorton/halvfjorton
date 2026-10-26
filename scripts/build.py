@@ -183,7 +183,6 @@ SITEMAP_PATHS = [
     "/lyssna/",
     "/faq/",
     "/kontakt/",
-    "/integritetspolicy/",
 ]
 
 HOME_NAV_LINKS = [
@@ -2219,6 +2218,7 @@ def write_pages():
         "Så behandlar Halv Fjorton personuppgifter från kontaktformuläret: vad vi samlar in, varför, hur länge vi sparar och dina rättigheter.",
         breadcrumb_name="Integritetspolicy",
         body=integritetspolicy_page_body(),
+        robots_tag="noindex,follow",
     )
 
     page(
