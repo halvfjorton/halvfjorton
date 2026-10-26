@@ -6,6 +6,7 @@ import json
 import re
 import shutil
 import sys
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import NamedTuple
@@ -902,7 +903,8 @@ def write_redirect_page(
 </body>
 </html>
 """
-    dest = OUT_ROOT / path.strip("/") / "index.html"
+    segment = unicodedata.normalize("NFC", path.strip("/"))
+    dest = OUT_ROOT / segment / "index.html"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(html, encoding="utf-8")
     print("wrote", dest.relative_to(OUT_ROOT), "(redirect)")
@@ -2255,6 +2257,13 @@ def write_pages():
         message="Den gamla adressen /mingel/ pekar nu till Fest och mingel.",
         link_label="Fest och mingel",
     )
+    write_redirect_page(
+        "/lyssna-på-oss/",
+        "/lyssna/",
+        title="Lyssna | omdirigering",
+        message="Den gamla adressen /lyssna-på-oss/ pekar nu till Lyssna.",
+        link_label="Lyssna",
+    )
 
 
 def write_sitemap():
@@ -2640,7 +2649,11 @@ def assert_integritetspolicy_links_in_build(target: Path) -> None:
         if not file_path.is_file():
             continue
         rel = str(file_path.relative_to(target))
-        if rel.startswith("repertoar/") or rel.startswith("mingel/"):
+        if (
+            rel.startswith("repertoar/")
+            or rel.startswith("mingel/")
+            or rel.startswith("lyssna-på-oss/")
+        ):
             continue
         text = file_path.read_text(encoding="utf-8")
         if 'class="site-footer"' in text:
