@@ -281,7 +281,7 @@ def annotate_site_html(
 
 
 def _base_stem(stem: str) -> str:
-    return re.sub(r"-(?:480|800|1200|1600|1920)w$", "", stem)
+    return re.sub(r"-(?:480|800|1200|1600|1724|1920)w$", "", stem)
 
 
 def _logical_image_key(rel_path: str) -> str | None:
@@ -296,7 +296,7 @@ def _logical_image_key(rel_path: str) -> str | None:
 
 
 def _variant_width_from_name(stem: str) -> str | None:
-    m = re.search(r"-(480|800|1200|1600|1920)w$", stem)
+    m = re.search(r"-(480|800|1200|1600|1724|1920)w$", stem)
     if m:
         return f"{m.group(1)}w"
     return None
@@ -345,7 +345,7 @@ def write_image_manifest(img_root: Path, out_path: Path, url_prefix: str = "") -
             default_rel = min(g["paths"], key=len)
             variants["default"] = f"{url_prefix}/assets/img/{default_rel}"
         srcset_parts = []
-        for w in ("480w", "800w", "1200w", "1600w", "1920w"):
+        for w in ("480w", "800w", "1200w", "1600w", "1724w", "1920w"):
             if w in variants:
                 width = w.replace("w", "")
                 srcset_parts.append(f"{variants[w]} {width}w")

@@ -330,6 +330,19 @@
       "srcset": ""
     },
     {
+      "id": "lyssna-posters/V2Nb8jMKUCk.webp",
+      "label": "V2Nb8jMKUCk.webp",
+      "default": "/assets/img/lyssna-posters/V2Nb8jMKUCk.webp",
+      "variants": {
+        "1200w": "/assets/img/lyssna-posters/V2Nb8jMKUCk-1200w.webp",
+        "1724w": "/assets/img/lyssna-posters/V2Nb8jMKUCk-1724w.webp",
+        "480w": "/assets/img/lyssna-posters/V2Nb8jMKUCk-480w.webp",
+        "800w": "/assets/img/lyssna-posters/V2Nb8jMKUCk-800w.webp",
+        "default": "/assets/img/lyssna-posters/V2Nb8jMKUCk.webp"
+      },
+      "srcset": "/assets/img/lyssna-posters/V2Nb8jMKUCk-480w.webp 480w, /assets/img/lyssna-posters/V2Nb8jMKUCk-800w.webp 800w, /assets/img/lyssna-posters/V2Nb8jMKUCk-1200w.webp 1200w, /assets/img/lyssna-posters/V2Nb8jMKUCk-1724w.webp 1724w"
+    },
+    {
       "id": "lyssna-posters/gm5C41wqYuU.webp",
       "label": "gm5C41wqYuU.webp",
       "default": "/assets/img/lyssna-posters/gm5C41wqYuU.webp",

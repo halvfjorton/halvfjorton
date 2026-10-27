@@ -737,6 +737,10 @@ def lyssna_yt_poster_path(video_id: str) -> str:
     return f"/assets/img/lyssna-posters/{video_id}.webp"
 
 
+def lyssna_yt_poster_tile_path(video_id: str) -> str:
+    return f"/assets/img/lyssna-posters/{video_id}-1200w.webp"
+
+
 SPOTIFY_REPERTOIRE_PLAYLIST_URL = (
     "https://open.spotify.com/playlist/0q8DLuLfZE25an41tppmvu"
 )
@@ -762,6 +766,11 @@ def _lyssna_poster_srcset(poster: str) -> str:
         return (
             f' srcset="{stem}-480w.webp 480w, {stem}-800w.webp 800w, '
             f'{stem}-1200w.webp 1200w"'
+        )
+    if "/assets/img/lyssna-posters/" in poster:
+        return (
+            f' srcset="{stem}-480w.webp 480w, {stem}-800w.webp 800w, '
+            f'{stem}-1200w.webp 1200w, {stem}-1724w.webp 1724w"'
         )
     return ""
 
@@ -1677,7 +1686,7 @@ def lyssna_page_video_ld() -> list[str]:
             "Signed Sealed Delivered - Halv Fjorton 2025",
             "Livefilm med Halv Fjorton från 2025.",
             "V2Nb8jMKUCk",
-            f"{SITE}/assets/img/gallery/halvfjorton-01-1200w.webp",
+            f"{SITE}{lyssna_yt_poster_path('V2Nb8jMKUCk')}",
             upload_dates["V2Nb8jMKUCk"],
         ),
         youtube_video_object_ld(
@@ -2122,7 +2131,7 @@ def write_pages():
         "V2Nb8jMKUCk",
         "Signed Sealed Delivered",
         "Signed Sealed Delivered - Halv Fjorton 2025",
-        poster="/assets/img/gallery/halvfjorton-01-1200w.webp",
+        poster=lyssna_yt_poster_tile_path("V2Nb8jMKUCk"),
     ),
     lyssna_video_tile(
         "gm5C41wqYuU",
@@ -2806,10 +2815,15 @@ def inject_production_cloudflare_analytics(target: Path) -> None:
 
 
 def assert_lyssna_yt_posters_exist() -> None:
-    for video_id in ("gm5C41wqYuU", "vV8aavPxYss", "UytyTLnKDWQ"):
+    for video_id in ("V2Nb8jMKUCk", "gm5C41wqYuU", "vV8aavPxYss", "UytyTLnKDWQ"):
         path = LYSSNA_POSTERS_DIR / f"{video_id}.webp"
         if not path.is_file():
             raise SystemExit(f"Build check failed: missing lyssna poster {path.relative_to(ROOT)}")
+        tile_path = LYSSNA_POSTERS_DIR / f"{video_id}-1200w.webp"
+        if video_id == "V2Nb8jMKUCk" and not tile_path.is_file():
+            raise SystemExit(
+                f"Build check failed: missing lyssna poster tile {tile_path.relative_to(ROOT)}"
+            )
 
 
 def remove_legacy_home_publish_dir() -> None:
