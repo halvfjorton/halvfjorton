@@ -692,7 +692,45 @@ LYSSNA_VIDEO_MODAL_SCRIPT = (
     '  <script src="/assets/js/lyssna-video-modal.js" defer></script>\n'
 )
 LYSSNA_REPERTOIRE_JSON = ROOT / "assets/data/lyssna-repertoire.json"
+LYSSNA_VIDEOS_JSON = ROOT / "assets/data/lyssna-videos.json"
 LYSSNA_POSTERS_DIR = ROOT / "assets/img/lyssna-posters"
+
+LYSSNA_VIDEO_IDS = (
+    "V2Nb8jMKUCk",
+    "gm5C41wqYuU",
+    SOULFUL_LUCIA_2025_VIDEO_ID,
+    "vV8aavPxYss",
+    "UytyTLnKDWQ",
+)
+
+
+def load_lyssna_video_upload_dates() -> dict[str, str]:
+    if not LYSSNA_VIDEOS_JSON.is_file():
+        raise SystemExit(
+            f"Build check failed: missing lyssna video data {LYSSNA_VIDEOS_JSON.relative_to(ROOT)}"
+        )
+    entries = json.loads(LYSSNA_VIDEOS_JSON.read_text(encoding="utf-8"))
+    if not isinstance(entries, list):
+        raise SystemExit("Build check failed: lyssna-videos.json must be a JSON array")
+    dates: dict[str, str] = {}
+    for entry in entries:
+        if not isinstance(entry, dict):
+            raise SystemExit("Build check failed: lyssna-videos.json entries must be objects")
+        video_id = entry.get("videoId")
+        upload_date = entry.get("uploadDate")
+        if not video_id or not upload_date:
+            raise SystemExit(
+                "Build check failed: each lyssna-videos.json entry needs videoId and uploadDate"
+            )
+        if video_id in dates:
+            raise SystemExit(f"Build check failed: duplicate videoId in lyssna-videos.json: {video_id}")
+        dates[video_id] = upload_date
+    missing = [vid for vid in LYSSNA_VIDEO_IDS if vid not in dates]
+    if missing:
+        raise SystemExit(
+            "Build check failed: lyssna-videos.json missing uploadDate for: " + ", ".join(missing)
+        )
+    return dates
 
 
 def lyssna_yt_poster_path(video_id: str) -> str:
@@ -1593,8 +1631,11 @@ def youtube_video_object_ld(
     description: str,
     video_id: str,
     thumbnail_url: str,
+    upload_date: str,
     start_seconds: int | None = None,
 ) -> str:
+    if not upload_date:
+        raise ValueError(f"VideoObject for {video_id} requires uploadDate")
     embed_url = f"https://www.youtube-nocookie.com/embed/{video_id}"
     content_url = f"https://www.youtube.com/watch?v={video_id}"
     if start_seconds:
@@ -1606,6 +1647,7 @@ def youtube_video_object_ld(
         "name": name,
         "description": description,
         "thumbnailUrl": thumbnail_url,
+        "uploadDate": upload_date,
         "embedUrl": embed_url,
         "contentUrl": content_url,
         "publisher": {
@@ -1618,45 +1660,53 @@ def youtube_video_object_ld(
 
 
 def wedding_video_ld() -> str:
+    upload_dates = load_lyssna_video_upload_dates()
     return youtube_video_object_ld(
         WEDDING_VIDEO_TITLE,
         "Livevideo med Halv Fjorton som cover- och bröllopsband i södra Sverige.",
         WEDDING_VIDEO_ID,
         f"https://i.ytimg.com/vi/{WEDDING_VIDEO_ID}/hqdefault.jpg",
+        upload_dates[WEDDING_VIDEO_ID],
     )
 
 
 def lyssna_page_video_ld() -> list[str]:
+    upload_dates = load_lyssna_video_upload_dates()
     return [
         youtube_video_object_ld(
             "Signed Sealed Delivered - Halv Fjorton 2025",
             "Livefilm med Halv Fjorton från 2025.",
             "V2Nb8jMKUCk",
             f"{SITE}/assets/img/gallery/halvfjorton-01-1200w.webp",
+            upload_dates["V2Nb8jMKUCk"],
         ),
         youtube_video_object_ld(
             "Halv Fjorton Reel 2022",
             "Kortare klipp från spelningar 2022.",
             "gm5C41wqYuU",
             f"{SITE}{lyssna_yt_poster_path('gm5C41wqYuU')}",
+            upload_dates["gm5C41wqYuU"],
         ),
         youtube_video_object_ld(
             "A Soulful Lucia 2025",
             "Julkonsert med Halv Fjorton, inspelning från lucia 2025.",
             SOULFUL_LUCIA_2025_VIDEO_ID,
             f"{SITE}{SOULFUL_LUCIA_2025_IMG}-1200w.webp",
+            upload_dates[SOULFUL_LUCIA_2025_VIDEO_ID],
         ),
         youtube_video_object_ld(
             "A Soulful Christmas 2024 - 8 december, Nygatan 6",
             "Julkonsert A Soulful Christmas 2024 på Nygatan 6 i Växjö.",
             "vV8aavPxYss",
             f"{SITE}{lyssna_yt_poster_path('vV8aavPxYss')}",
+            upload_dates["vV8aavPxYss"],
         ),
         youtube_video_object_ld(
             "A Soulful Christmas 2023 - 3 december, Nygatan 6",
             "Julkonsert A Soulful Christmas 2023 på Nygatan 6 i Växjö.",
             "UytyTLnKDWQ",
             f"{SITE}{lyssna_yt_poster_path('UytyTLnKDWQ')}",
+            upload_dates["UytyTLnKDWQ"],
         ),
     ]
 
@@ -2712,6 +2762,8 @@ def assert_valid_jsonld_in_build(target: Path) -> None:
             if not isinstance(node, dict) or "@type" not in node:
                 offenders.append(f"{rel}: graph node missing @type")
                 break
+            if node.get("@type") == "VideoObject" and not node.get("uploadDate"):
+                offenders.append(f"{rel}: VideoObject missing uploadDate")
     if offenders:
         sample = "\n".join(f"  - {line}" for line in offenders[:25])
         raise SystemExit("Build check failed: JSON-LD validation:\n" + sample)
@@ -2780,6 +2832,7 @@ def run_build(
     else:
         OUT_ROOT.mkdir(parents=True, exist_ok=True)
         remove_legacy_home_publish_dir()
+    load_lyssna_video_upload_dates()
     assert_lyssna_yt_posters_exist()
     shutil.copy2(HOME_SOURCE, OUT_ROOT / "index.html")
     write_pages()
