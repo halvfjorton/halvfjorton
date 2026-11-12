@@ -1037,6 +1037,7 @@ BROLLOP_FAQS: tuple[tuple[str, str], ...] = (
 
 SERVICE_HERO_SLIDESHOW_KEYS = frozenset({"brollop", "foretag"})
 SERVICE_HERO_SLIDESHOW_SCRIPT = (
+    '  <script src="/assets/js/defer-hero-slides.js" defer></script>\n'
     '  <script src="/assets/js/service-hero-slideshow.js" defer></script>\n'
 )
 
@@ -1118,19 +1119,25 @@ def _service_hero_slide_markup(
 ) -> str:
     src, srcset = _service_hero_img_urls(stem)
     pos = f' style="object-position: {position};"' if position else ""
-    loading = "eager" if first else "lazy"
     fp = ' fetchpriority="high"' if first else ""
     hero_sizes = hero_cover_sizes(width, height, SERVICE_HERO_COVER_SCALE_SLIDESHOW)
+    if first:
+        src_attrs = f'''src="{src}"
+              srcset="{srcset}"
+              loading="eager"'''
+    else:
+        src_attrs = f'''data-defer-hero
+              data-defer-src="{src}"
+              data-defer-srcset="{srcset}"
+              loading="lazy"'''
     return f"""          <div class="alt-service-hero__slide">
             <img
               class="alt-service-hero__img"
-              src="{src}"
-              srcset="{srcset}"
+              {src_attrs}
               sizes="{hero_sizes}"
               alt="{esc(alt)}"
               width="{width}"
               height="{height}"
-              loading="{loading}"
               decoding="async"{fp}{pos}
             >
           </div>"""
@@ -2782,7 +2789,13 @@ def assert_footer_styles_in_css(site_css: Path) -> None:
     if not site_css.is_file():
         raise SystemExit(f"Build check failed: missing stylesheet {site_css}")
     text = site_css.read_text(encoding="utf-8")
+    if '@import url("fonts.css")' in text:
+        raise SystemExit(
+            "Build check failed: site.css must not @import fonts.css (inline @font-face instead)"
+        )
     required = (
+        "@font-face",
+        'font-family: "Inter"',
         ".alt-page .site-footer__links",
         "list-style: none",
         ".alt-page .site-footer__inner",
