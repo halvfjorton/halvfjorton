@@ -609,7 +609,7 @@ def modern_footer_markup() -> str:
     <div class="site-footer__inner">
       <div class="site-footer__columns">
         <div class="site-footer__brand">
-          <a class="site-footer__brand-mark" href="/" aria-label="Halv Fjorton">
+          <a class="site-footer__brand-mark" href="/" aria-label="Halv Fjorton (14/2)">
             <span class="site-footer__title">Halv Fjorton</span>
           </a>
           <p class="site-footer__tagline">Coverband och partyband med rötter i Växjö, Småland.</p>
@@ -667,6 +667,12 @@ def brand_logo_markup() -> str:
     )
     svg = re.sub(r'\bwidth="[^"]*"', f'width="{BRAND_MARK_PX}"', svg, count=1)
     svg = re.sub(r'\bheight="[^"]*"', f'height="{BRAND_MARK_PX}"', svg, count=1)
+    svg = re.sub(
+        r'\s*aria-hidden="true"',
+        ' role="img" aria-label="Halv Fjorton (14/2)"',
+        svg,
+        count=1,
+    )
     return svg
 
 
@@ -1940,7 +1946,7 @@ def page(
   <a class="skip-link" href="#innehall">Hoppa till innehållet</a>
   <header class="alt-header site-header" data-nav>
     <div class="alt-header__inner header-inner">
-      <a class="alt-brand brand" href="/" aria-label="Halv Fjorton">
+      <a class="alt-brand brand" href="/" aria-label="Halv Fjorton (14/2)">
 {brand_logo_markup()}
       </a>
 {toggle}
@@ -2199,7 +2205,7 @@ def write_pages():
         ),
         (
             "Hur stort är bandet?",
-            "Vi är åtta musiker med sång, rytmsektion och egen blåssektion. Namnet kommer från att vi började som sju, alltså halva fjorton.",
+            "Vi är åtta musiker med sång, rytmsektion och egen blåssektion. Namnet kommer från att vi började som sju, alltså halva fjorton. Därför heter vi Halv Fjorton, eller Halv 14 (14/2).",
         ),
         (
             "Hur länge spelar ni?",
@@ -2323,6 +2329,13 @@ def write_pages():
         message="Den gamla adressen /lyssna-på-oss/ pekar nu till Lyssna.",
         link_label="Lyssna",
     )
+    write_redirect_page(
+        "/startsida/",
+        "/",
+        title="Startsida | omdirigering",
+        message="Den gamla adressen /startsida/ pekar nu till startsidan.",
+        link_label="startsida",
+    )
 
 
 def write_sitemap():
@@ -2351,6 +2364,7 @@ def write_llms_txt():
     text = f"""# Halv Fjorton
 
 > Cover- och partyband med åtta musiker och egen blåssektion från Växjö. Grundat 2018. Soul, funk, rock och svenska klassiker.
+Halv Fjorton, also known as Halv 14, 14/2, Halvfjorton.
 
 ## Kontakt
 - E-post: halvfjorton@gmail.com
@@ -2424,11 +2438,39 @@ def patch_home_page():
         count=1,
         flags=re.DOTALL,
     )
-    if 'aria-label="Halv Fjorton"' not in html.split("<header", 1)[-1][:800]:
+    if 'aria-label="Halv Fjorton (14/2)"' not in html.split("<header", 1)[-1][:800]:
         html = html.replace(
             '<a class="alt-brand brand" href="/">',
-            '<a class="alt-brand brand" href="/" aria-label="Halv Fjorton">',
+            '<a class="alt-brand brand" href="/" aria-label="Halv Fjorton (14/2)">',
             1,
+        )
+        html = html.replace(
+            '<a class="alt-brand brand" href="/" aria-label="Halv Fjorton">',
+            '<a class="alt-brand brand" href="/" aria-label="Halv Fjorton (14/2)">',
+            1,
+        )
+    home_description = (
+        "Halv Fjorton, också kallade Halv 14 (14/2), är ett coverband med åtta musiker "
+        "och egen blåssektion. Bröllop, företagsfest och fest i Växjö, Småland, Skåne och Malmö."
+    )
+    html = re.sub(
+        r'  <meta name="description" content="[^"]*">',
+        f'  <meta name="description" content="{esc(home_description)}">',
+        html,
+        count=1,
+    )
+    html = re.sub(
+        r'  <meta property="og:description" content="[^"]*">',
+        f'  <meta property="og:description" content="{esc(home_description)}">',
+        html,
+        count=1,
+    )
+    if 'name="twitter:description"' in html:
+        html = re.sub(
+            r'  <meta name="twitter:description" content="[^"]*">',
+            f'  <meta name="twitter:description" content="{esc(home_description)}">',
+            html,
+            count=1,
         )
     html = html.replace(
         '<span class="alt-facts__placeholder">Grundat [ÅR - fyll i]</span>',
@@ -2444,7 +2486,7 @@ def patch_home_page():
         twitter_block = (
             '  <meta name="twitter:card" content="summary_large_image">\n'
             '  <meta name="twitter:title" content="Halv Fjorton | Coverband från Växjö">\n'
-            '  <meta name="twitter:description" content="Soul, funk, rock och svenska klassiker med åtta musiker. Bröllop, företag och event i södra Sverige.">\n'
+            '  <meta name="twitter:description" content="Halv Fjorton, också kallade Halv 14 (14/2), är ett coverband med åtta musiker och egen blåssektion. Bröllop, företagsfest och fest i Växjö, Småland, Skåne och Malmö.">\n'
             f'  <meta name="twitter:image" content="{OG}">\n'
         )
         html = html.replace(
@@ -2712,6 +2754,7 @@ def assert_integritetspolicy_links_in_build(target: Path) -> None:
             rel.startswith("repertoar/")
             or rel.startswith("mingel/")
             or rel.startswith("lyssna-på-oss/")
+            or rel.startswith("startsida/")
         ):
             continue
         text = file_path.read_text(encoding="utf-8")
