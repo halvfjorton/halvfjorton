@@ -2375,25 +2375,24 @@ Halv Fjorton, also known as Halv 14, 14/2, Halvfjorton.
 
 ## Kontakt
 - E-post: halvfjorton@gmail.com
-- Org.nr: 769641-5418
 - Bokning: en kontakt, offert som PDF på begäran
-- Instagram: https://www.instagram.com/halvfjorton/
-- YouTube: https://www.youtube.com/@halvfjorton9292
+- [Instagram](https://www.instagram.com/halvfjorton/)
+- [YouTube](https://www.youtube.com/@halvfjorton9292)
 
 ## Område
 Bandet utgår från Växjö och spelar på begäran i hela södra Sverige (Småland och Skåne), till exempel Kalmar, Jönköping, Malmö, Lund och Helsingborg. Älmhult och andra orter ingår; spelningar utanför södra Sverige går att diskutera.
 
 ## Tjänster
-- Bröllop: {SITE}/brollop/
-- Företag: {SITE}/foretag/
-- Fest och mingel: {SITE}/fest-och-mingel/
+- [Bröllop]({SITE}/brollop/)
+- [Företag]({SITE}/foretag/)
+- [Fest och mingel]({SITE}/fest-och-mingel/)
 
 ## Viktiga sidor
-- Startsida: {SITE}/
-- FAQ: {SITE}/faq/
-- Kontakt: {SITE}/kontakt/
-- Konserter: {SITE}/konserter/
-- Repertoar: {SITE}/lyssna/#repertoar
+- [Startsida]({SITE}/)
+- [FAQ]({SITE}/faq/)
+- [Kontakt]({SITE}/kontakt/)
+- [Konserter]({SITE}/konserter/)
+- [Repertoar]({SITE}/lyssna/#repertoar)
 """
     dest = OUT_ROOT / "llms.txt"
     dest.write_text(text, encoding="utf-8")
