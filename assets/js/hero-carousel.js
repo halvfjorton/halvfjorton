@@ -10,4 +10,16 @@
     },
     { threshold: [0, 0.05, 0.1] }
   ).observe(hero);
+
+  function initDeferredHomeCarousel() {
+    var carousel = document.querySelector(".alt-hero__carousel");
+    if (!carousel || !window.__deferHeroSlides) return;
+    window.__deferHeroSlides.scheduleCarousel(carousel, 6500, 2000);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initDeferredHomeCarousel);
+  } else {
+    initDeferredHomeCarousel();
+  }
 })();

@@ -39,6 +39,13 @@
     slide.style.opacity = String(value);
   }
 
+  function hydrateSlideImg(slide) {
+    var img = slide && slide.querySelector(".alt-service-hero__img");
+    if (img && window.__deferHeroSlides) {
+      window.__deferHeroSlides.hydrateImg(img);
+    }
+  }
+
   function initCarousel(carousel) {
     stopInstance(carousel);
     var slides = carousel.querySelectorAll(".alt-service-hero__slide");
@@ -71,6 +78,7 @@
       if (count > 1 && elapsed >= SLIDE_MS) {
         var next = (index + 1) % count;
         var nextSlide = slides[next];
+        hydrateSlideImg(nextSlide);
         setSlideOpacity(slide, 0);
         slide.classList.remove("is-active");
         setSlideOpacity(nextSlide, 1);
@@ -92,7 +100,15 @@
     document.querySelectorAll(".alt-service-hero__carousel").forEach(initCarousel);
   }
 
+  function scheduleDeferredServiceCarousels() {
+    if (!window.__deferHeroSlides) return;
+    document.querySelectorAll(".alt-service-hero__carousel").forEach(function (carousel) {
+      window.__deferHeroSlides.scheduleCarousel(carousel, SLIDE_MS, 2500);
+    });
+  }
+
   function onReady() {
+    scheduleDeferredServiceCarousels();
     refresh();
     window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", refresh);
   }

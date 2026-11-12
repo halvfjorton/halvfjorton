@@ -20,7 +20,8 @@
 
   function manifestEntryForImg(manifest, img) {
     if (!img) return null;
-    var norm = (img.currentSrc || img.src || "").split("?")[0];
+    var norm = (img.currentSrc || img.src || img.getAttribute("data-defer-src") || "")
+      .split("?")[0];
     var images = manifest.images || [];
     for (var i = 0; i < images.length; i++) {
       var entry = images[i];
@@ -112,12 +113,16 @@
     var fp = first ? ' fetchpriority="high"' : "";
     var w = entry.id.indexOf("1280") >= 0 ? "1280" : "2400";
     var h = w === "1280" ? "853" : "1600";
+    var srcPart = first
+      ? 'src="' + escapeAttr(src) + '"' + (srcset ? ' srcset="' + escapeAttr(srcset) + '"' : "")
+      : 'data-defer-hero data-defer-src="' +
+        escapeAttr(src) +
+        '"' +
+        (srcset ? ' data-defer-srcset="' + escapeAttr(srcset) + '"' : "");
     return (
       '<div class="alt-hero__slide">' +
-      '<img src="' +
-      escapeAttr(src) +
-      '"' +
-      (srcset ? ' srcset="' + escapeAttr(srcset) + '"' : "") +
+      '<img ' +
+      srcPart +
       ' sizes="(max-width: 900px) 100vw, 100vw" alt="' +
       escapeAttr(alt) +
       '" width="' +
@@ -147,12 +152,16 @@
     var w = entry.id.indexOf("1280") >= 0 || entry.id.indexOf("halvfjorton-04") >= 0 ? "1280" : "2400";
     var h = w === "1280" ? "853" : "1600";
     var pos = serviceSlideObjectPosition(entry.id);
+    var srcPart = first
+      ? 'src="' + escapeAttr(src) + '"' + (srcset ? ' srcset="' + escapeAttr(srcset) + '"' : "")
+      : 'data-defer-hero data-defer-src="' +
+        escapeAttr(src) +
+        '"' +
+        (srcset ? ' data-defer-srcset="' + escapeAttr(srcset) + '"' : "");
     return (
       '<div class="alt-service-hero__slide">' +
-      '<img class="alt-service-hero__img" src="' +
-      escapeAttr(src) +
-      '"' +
-      (srcset ? ' srcset="' + escapeAttr(srcset) + '"' : "") +
+      '<img class="alt-service-hero__img" ' +
+      srcPart +
       ' sizes="100vw" alt="' +
       escapeAttr(alt) +
       '" width="' +
@@ -182,6 +191,9 @@
       });
       homeCarousel.innerHTML = html;
       syncSlideAnimations(homeCarousel);
+      if (window.__deferHeroSlides) {
+        window.__deferHeroSlides.scheduleCarousel(homeCarousel, 6500, 2000);
+      }
       return;
     }
     var serviceCarousel = container.querySelector(".alt-service-hero__carousel");
@@ -193,6 +205,9 @@
         svcHtml += buildServiceCarouselSlide(entry, item.alt || "", i);
       });
       serviceCarousel.innerHTML = svcHtml;
+      if (window.__deferHeroSlides) {
+        window.__deferHeroSlides.scheduleCarousel(serviceCarousel, 7000, 2500);
+      }
       if (window.__altServiceHeroSlideshow) {
         window.__altServiceHeroSlideshow.refresh();
       }
